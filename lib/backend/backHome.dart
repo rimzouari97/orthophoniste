@@ -22,7 +22,7 @@ class backHome extends StatelessWidget{
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      "Johny s Family",
+                      "DASHBOARD",
                       style: GoogleFonts.openSans(
                           textStyle: TextStyle(
                               color: Colors.white,

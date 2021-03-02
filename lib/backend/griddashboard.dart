@@ -11,7 +11,7 @@ class GridDashboard extends StatelessWidget {
 
   Items item2 = new Items(
     title: "Scores",
-    subtitle: "Bocali, Apple",
+    subtitle: "FROM 1 TO 10",
     event: "4 Items",
     img: "assets/images/score1.png",
   );

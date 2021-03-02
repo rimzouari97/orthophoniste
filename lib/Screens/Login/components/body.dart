@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:orthophoniste/Screens/Home/home.dart';
+import 'package:orthophoniste/Screens/Home/screens/details_screen.dart';
+import 'package:orthophoniste/Screens/Home/widgets/category_card.dart';
 import 'package:orthophoniste/Screens/Signup/signup_screen.dart';
 import 'package:orthophoniste/components/already_have_an_account_acheck.dart';
 import 'package:orthophoniste/components/rounded_button.dart';
@@ -40,7 +43,12 @@ class Body extends StatelessWidget {
             ),
             RoundedButton(
               text: "LOGIN",
-              press: () {},
+              press: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context){
+                      return HomeScreen();
+                    }),);
+              },
             ),
             SizedBox(height: size.height * 0.03),
             AlreadyHaveAnAccountCheck(
