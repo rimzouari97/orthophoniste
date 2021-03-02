@@ -21,6 +21,7 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  google_fonts: ^0.2.0
   flutter:
     sdk: flutter
 
@@ -61,9 +62,16 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
+  fonts:
+     - family: Schyler
+       fonts:
+         - asset: assets/fonts/Cairo/Cairo-Regular.ttf
+         - asset: assets/fonts/Cairo/Cairo-SemiBold.ttf
+           weight: 600
+         - asset: assets/fonts/Cairo/Cairo-Bold.ttf
+           weight: 700
+         - asset: assets/fonts/Cairo/Cairo-Black.ttf
+           weight: 900
   #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
