@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:orthophoniste/Screens/Home/constants.dart';
+import 'package:orthophoniste/Screens/Home/level1/work1.dart';
 
 import 'package:orthophoniste/Screens/Home/widgets/bottom_nav_bar.dart';
 import 'package:orthophoniste/Screens/Home/widgets/search_bar.dart';
@@ -63,7 +64,12 @@ class DetailsScreen extends StatelessWidget {
                         SeassionCard(
                           seassionNum: 1,
                           isDone: true,
-                          press: () {},
+                          press: () {Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) {
+                              return Home();
+                            }),
+                          );},
                         ),
                         SeassionCard(
                           seassionNum: 2,
@@ -183,7 +189,7 @@ class SeassionCard extends StatelessWidget {
           child: Material(
             color: Colors.transparent,
             child: InkWell(
-              onTap: press,
+              onTap: press ,
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Row(
@@ -201,6 +207,7 @@ class SeassionCard extends StatelessWidget {
                         color: isDone ? Colors.white : kBlueColor,
                       ),
                     ),
+
                     SizedBox(width: 10),
                     Text(
                       "Session $seassionNum",
