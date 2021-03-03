@@ -11,14 +11,28 @@ import 'package:orthophoniste/components/rounded_password_field.dart';
 
 import 'background.dart';
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
+  /*
   const Body({
     Key key,
   }) : super(key: key);
+*/
+  String email,pwd;
+  GlobalKey<FormState> _keyForm = new GlobalKey<FormState>();
+
+  @override
+  _BodyState createState() => _BodyState();
+
+}
+
+class _BodyState extends State<Body> {
+  GlobalKey<FormState> _keyForm = new GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery
+        .of(context)
+        .size;
     return Background(
       child: SingleChildScrollView(
         child: Column(
@@ -34,20 +48,58 @@ class Body extends StatelessWidget {
               height: size.height * 0.35,
             ),
             SizedBox(height: size.height * 0.03),
-            RoundedInputField(
-              hintText: "Your Email",
-              onChanged: (value) {},
+            TextFormField(
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                labelText: 'Email',
+                border: OutlineInputBorder(),
+              ),
+              validator: (String value) {
+                if(value.isEmpty){
+                  return "must not be empty";
+                }else{
+                  return null;
+                }
+              },
+              onSaved: (String value) {
+                int.parse(widget.email = value);
+              },
             ),
-            RoundedPasswordField(
-              onChanged: (value) {},
+            /*RoundedPasswordField(
+              onChanged: (value) {
+                widget.pwd = value;
+
+              },
             ),
-            RoundedButton(
-              text: "LOGIN",
-              press: () {
+             */
+            Text(""),
+            TextFormField(
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                labelText: 'Password',
+                border: OutlineInputBorder(),
+              ),
+              validator: (String value) {
+                if(value.isEmpty){
+                  return "must not be empty";
+                }else{
+                  return null;
+                }
+              },
+              onSaved: (String value) {
+                int.parse(widget.pwd = value);
+              },
+            ),
+           RaisedButton(
+               child: Text ("LOGIN"),
+                onPressed: () {
+                _keyForm.currentState.save();
+                _keyForm.currentState.validate();
+
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context){
-                      return HomeScreen();
-                    }),);
+                  MaterialPageRoute(builder: (context) {
+                    return HomeScreen();
+                  }),);
               },
             ),
             SizedBox(height: size.height * 0.03),
@@ -68,4 +120,8 @@ class Body extends StatelessWidget {
       ),
     );
   }
+
 }
+
+
+
