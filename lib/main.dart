@@ -5,12 +5,9 @@ import 'package:orthophoniste/backend/backHome.dart';
 import 'package:orthophoniste/constants.dart';
 import 'package:orthophoniste/services/user_service.dart';
 
-void setupLocator(){
-
+void setupLocator() {
   GetIt.I.registerLazySingleton(() => UserService());
-
 }
-
 
 void main() {
   setupLocator();
@@ -29,7 +26,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
       ),
       home: WelcomeScreen(),
-        //home: backHome(),
+      //home: backHome(),
     );
   }
 }
