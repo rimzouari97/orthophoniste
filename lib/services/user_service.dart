@@ -6,15 +6,16 @@ import 'package:http/http.dart'as http;
 import 'package:orthophoniste/models/user_parm.dart';
 class UserService {
 
-  static  const API = "http://192.168.1.15:3000/users/";
+  static  const API = "http://172.16.115.247:3000/users/";
 
  Future<APIResponse<List<User>>> getUsersList(){
+
    return http.get(API +"list")
        .then((data) {
          if(data.statusCode == 200){
            final Map<String, dynamic> jsonData = json.decode(data.body);
            final users = <User>[];
-          // print(jsonData);
+           print(jsonData);
 
           for(var item in jsonData.values.first ){
             print(item);
