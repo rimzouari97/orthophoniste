@@ -18,8 +18,8 @@ class MyApp extends StatelessWidget {
         primaryColor: kPrimaryColor,
         scaffoldBackgroundColor: Colors.white,
       ),
-     //home: Home(),
-      home: WelcomeScreen(),
+     home: Home(),
+      //home: WelcomeScreen(),
         //home: backHome(),
     );
   }

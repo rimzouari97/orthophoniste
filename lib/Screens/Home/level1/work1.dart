@@ -24,7 +24,7 @@ class _HomeState extends State<Home> {
     myPairs.shuffle();
 
     gridViewTiles = myPairs;
-    Future.delayed(const Duration(seconds: 5), () {
+    Future.delayed(const Duration(seconds: 10), () {
 // Here you can write your code
       setState(() {
         print("2 seconds done");
@@ -122,11 +122,7 @@ class _HomeState extends State<Home> {
                             ),
                             borderRadius: BorderRadius.circular(24),
                           ),
-                          child: Text("Rate Us", style: TextStyle(
-                              color: Colors.blue,
-                              fontSize: 17,
-                              fontWeight: FontWeight.w500
-                          ),),
+
                         ),
                       ),
                     ],
