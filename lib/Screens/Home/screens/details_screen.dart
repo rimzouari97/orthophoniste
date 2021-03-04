@@ -35,7 +35,7 @@ class DetailsScreen extends StatelessWidget {
                       height: size.height * 0.05,
                     ),
                     Text(
-                      "Meditation",
+                      "Let's remember!",
                       style: Theme.of(context)
                           .textTheme
                           .display1
