@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:orthophoniste/Screens/Home/level1/work1.dart';
 import 'package:orthophoniste/Screens/Welcome/welcome_screen.dart';
 import 'package:orthophoniste/backend/backHome.dart';
 import 'package:orthophoniste/constants.dart';
 import 'package:orthophoniste/services/user_service.dart';
 
-void setupLocator(){
-
+void setupLocator() {
   GetIt.I.registerLazySingleton(() => UserService());
-
 }
-
 
 void main() {
   setupLocator();
@@ -29,8 +25,8 @@ class MyApp extends StatelessWidget {
         primaryColor: kPrimaryColor,
         scaffoldBackgroundColor: Colors.white,
       ),
-      // home: WelcomeScreen(),
-        home: Home(),
+      home: WelcomeScreen(),
+      //home: backHome(),
     );
   }
 }
