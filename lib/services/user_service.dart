@@ -6,7 +6,7 @@ import 'package:http/http.dart'as http;
 import 'package:orthophoniste/models/user_parm.dart';
 class UserService {
 
-  static  const API = "http://172.16.115.247:3000/users/";
+  static  const API = "http://https://rivalsbackend.herokuapp.com/users/";
 
  Future<APIResponse<List<User>>> getUsersList(){
 
