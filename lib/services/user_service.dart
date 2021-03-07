@@ -6,7 +6,7 @@ import 'package:http/http.dart'as http;
 import 'package:orthophoniste/models/user_parm.dart';
 class UserService {
 
-  static  const API = "http://https://rivalsbackend.herokuapp.com/users/";
+  static  const API = "http://rivalsbackend.herokuapp.com/users/";
 
  Future<APIResponse<List<User>>> getUsersList(){
 
@@ -18,7 +18,7 @@ class UserService {
            print(jsonData);
 
           for(var item in jsonData.values.first ){
-         //   print(item);
+            print(item);
 
              final user = User(
                  item['_id'],
