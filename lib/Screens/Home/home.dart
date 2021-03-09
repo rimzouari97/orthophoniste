@@ -4,12 +4,12 @@ import 'package:orthophoniste/Screens/Home/screens/details_screen.dart';
 import 'package:orthophoniste/Screens/Home/widgets/bottom_nav_bar.dart';
 import 'package:orthophoniste/Screens/Home/widgets/category_card.dart';
 import 'package:orthophoniste/Screens/Home/widgets/search_bar.dart';
+import 'package:orthophoniste/page/exercice_memoire.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery
-        .of(context)
+    var size = MediaQuery.of(context)
         .size; //this gonna give us total height and with of our device
     return Scaffold(
       bottomNavigationBar: BottomNavBar(),
@@ -47,8 +47,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   Text(
                     "Good Morning \nOumessa",
-                    style: Theme
-                        .of(context)
+                    style: Theme.of(context)
                         .textTheme
                         .display1
                         .copyWith(fontWeight: FontWeight.w900),
@@ -86,13 +85,13 @@ class HomeScreen extends StatelessWidget {
                           },
                         ),
                         CategoryCard(
-                          title: "Meditation",
+                          title: "Exercice Mémoire",
                           svgSrc: "assets/icons/Meditation.svg",
                           press: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) {
-                                return DetailsScreen();
+                                return ExercieMemoire();
                               }),
                             );
                           },

@@ -59,6 +59,12 @@ class QuestionsWidget extends StatelessWidget {
               style: TextStyle(fontStyle: FontStyle.italic, fontSize: 16),
             ),
             SizedBox(height: 32),
+            Text(
+              //  "scoore: " + question.scoore.toString(),
+              "Numéro de question: " + question.number.toString(),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+            ),
+            SizedBox(height: 32),
             Expanded(
               child: OptionsWidget(
                 question: question,

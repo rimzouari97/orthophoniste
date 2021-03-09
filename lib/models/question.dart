@@ -9,12 +9,14 @@ class Question {
   bool isLocked;
   Option selectedOption;
   final String sound;
+  int number;
 
   Question({
     @required this.text,
     @required this.options,
     @required this.solution,
     @required this.sound,
+    @required this.number,
     this.isLocked = false,
     this.selectedOption,
   });

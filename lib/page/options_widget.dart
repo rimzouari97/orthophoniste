@@ -53,10 +53,7 @@ class OptionsWidget extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
           ),
           SizedBox(width: 12),
-          Text(
-            option.text,
-            style: TextStyle(fontSize: 20),
-          )
+          Image(image: AssetImage(option.text)),
         ]),
       );
 
