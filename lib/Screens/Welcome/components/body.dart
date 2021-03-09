@@ -31,7 +31,7 @@ class Body extends StatelessWidget {
               text: "LOGIN",
               press: () {
 
-                print("test 1ggggggggggggggggggggggggggggggggggggggggggggggggggg");
+              //  print("test 1ggggggggggggggggggggggggggggggggggggggggggggggggggg");
                 Navigator.push(
                   context,
                   MaterialPageRoute(
