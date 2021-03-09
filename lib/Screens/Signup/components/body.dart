@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get_it/get_it.dart';
+import 'package:orthophoniste/Screens/Home/home.dart';
 import 'package:orthophoniste/Screens/Login/login_screen.dart';
 import 'package:orthophoniste/Screens/Signup/components/background.dart';
 import 'package:orthophoniste/Screens/Signup/components/or_divider.dart';
@@ -8,44 +10,167 @@ import 'package:orthophoniste/components/already_have_an_account_acheck.dart';
 import 'package:orthophoniste/components/rounded_button.dart';
 import 'package:orthophoniste/components/rounded_input_field.dart';
 import 'package:orthophoniste/components/rounded_password_field.dart';
+import 'package:orthophoniste/models/API_response.dart';
+import 'package:orthophoniste/models/user_info.dart';
+import 'package:orthophoniste/models/user_parm.dart';
+import 'package:orthophoniste/services/user_service.dart';
 
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
+
+  String _email;
+  String _pwd;
+  String _name;
+  String _type;
+  GlobalKey<FormState> _keyForm = new GlobalKey<FormState>();
+
+  @override
+  _BodyState createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  GlobalKey<FormState> _keyForm = new GlobalKey<FormState>();
+  UserService get service => GetIt.I<UserService>();
+  APIResponse <User> _apiResponse;
+
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Background(
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              "SIGNUP",
+    Size size = MediaQuery
+        .of(context)
+        .size;
+    return Form(
+      key: _keyForm,
+        child : Background(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+               Text(
+               "SIGNUP",
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: size.height * 0.03),
-            SvgPicture.asset(
+               SizedBox(height: size.height * 0.03),
+                SvgPicture.asset(
               "assets/icons/signup.svg",
-              height: size.height * 0.35,
+              height: size.height * 0.20,
             ),
-            RoundedInputField(
-              hintText: "Your Email",
-              onChanged: (value) {},
-            ),
-            RoundedPasswordField(
-              onChanged: (value) {},
-            ),
-            RoundedButton(
+                TextFormField(
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    labelText: 'Name',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50),
+                      borderSide: BorderSide(
+                        width: 2,
+                      ),),
+                  ),
+                  validator: (String value) {
+                    if(value.isEmpty){
+                      return "must not be empty";
+                    }else{
+                      return null;
+                    }
+                  },
+                  onSaved: (String value) {
+                    widget._name = value;
+                  },
+                ),
+                Text(""),
+                TextFormField(
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50),
+                      borderSide: BorderSide(
+                        width: 2,
+                      ),),
+                  ),
+                  validator: (String value) {
+                    if(value.isEmpty){
+                      return "must not be empty";
+                    }else{
+                      return null;
+                    }
+                  },
+                  onSaved: (String value) {
+                    widget._email = value;
+                  },
+                ),
+                Text(""),
+                TextFormField(
+                  keyboardType: TextInputType.visiblePassword,
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50),
+                      borderSide: BorderSide(
+                        width: 2,
+                      ),),
+                  ),
+                  validator: (String value) {
+                    if(value.isEmpty){
+                      return "must not be empty";
+                    }else{
+                      return null;
+                    }
+                  },
+                  onSaved: (String value) {
+                    widget._pwd = value;
+                  },
+                ),
+                Text(""),
+                TextFormField(
+                  keyboardType: TextInputType.text,
+                  decoration: InputDecoration(
+                    labelText: 'Type',
+                    border:  OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50),
+                      borderSide: BorderSide(
+                        width: 2,
+                      ),
+                    ),
+                  ),
+                  validator: (String value) {
+                    if(value.isEmpty){
+                      return "must not be empty";
+                    }else{
+                      return null;
+                    }
+                  },
+                  onSaved: (String value) {
+                    widget._type = value;
+                  },
+                ),
+                RoundedButton(
               text: "SIGNUP",
-              press: () {},
+              press: () async {
+                if(!_keyForm.currentState.validate())
+                  return;
+                _keyForm.currentState.save();
+                final result = await service.SignUp(UserParam(name: widget._name, email: widget._email, password: widget._pwd, type: widget._type));
+                   if (result.data != null){
+                     Navigator.push(
+                       context,
+                       MaterialPageRoute(
+                         builder: (context) {
+                           return HomeScreen();
+                         },
+                       ),
+                     );
+                   }
+
+
+
+              },
             ),
-            SizedBox(height: size.height * 0.03),
-            AlreadyHaveAnAccountCheck(
-              login: false,
-              press: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
+                SizedBox(height: size.height * 0.03),
+                AlreadyHaveAnAccountCheck(
+                  login: false,
+                  press: () {
+                     Navigator.push(
+                    context,
+                    MaterialPageRoute(
                     builder: (context) {
                       return LoginScreen();
                     },
@@ -53,27 +178,29 @@ class Body extends StatelessWidget {
                 );
               },
             ),
-            OrDivider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SocalIcon(
-                  iconSrc: "assets/icons/facebook.svg",
-                  press: () {},
+               OrDivider(),
+                Row(
+                   mainAxisAlignment: MainAxisAlignment.center,
+                   children: <Widget>[
+                   SocalIcon(
+                     iconSrc: "assets/icons/facebook.svg",
+                     press: () {},
                 ),
-                SocalIcon(
-                  iconSrc: "assets/icons/twitter.svg",
-                  press: () {},
+                   SocalIcon(
+                     iconSrc: "assets/icons/twitter.svg",
+                    press: () {},
                 ),
-                SocalIcon(
+                   SocalIcon(
                   iconSrc: "assets/icons/google-plus.svg",
                   press: () {},
-                ),
-              ],
-            )
-          ],
+                  ),
+                ],
+              )
+            ],
+           ),
+         ),
         ),
-      ),
     );
   }
 }
+

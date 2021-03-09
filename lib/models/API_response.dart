@@ -1,5 +1,6 @@
 class APIResponse<T>{
   T data;
+  String  token;
   bool errer;
   String errorMessage;
 

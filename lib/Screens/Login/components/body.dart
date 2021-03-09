@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:get_it/get_it.dart';
 import 'package:orthophoniste/Screens/Home/home.dart';
 import 'package:orthophoniste/Screens/Home/screens/details_screen.dart';
 import 'package:orthophoniste/Screens/Home/widgets/category_card.dart';
@@ -8,16 +10,17 @@ import 'package:orthophoniste/components/already_have_an_account_acheck.dart';
 import 'package:orthophoniste/components/rounded_button.dart';
 import 'package:orthophoniste/components/rounded_input_field.dart';
 import 'package:orthophoniste/components/rounded_password_field.dart';
+import 'package:orthophoniste/models/API_response.dart';
+import 'package:orthophoniste/models/user_info.dart';
+import 'package:orthophoniste/models/user_parm.dart';
+import 'package:orthophoniste/services/user_service.dart';
 
 import 'background.dart';
 
 class Body extends StatefulWidget {
-  /*
-  const Body({
-    Key key,
-  }) : super(key: key);
-*/
-  String email,pwd;
+
+  String _email;
+  String _pwd;
   GlobalKey<FormState> _keyForm = new GlobalKey<FormState>();
 
   @override
@@ -28,16 +31,21 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   GlobalKey<FormState> _keyForm = new GlobalKey<FormState>();
 
+  UserService get service => GetIt.I<UserService>();
+  APIResponse <User> _apiResponse;
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery
         .of(context)
         .size;
-    return Background(
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
+    return Form(
+      key: _keyForm,
+      child : Background(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
             Text(
               "LOGIN",
               style: TextStyle(fontWeight: FontWeight.bold),
@@ -49,10 +57,14 @@ class _BodyState extends State<Body> {
             ),
             SizedBox(height: size.height * 0.03),
             TextFormField(
-              keyboardType: TextInputType.text,
+              keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
                 labelText: 'Email',
-                border: OutlineInputBorder(),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(50),
+                  borderSide: BorderSide(
+                    width: 2,
+                  ),),
               ),
               validator: (String value) {
                 if(value.isEmpty){
@@ -62,7 +74,7 @@ class _BodyState extends State<Body> {
                 }
               },
               onSaved: (String value) {
-                int.parse(widget.email = value);
+                widget._email = value;
               },
             ),
             /*RoundedPasswordField(
@@ -74,10 +86,14 @@ class _BodyState extends State<Body> {
              */
             Text(""),
             TextFormField(
-              keyboardType: TextInputType.text,
+              keyboardType: TextInputType.visiblePassword,
               decoration: InputDecoration(
                 labelText: 'Password',
-                border: OutlineInputBorder(),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(50),
+                  borderSide: BorderSide(
+                    width: 2,
+                  ),),
               ),
               validator: (String value) {
                 if(value.isEmpty){
@@ -87,21 +103,46 @@ class _BodyState extends State<Body> {
                 }
               },
               onSaved: (String value) {
-                int.parse(widget.pwd = value);
+                widget._pwd = value;
+                print(value);
               },
             ),
-           RaisedButton(
-               child: Text ("LOGIN"),
-                onPressed: () {
-               // _keyForm.currentState.save();
-              //  _keyForm.currentState.validate();
 
-                  print("ddddddddddddddddd");
+              RaisedButton(
+                 child: Text ("LOGIN"),
+                onPressed: () async {
+                  if(!_keyForm.currentState.validate())
+                    return;
+                _keyForm.currentState.save();
 
-                Navigator.push(context,
-                  MaterialPageRoute(builder: (context) {
-                    return HomeScreen();
-                  }),);
+                 final result = await service.Login(UserParam( email: widget._email, password: widget._pwd));
+                  if (result.data != null){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return HomeScreen();
+                        },
+                      ),
+                    );
+
+                  }
+
+
+
+                  final text = result.errer ? (result.errorMessage ?? " An errer 1") : 'you are connected';
+
+                 showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                          title: Text("test"),
+                          content: Text(text)
+                      );
+                    },
+                  );
+
+
               },
             ),
             SizedBox(height: size.height * 0.03),
@@ -120,6 +161,7 @@ class _BodyState extends State<Body> {
           ],
         ),
       ),
+    ),
     );
   }
 

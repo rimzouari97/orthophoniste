@@ -54,9 +54,9 @@ class _UserState extends State<TestApp> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(_apiResponse.data[0].name),
+             //   Text(_apiResponse.data.toString()),
                 Text(_apiResponse.data[1].name),
-                Text(_apiResponse.data[2].name),
+            //    Text(_apiResponse.data[2].name),
 
 
               ],
