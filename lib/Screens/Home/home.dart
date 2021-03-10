@@ -4,6 +4,7 @@ import 'package:orthophoniste/Screens/Home/screens/details_screen.dart';
 import 'package:orthophoniste/Screens/Home/widgets/bottom_nav_bar.dart';
 import 'package:orthophoniste/Screens/Home/widgets/category_card.dart';
 import 'package:orthophoniste/Screens/Home/widgets/search_bar.dart';
+import 'package:orthophoniste/beg_pack/Beg.dart';
 import 'package:orthophoniste/page/exercice_memoire.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -81,7 +82,7 @@ class HomeScreen extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) {
-                                return DetailsScreen();
+                                return Beg() ;
                               }),
                             );
                           },
