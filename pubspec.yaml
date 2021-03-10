@@ -74,15 +74,15 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-     - family: Schyler
-       fonts:
-         - asset: assets/fonts/Cairo/Cairo-Regular.ttf
-         - asset: assets/fonts/Cairo/Cairo-SemiBold.ttf
-           weight: 600
-         - asset: assets/fonts/Cairo/Cairo-Bold.ttf
-           weight: 700
-         - asset: assets/fonts/Cairo/Cairo-Black.ttf
-           weight: 900
+    - family: Schyler
+      fonts:
+        - asset: assets/fonts/Cairo/Cairo-Regular.ttf
+        - asset: assets/fonts/Cairo/Cairo-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Cairo/Cairo-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Cairo/Cairo-Black.ttf
+          weight: 900
   #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
