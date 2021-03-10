@@ -64,7 +64,7 @@ class HomeScreen extends StatelessWidget {
                       mainAxisSpacing: 20,
                       children: <Widget>[
                         CategoryCard(
-                          title: "Diet Recommendation",
+                          title: "Exercices de mémoire",
                           svgSrc: "assets/icons/Hamburger.svg",
                           press: () {
                             Navigator.push(
@@ -76,31 +76,31 @@ class HomeScreen extends StatelessWidget {
                           },
                         ),
                         CategoryCard(
-                          title: "Exercices beg",
+                          title: "Exercices de begaiement",
                           svgSrc: "assets/icons/Excrecises.svg",
                           press: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) {
-                                return Beg();
+                                return Beg() ;
                               }),
                             );
                           },
                         ),
                         CategoryCard(
-                          title: "Exercie Memoire",
+                          title: "Exercices de concentration",
                           svgSrc: "assets/icons/Meditation.svg",
                           press: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) {
-                                return ExercieMemoire();
+                                return ExerciceConcentration();
                               }),
                             );
                           },
                         ),
                         CategoryCard(
-                          title: "Yoga",
+                          title: "Exercices d'apprentissage",
                           svgSrc: "assets/icons/yoga.svg",
                           press: () {
                             Navigator.push(

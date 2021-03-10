@@ -9,7 +9,7 @@ import 'package:orthophoniste/data/categories.dart';
 
 import 'category_page.dart';
 
-class ExercieMemoire extends StatelessWidget {
+class ExerciceConcentration extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
