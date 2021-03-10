@@ -46,8 +46,10 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "Good Morning \nOumessa",
-                    style: Theme.of(context)
+
+                    "Good Morning \nOussama",
+                    style: Theme
+                        .of(context)
                         .textTheme
                         .display1
                         .copyWith(fontWeight: FontWeight.w900),
