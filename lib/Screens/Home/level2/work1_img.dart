@@ -35,7 +35,7 @@ class _HomeState extends State<Home2> {
     gridViewTiles = myPairs;
     Future.delayed(const Duration(seconds: 3), () {
 // Here you can write your code
-     // print(gridViewTiles[0].toString());
+     print(gridViewTiles[0].toString());
       setState(() {
         print("2 seconds done");
         // Here you can write your code for open new view
