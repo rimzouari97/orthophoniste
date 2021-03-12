@@ -1,10 +1,10 @@
-class TileModel{
+class TileModelImage{
 
   String imageAssetPath;
   bool isSelected;
   String sound;
 
-  TileModel({this.imageAssetPath, this.isSelected, this.sound});
+  TileModelImage({this.imageAssetPath, this.isSelected, this.sound});
 
   void setImageAssetPath(String getImageAssetPath){
     imageAssetPath = getImageAssetPath;
@@ -28,4 +28,9 @@ class TileModel{
  String getSound(){
     return sound;
  }
+
+  @override
+  String toString() {
+    return 'TileModelImage{imageAssetPath: $imageAssetPath, isSelected: $isSelected, sound: $sound}';
+  }
 }

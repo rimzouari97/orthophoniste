@@ -1,33 +1,41 @@
 import 'dart:async';
 
+import 'package:audioplayers/audio_cache.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:orthophoniste/Screens/Home/level1/TileModel.dart';
-import 'package:orthophoniste/Screens/Home/level1/data.dart';
+import 'package:orthophoniste/Screens/Home/level2/TileModel_img.dart';
+import 'package:orthophoniste/Screens/Home/level2/data_img.dart';
 
 import '../constants.dart';
-class Home extends StatefulWidget {
+class Home2 extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
-  List<TileModel> gridViewTiles = new List<TileModel>();
-  List<TileModel> questionPairs = new List<TileModel>();
-
+class _HomeState extends State<Home2> {
+  List<TileModelImage> gridViewTiles = new List<TileModelImage>();
+  List<TileModelImage> questionPairs = new List<TileModelImage>();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     reStart();
+
   }
-  void reStart() {
+
+
+
+  void reStart()  {
+
+
 
     myPairs = getPairs();
     myPairs.shuffle();
 
     gridViewTiles = myPairs;
-    Future.delayed(const Duration(seconds: 10), () {
+    Future.delayed(const Duration(seconds: 3), () {
 // Here you can write your code
+     // print(gridViewTiles[0].toString());
       setState(() {
         print("2 seconds done");
         // Here you can write your code for open new view
@@ -35,6 +43,7 @@ class _HomeState extends State<Home> {
         gridViewTiles = questionPairs;
         selected = false;
       });
+
     });
   }
 
@@ -98,11 +107,16 @@ class _HomeState extends State<Home> {
                   gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                       mainAxisSpacing: 0.0, maxCrossAxisExtent: 100.0),
                   children: List.generate(gridViewTiles.length, (index) {
+                 //   print(questionPairs[index].getSound());
+                   // print(index);
+                 //   print(gridViewTiles[index].imageAssetPath);
                     return Tile(
                       imagePathUrl: gridViewTiles[index].getImageAssetPath(),
                       tileIndex: index,
                       parent: this,
+                      sound: gridViewTiles[index].getSound()
                     );
+
                   }),
                 ) : Container(
                     child: Column(
@@ -181,8 +195,9 @@ class Tile extends StatefulWidget {
   String imagePathUrl;
   int tileIndex;
   _HomeState parent;
+  String sound;
 
-  Tile({this.imagePathUrl, this.tileIndex, this.parent});
+  Tile({this.imagePathUrl, this.tileIndex, this.parent,this.sound});
 
   @override
   _TileState createState() => _TileState();
@@ -193,18 +208,21 @@ class _TileState extends State<Tile> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        print(widget.sound.toString());
+        final player = AudioCache();
+        print(widget.sound);
+          player.play(myPairs[widget.tileIndex].sound);
         if (!selected) {
           setState(() {
             myPairs[widget.tileIndex].setIsSelected(true);
           });
           if (selectedTile != "") {
             /// testing if the selected tiles are same
-            if (selectedTile == myPairs[widget.tileIndex].getImageAssetPath()) {
+            if (selectedTile == myPairs[widget.tileIndex].getSound()) {
               print("add point");
               points = points + 100;
               print(selectedTile + " thishis" + widget.imagePathUrl);
-
-              TileModel tileModel = new TileModel();
+              TileModelImage tileModel = new TileModelImage();
               print(widget.tileIndex);
               selected = true;
               Future.delayed(const Duration(seconds: 2), () {
@@ -240,7 +258,7 @@ class _TileState extends State<Tile> {
             }
           } else {
             setState(() {
-              selectedTile = myPairs[widget.tileIndex].getImageAssetPath();
+              selectedTile = myPairs[widget.tileIndex].getSound();
               selectedIndex = widget.tileIndex;
             });
 
