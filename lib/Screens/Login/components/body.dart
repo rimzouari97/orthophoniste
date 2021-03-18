@@ -21,6 +21,7 @@ class Body extends StatefulWidget {
 
   String _email;
   String _pwd;
+
   GlobalKey<FormState> _keyForm = new GlobalKey<FormState>();
 
   @override
@@ -28,11 +29,20 @@ class Body extends StatefulWidget {
 
 }
 
+
+
+
 class _BodyState extends State<Body> {
   GlobalKey<FormState> _keyForm = new GlobalKey<FormState>();
 
   UserService get service => GetIt.I<UserService>();
   APIResponse <User> _apiResponse;
+  bool _obscureText = true;
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +70,9 @@ class _BodyState extends State<Body> {
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
                 labelText: 'Email',
+                  icon:   IconButton(
+                    icon:  Icon(Icons.mail),
+                  ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(50),
                   borderSide: BorderSide(
@@ -77,40 +90,46 @@ class _BodyState extends State<Body> {
                 widget._email = value;
               },
             ),
-            /*RoundedPasswordField(
-              onChanged: (value) {
-                widget.pwd = value;
 
-              },
-            ),
-             */
-            Text(""),
-            TextFormField(
-              keyboardType: TextInputType.visiblePassword,
-              decoration: InputDecoration(
-                labelText: 'Password',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(50),
-                  borderSide: BorderSide(
-                    width: 2,
-                  ),),
+            SizedBox(child: Text("")),
+
+              Container(
+                child: new Column(
+                  children: <Widget>[
+                    new TextFormField(
+                      decoration:  InputDecoration(
+
+                        labelText: 'Password',
+                         icon:  IconButton(
+
+                           icon: new Icon(Icons.lock),
+
+                           onPressed: _toggle,
+                         ),
+                          border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(50),
+                          borderSide: BorderSide(
+                            width: 2,
+                          ),),
+                      ),
+                      validator: (String value) {
+                        if(value.isEmpty){
+                          return "must not be empty";
+                        }else{
+                          return null;
+                        }
+                      },
+                      onSaved: (val) => widget._pwd = val,
+                      obscureText: _obscureText,
+                    ),
+                  ],
+                ),
               ),
-              validator: (String value) {
-                if(value.isEmpty){
-                  return "must not be empty";
-                }else{
-                  return null;
-                }
-              },
-              onSaved: (String value) {
-                widget._pwd = value;
-                print(value);
-              },
-            ),
 
-              RaisedButton(
-                 child: Text ("LOGIN"),
-                onPressed: () async {
+              SizedBox(child: Text(""),height: 50,),
+              RoundedButton(
+                 text: "LOGIN",
+                press: () async {
                   if(!_keyForm.currentState.validate())
                     return;
                 _keyForm.currentState.save();
