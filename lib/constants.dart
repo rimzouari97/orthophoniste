@@ -5,6 +5,4 @@ const kPrimaryLightColor = Color(0xFFF1E6FF);
 
 const BASE_URL = "https://rivalsbackend.herokuapp.com/";
 //const BASE_URL = "http://192.168.1.14:3000/";
-const headers = {
-  "Content-Type" : "application/json"
-};
+const headers = {"Content-Type": "application/json"};
