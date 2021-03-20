@@ -4,12 +4,14 @@ import 'package:orthophoniste/Screens/Home/screens/details_screen.dart';
 import 'package:orthophoniste/Screens/Home/widgets/bottom_nav_bar.dart';
 import 'package:orthophoniste/Screens/Home/widgets/category_card.dart';
 import 'package:orthophoniste/Screens/Home/widgets/search_bar.dart';
+import 'package:orthophoniste/beg_pack/Beg.dart';
 import 'package:orthophoniste/page/exercice_memoire.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context)
+    var size = MediaQuery
+        .of(context)
         .size; //this gonna give us total height and with of our device
     return Scaffold(
       bottomNavigationBar: BottomNavBar(),
@@ -34,20 +36,27 @@ class HomeScreen extends StatelessWidget {
                 children: <Widget>[
                   Align(
                     alignment: Alignment.topRight,
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: 52,
-                      width: 52,
-                      decoration: BoxDecoration(
-                        color: Color(0xFFF2BEA1),
-                        shape: BoxShape.circle,
+                    child: FlatButton(
+                      shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(100.0)),
+                      onPressed: (){
+                        print("oooooooooookkkkkkkkkkkkkkkkk");
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 52,
+                        width: 52,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFF2BEA1),
+                          shape: BoxShape.circle,
+                        ),
+                        child: SvgPicture.asset("assets/icons/menu.svg"),
                       ),
-                      child: SvgPicture.asset("assets/icons/menu.svg"),
                     ),
                   ),
                   Text(
-                    "Good Morning \nOumessa",
-                    style: Theme.of(context)
+                    "Good Morning \nOussama",
+                    style: Theme
+                        .of(context)
                         .textTheme
                         .display1
                         .copyWith(fontWeight: FontWeight.w900),
@@ -61,7 +70,7 @@ class HomeScreen extends StatelessWidget {
                       mainAxisSpacing: 20,
                       children: <Widget>[
                         CategoryCard(
-                          title: "Diet Recommendation",
+                          title: "Exercices de mémoire",
                           svgSrc: "assets/icons/Hamburger.svg",
                           press: () {
                             Navigator.push(
@@ -73,31 +82,31 @@ class HomeScreen extends StatelessWidget {
                           },
                         ),
                         CategoryCard(
-                          title: "Kegel Exercises",
+                          title: "Exercices de begaiement",
                           svgSrc: "assets/icons/Excrecises.svg",
                           press: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) {
-                                return DetailsScreen();
+                                return Beg() ;
                               }),
                             );
                           },
                         ),
                         CategoryCard(
-                          title: "Exercice Mémoire",
+                          title: "Exercices de concentration",
                           svgSrc: "assets/icons/Meditation.svg",
                           press: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) {
-                                return ExercieMemoire();
+                                return ExerciceConcentration();
                               }),
                             );
                           },
                         ),
                         CategoryCard(
-                          title: "Yoga",
+                          title: "Exercices d'apprentissage",
                           svgSrc: "assets/icons/yoga.svg",
                           press: () {
                             Navigator.push(

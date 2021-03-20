@@ -9,7 +9,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # A version number is three numbers separated by dots, like 1.2.43
 # followed by an optional build number separated by a +.
 # Both the version and the builder number may be overridden in flutter
-# build by specifying --build-name and --build-number, respectively.
+# build by specifying --build-name and --build-
 # In Android, build-name is used as versionName while build-number used as versionCode.
 # Read more about Android versioning at https://developer.android.com/studio/publish/versioning
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
@@ -60,6 +60,7 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/
+    - assets/images_beg/
     - assets/icons/logo.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -74,15 +75,15 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-     - family: Schyler
-       fonts:
-         - asset: assets/fonts/Cairo/Cairo-Regular.ttf
-         - asset: assets/fonts/Cairo/Cairo-SemiBold.ttf
-           weight: 600
-         - asset: assets/fonts/Cairo/Cairo-Bold.ttf
-           weight: 700
-         - asset: assets/fonts/Cairo/Cairo-Black.ttf
-           weight: 900
+    - family: Schyler
+      fonts:
+        - asset: assets/fonts/Cairo/Cairo-Regular.ttf
+        - asset: assets/fonts/Cairo/Cairo-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Cairo/Cairo-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Cairo/Cairo-Black.ttf
+          weight: 900
   #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic

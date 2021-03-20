@@ -53,19 +53,20 @@ class UserService {
         final Map<String, dynamic> jsonData = json.decode(data.body);
          print(jsonData);
 
-          var item = jsonData["user"] ;
-          print(item);
+           var item = jsonData["user"];
+           print(item);
 
-          final   user = User(
-              item['id'],
-              item['name'],
-              item['email'],
-              item['type'],
-              item['password']);
+           final user = User(
+               item['id'],
+               item['name'],
+               item['email'],
+               item['type'],
+               item['password']);
 
-        print(user.name);
+           print(user.name);
 
-        return APIResponse<User>(data: user);
+           return APIResponse<User>(data: user);
+
       }
       return APIResponse<User>(errer: true,errorMessage: " An errer 1");
     }).catchError((_) =>  APIResponse<User>(errer: true,errorMessage: " An errer 2"));
@@ -81,22 +82,27 @@ class UserService {
         final Map<String, dynamic> jsonData = json.decode(data.body);
         print(jsonData);
 
-        var item = jsonData["user"] ;
-        print(item);
+        if(jsonData["message"] != null){
+          print(jsonData["message"]);
+          return APIResponse<User>(errer: true,errorMessage: jsonData["message"]);
+        }else {
+          var item = jsonData["user"];
+          print(item);
 
-        final   user = User(
-            item['id'],
-            item['name'],
-            item['email'],
-            item['type'],
-            item['password']);
+          final user = User(
+              item['id'],
+              item['name'],
+              item['email'],
+              item['type'],
+              item['password']);
 
-        print(user.name);
+          print(user.name);
 
-        return APIResponse<User>(data: user);
+          return APIResponse<User>(data: user);
+        }
       }
       return APIResponse<User>(errer: true,errorMessage: " An errer 1");
-    }).catchError((_) =>  APIResponse<User>(errer: true,errorMessage: " An errer 2"));
+    }).catchError((_) =>  APIResponse<User>(errer: true,errorMessage: " Opps server Errer"));
   }
 
 
