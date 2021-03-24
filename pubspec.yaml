@@ -29,6 +29,19 @@ dependencies:
   http: ^0.12.2
   audioplayers: ^0.17.4
   font_awesome_flutter: ^8.11.0
+  condition: ^0.0.7
+  rflutter_alert: ^1.0.3
+  auto_size_text: ^2.1.0
+  url_launcher: ^5.4.5
+  package_info: ^0.4.0+17
+  share: ^0.6.4
+  page_transition: ^1.1.5
+  hive: ^1.4.1+1
+  hive_flutter: ^0.3.0+2
+  path_provider: ^1.6.7
+  intl: ^0.16.1
+  flutter_linkify: ^3.1.2
+  soundpool: ^1.0.1
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -43,6 +56,20 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  hive_generator: ^0.7.0+2
+  build_runner: ^1.9.0
+  flutter_launcher_icons: ^0.7.5
+  flutter_native_splash: ^0.1.9
+
+flutter_icons:
+  android: "ic_launcher"
+  ios: false
+  image_path: "images/virus.png"
+
+flutter_native_splash:
+  image: "images/virus.png"
+  color: "FFFFFF"
+  fill: true
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -60,6 +87,7 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/
+    - sounds/
     - assets/images_beg/
     - assets/icons/logo.svg
 

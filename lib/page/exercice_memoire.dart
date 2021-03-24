@@ -5,6 +5,7 @@ import 'package:orthophoniste/Screens/Home/level1/work1.dart';
 
 import 'package:orthophoniste/Screens/Home/widgets/bottom_nav_bar.dart';
 import 'package:orthophoniste/Screens/Home/widgets/search_bar.dart';
+import 'package:orthophoniste/Screens/homepage.dart';
 import 'package:orthophoniste/data/categories.dart';
 
 import 'category_page.dart';
@@ -78,7 +79,14 @@ class ExerciceConcentration extends StatelessWidget {
                         ),
                         SeassionCard(
                           seassionNum: 2,
-                          press: () {},
+                          press: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) {
+                                return HomePage();
+                              }),
+                            );
+                          },
                         ),
                         SeassionCard(
                           seassionNum: 3,
