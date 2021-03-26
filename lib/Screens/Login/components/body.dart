@@ -1,3 +1,5 @@
+//import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,6 +16,7 @@ import 'package:orthophoniste/models/API_response.dart';
 import 'package:orthophoniste/models/user_info.dart';
 import 'package:orthophoniste/models/user_parm.dart';
 import 'package:orthophoniste/services/user_service.dart';
+import 'package:orthophoniste/shared_preferences.dart';
 
 import 'background.dart';
 
@@ -34,7 +37,7 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   GlobalKey<FormState> _keyForm = new GlobalKey<FormState>();
-
+  SharedPref pref = SharedPref();
   UserService get service => GetIt.I<UserService>();
   APIResponse <User> _apiResponse;
   bool _obscureText = true;
@@ -136,6 +139,13 @@ class _BodyState extends State<Body> {
 
                  final result = await service.Login(UserParam( email: widget._email, password: widget._pwd));
                   if (result.data != null){
+                    pref.addUserEmail(result.data.email);
+                    pref.addUserName(result.data.name);
+                    pref.addUserType(result.data.type);
+                    pref.addUserId(result.data.id);
+                    pref.addUserCon();
+                    print("done");
+
                     Navigator.push(
                       context,
                       MaterialPageRoute(

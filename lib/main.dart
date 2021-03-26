@@ -12,9 +12,11 @@ import 'Screens/Home/level1/work1.dart';
 
 void setupLocator() {
   GetIt.I.registerLazySingleton(() => UserService());
-}
 
+
+}
 void main() {
+
   setupLocator();
   runApp(MyApp());
 
@@ -22,22 +24,10 @@ void main() {
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
-  SharedPref pref = SharedPref();
-  SharedPreferences _prefs ;
-  bool bb = true;
-   sConnect() async{
-   // _prefs = await SharedPreferences.getInstance();
-   // print("tesssssssssssssssssssssssst");
-     bb = await pref.isConnect();
-    print(bb);
-    return bb;
-  }
+
   @override
   Widget build(BuildContext context) {
 
-
-    sConnect();
-    if(bb) {
     return MaterialApp(
        debugShowCheckedModeBanner: false,
        title: 'Flutter Auth',
@@ -46,23 +36,42 @@ class MyApp extends StatelessWidget {
       scaffoldBackgroundColor: Colors.white,
      ),
 
-        home :HomeScreen(),
-   //   home: backHome(),
+       // home :HomeScreen(),
+      home: MyHomePage(),
      );
 
-    }else {
-
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Auth',
-      theme: ThemeData(
-        primaryColor: kPrimaryColor,
-        scaffoldBackgroundColor: Colors.white,
-      ),
-
-      home :WelcomeScreen(),
-    //  home: backHome(),
-    );
   }
-  }
+
+}
+
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  @override
+  Widget build(BuildContext context) => FutureBuilder(
+    future: fetchData(),
+    builder: (context, snapshot) {
+      if(snapshot.hasData) {
+           if (snapshot.data == true) {
+                return HomeScreen() ;
+           } else  {
+              return  WelcomeScreen();
+        }
+      }else {
+         // We can show the loading view until the data comes back.
+          debugPrint('Step 1, build loading widget');
+          return CircularProgressIndicator();
+        }
+      },
+  );
+
+  Future<bool> fetchData() => Future.delayed(Duration(seconds: 3), () {
+    debugPrint('Step 2, fetch data');
+    SharedPref pref = SharedPref();
+    return pref.isConnect();
+    //return false;
+  });
 }

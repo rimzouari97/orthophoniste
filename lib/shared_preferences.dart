@@ -21,11 +21,14 @@ class SharedPref {
   addUserName(String name) async {
      _prefs = await SharedPreferences.getInstance();
      _prefs.setString('UserName', name);
+
   }
 
-  getUserName() async {
+
+  Future<String> getUserName() async {
     _prefs = await SharedPreferences.getInstance();
     String stringValue = _prefs.getString('UserName');
+   // print(stringValue);
     return stringValue;
   }
 
@@ -74,11 +77,12 @@ class SharedPref {
     return boolValue;
   }
 
-  Future<bool> isConnect() async{
+   Future<bool> isConnect() async{
     _prefs = await SharedPreferences.getInstance();
    // print("tesssssssssssssssssssssssst");
     bool con = _prefs.containsKey('con');
-   // print(con);
+    print('55555555555555');
+    print(con);
     return con;
   }
 
@@ -91,6 +95,8 @@ class SharedPref {
     _prefs.remove("UserType");
     _prefs.remove("Token");
     _prefs.remove("con");
+    _prefs.clear();
+    print("dane");
   }
 
 
