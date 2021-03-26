@@ -66,6 +66,7 @@ class _HomeState extends State<Home2> {
     if (timer == null) {
       timer = Timer.periodic(duration, (Timer t) {
         handleTick();
+        //print(timer);
       });
     }
     int seconds = secondsPassed % 60;
@@ -108,7 +109,7 @@ class _HomeState extends State<Home2> {
                       mainAxisSpacing: 0.0, maxCrossAxisExtent: 100.0),
                   children: List.generate(gridViewTiles.length, (index) {
                  //   print(questionPairs[index].getSound());
-                   // print(index);
+                    // print(index);
                  //   print(gridViewTiles[index].imageAssetPath);
                     return Tile(
                       imagePathUrl: gridViewTiles[index].getImageAssetPath(),
@@ -149,7 +150,6 @@ class _HomeState extends State<Home2> {
                     )
                 ),
             Row(
-
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 LabelText(
