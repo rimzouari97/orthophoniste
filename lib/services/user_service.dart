@@ -55,7 +55,7 @@ class UserService {
       if(data.statusCode == 200){
 
         final Map<String, dynamic> jsonData = json.decode(data.body);
-         print(jsonData);
+         print(jsonData["token"]);
 
            var item = jsonData["user"];
            print(item);
@@ -65,7 +65,8 @@ class UserService {
                item['name'],
                item['email'],
                item['type'],
-               item['password']);
+               item['password'],
+               token: jsonData["token"]);
 
            print(user.name);
 
@@ -98,7 +99,7 @@ class UserService {
               item['name'],
               item['email'],
               item['type'],
-              item['password']);
+              item['password'],);
 
           print(user.name);
 

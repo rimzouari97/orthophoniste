@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:orthophoniste/Screens/Login/components/background.dart';
+import 'package:orthophoniste/Screens/Profile/profile_screen.dart';
 import 'package:orthophoniste/Screens/Welcome/welcome_screen.dart';
 import 'package:orthophoniste/backend/backHome.dart';
 import 'package:orthophoniste/constants.dart';
@@ -36,7 +38,7 @@ class MyApp extends StatelessWidget {
       scaffoldBackgroundColor: Colors.white,
      ),
 
-       // home :HomeScreen(),
+       // home :ProfileScreen(),
       home: MyHomePage(),
      );
 
@@ -63,12 +65,24 @@ class _MyHomePageState extends State<MyHomePage> {
       }else {
          // We can show the loading view until the data comes back.
           debugPrint('Step 1, build loading widget');
-          return CircularProgressIndicator();
+          return Center( child:
+
+            SizedBox(
+              child: CircularProgressIndicator(backgroundColor: Colors.white,),
+              width: 60,
+              height: 60,
+            ),
+           // Padding(
+           //   padding: EdgeInsets.all(50 ),
+              //  child: Text('Awaiting result...'),
+         //   )
+
+          );
         }
       },
   );
 
-  Future<bool> fetchData() => Future.delayed(Duration(seconds: 3), () {
+  Future<bool> fetchData() => Future.delayed(Duration(microseconds: 100), () {
     debugPrint('Step 2, fetch data');
     SharedPref pref = SharedPref();
     return pref.isConnect();

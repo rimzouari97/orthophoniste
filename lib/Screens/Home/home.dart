@@ -33,14 +33,19 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  SharedPref _prefs = SharedPref();
 
-  Future<String> name ;
+
+ final Future<String> _name = Future<String>.delayed(
+     const Duration(microseconds: 100),() {
+   SharedPref pref = SharedPref();
+   return  pref.getUserName();
+ }
+ );
 
 
   @override
   Widget build(BuildContext context) => FutureBuilder(
-    future: fetchData(),
+    future: _name, //fetchData(),
     builder: (context, snapshot) {
       if(snapshot.hasData) {
         return Scaffold(
@@ -72,14 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(100.0)),
                           onPressed: (){
 
-                            _prefs.removeValues();
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) {
-                                return MyApp();
-                              }),
-                            );
-                            print("oooooooooookkkkkkkkkkkkkkkkk");
+
                           },
                           child: Container(
                             alignment: Alignment.center,
@@ -170,12 +168,22 @@ class _MyHomePageState extends State<MyHomePage> {
       }else {
         // We can show the loading view until the data comes back.
         debugPrint('Step 3, build loading widget');
-        return CircularProgressIndicator();
+       // return CircularProgressIndicator();
+        return Center(
+          child:
+
+            SizedBox(
+              child: CircularProgressIndicator(backgroundColor:  Colors.white,),
+              width: 60,
+              height: 60,
+            ),
+
+        );
       }
     },
   );
 
-  Future<String> fetchData() => Future.delayed(Duration(seconds: 3), () {
+  Future<String> fetchData() => Future.delayed(Duration(seconds: 1), () {
     debugPrint('Step 4, fetch data');
     SharedPref pref = SharedPref();
    return  pref.getUserName();

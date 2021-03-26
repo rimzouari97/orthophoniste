@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orthophoniste/Screens/Home/widgets/bottom_nav_bar.dart';
 import 'package:orthophoniste/Screens/Profile/components/coustom_bottom_nav_bar.dart';
 import 'package:orthophoniste/Screens/Profile/components/enums.dart';
 
@@ -13,8 +14,9 @@ class ProfileScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text("Profile"),
       ),
+      bottomNavigationBar: BottomNavBar(),
       body: Body(),
-      bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.profile),
+   //   bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.profile),
     );
   }
 }

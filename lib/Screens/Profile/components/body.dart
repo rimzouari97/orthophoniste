@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:orthophoniste/main.dart';
+import 'package:orthophoniste/shared_preferences.dart';
 
 import 'profile_menu.dart';
 import 'profile_pic.dart';
 
 class Body extends StatelessWidget {
+  SharedPref _prefs = SharedPref();
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -35,7 +38,16 @@ class Body extends StatelessWidget {
           ProfileMenu(
             text: "Log Out",
             icon: "assets/icons/Log out.svg",
-            press: () {},
+            press: () {
+              _prefs.removeValues();
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return MyApp();
+                }),
+              );
+              print("oooooooooookkkkkkkkkkkkkkkkk");
+            },
           ),
         ],
       ),

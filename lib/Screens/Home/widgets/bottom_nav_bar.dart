@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:orthophoniste/Screens/Home/constants.dart';
+import 'package:orthophoniste/Screens/Home/home.dart';
+import 'package:orthophoniste/Screens/Profile/profile_screen.dart';
 
 
 class BottomNavBar extends StatelessWidget {
@@ -60,19 +62,31 @@ class _BottomNavBarState extends State<MyBottomNavBar> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           BottomNavItem(
-            title: "Today",
-            svgScr: "assets/icons/calendar.svg",
+            title: "Profile",
+            svgScr: "assets/icons/User Icon.svg",
             isActive: _Active,
             press: (){
               _toggle();
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return ProfileScreen();
+                }),
+              );
             },
           ),
           BottomNavItem(
-            title: "All Exercises",
+            title: "Acceuil",
             svgScr: "assets/icons/gym.svg",
             isActive: _Active1,
             press: (){
               _toggle1();
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return HomeScreen();
+                }),
+              );
             },
           ),
           BottomNavItem(
