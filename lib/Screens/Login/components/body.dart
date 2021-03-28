@@ -146,13 +146,12 @@ class _BodyState extends State<Body> {
                     pref.addUserCon();
                     print("done");
 
-                    Navigator.push(
+                    Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
-                        builder: (context) {
-                          return HomeScreen();
-                        },
+                        builder: (BuildContext context) => HomeScreen(),
                       ),
+                          (route) => false,
                     );
 
                   }

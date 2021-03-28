@@ -40,11 +40,11 @@ class Body extends StatelessWidget {
             icon: "assets/icons/Log out.svg",
             press: () {
               _prefs.removeValues();
-              Navigator.push(
+              Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (context) {
-                  return MyApp();
-                }),
+                MaterialPageRoute(builder: (context) => MyApp()
+                ),
+                  (router) => false
               );
               print("oooooooooookkkkkkkkkkkkkkkkk");
             },

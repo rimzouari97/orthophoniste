@@ -29,6 +29,7 @@ dependencies:
   http: ^0.12.2
   audioplayers: ^0.17.4
   font_awesome_flutter: ^8.11.0
+  shared_preferences: 0.5.12
   condition: ^0.0.7
   rflutter_alert: ^1.0.3
   auto_size_text: ^2.1.0
