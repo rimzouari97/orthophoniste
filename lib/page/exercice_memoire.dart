@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:orthophoniste/Screens/Home/constants.dart';
-import 'package:orthophoniste/Screens/Home/level1/work1.dart';
+import 'package:orthophoniste/Screens/draggable_puzzle.dart';
 
 import 'package:orthophoniste/Screens/Home/widgets/bottom_nav_bar.dart';
 import 'package:orthophoniste/Screens/Home/widgets/search_bar.dart';
@@ -102,7 +102,14 @@ class ExerciceConcentration extends StatelessWidget {
                         ),
                         SeassionCard(
                           seassionNum: 4,
-                          press: () {},
+                          press: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) {
+                                return DragPicture();
+                              }),
+                            );
+                          },
                         ),
                         SeassionCard(
                           seassionNum: 5,
