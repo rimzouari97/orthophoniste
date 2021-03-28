@@ -77,7 +77,7 @@ List<TileModelImage>  getPairs(){
   //7
   tileModel.setImageAssetPath("assets/speaker.png");
   tileModel.setIsSelected(false);
-  tileModel.setSound("cat.mp3");
+  tileModel.setSound("ES_Bird Sandpiper 4 - SFX Producer.mp3");
   pairs.add(tileModel);
   pairs.add(tileModel);
   tileModel = new TileModelImage();
@@ -85,7 +85,7 @@ List<TileModelImage>  getPairs(){
   //8
   tileModel.setImageAssetPath("assets/speaker.png");
   tileModel.setIsSelected(false);
-  tileModel.setSound("cat.mp3");
+  tileModel.setSound("ES_Sheep Baa 1 - SFX Producer.mp3");
   pairs.add(tileModel);
   pairs.add(tileModel);
   tileModel = new TileModelImage();

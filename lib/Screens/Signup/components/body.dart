@@ -174,13 +174,12 @@ class _BodyState extends State<Body> {
                   _keyForm.currentState.save();
                   final result = await service.SignUp(UserParam(name: widget._name, email: widget._email, password: widget._pwd, type: widget._type));
                      if (result.data != null){
-                       Navigator.push(
+                       Navigator.pushAndRemoveUntil(
                          context,
                          MaterialPageRoute(
-                           builder: (context) {
-                             return HomeScreen();
-                           },
+                           builder: (BuildContext context) => HomeScreen(),
                          ),
+                             (route) => false,
                        );
                      }else{
                   final text =result.errorMessage;

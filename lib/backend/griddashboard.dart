@@ -10,19 +10,19 @@ class GridDashboard extends StatelessWidget {
       img: "assets/images/calendar.png");
 
   Items item2 = new Items(
-    title: "Scores",
+    title: "Patients",
     subtitle: "FROM 1 TO 10",
     event: "4 Items",
     img: "assets/images/score1.png",
   );
   Items item3 = new Items(
-    title: "Locations",
+    title: "Contacts",
     subtitle: "Lucy Mao going to Office",
     event: "",
     img: "assets/images/map.png",
   );
   Items item4 = new Items(
-    title: "Activity",
+    title: "Activities",
     subtitle: "Rose favirited your Post",
     event: "",
     img: "assets/images/festival.png",

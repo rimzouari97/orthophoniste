@@ -6,11 +6,13 @@ import 'package:orthophoniste/models/API_response.dart';
 import 'package:orthophoniste/models/user_info.dart';
 import 'package:http/http.dart'as http;
 import 'package:orthophoniste/models/user_parm.dart';
+import 'package:orthophoniste/shared_preferences.dart';
 class UserService {
 
   static  const API = BASE_URL+"users/";
-
-
+  
+  SharedPref pref = SharedPref();
+  
  Future<APIResponse<List<User>>> getUsersList(){
       print("jsonData");
       const uri = API+"list";
@@ -21,7 +23,9 @@ class UserService {
            final Map<String, dynamic> jsonData = json.decode(data.body);
            final users = <User>[];
            print("jsonData");
-           print(jsonData);
+
+           pref.addUserToken(jsonData["token"]);
+           print(pref.getUserToken());
 
           for(var item in jsonData.values.first ){
             print(item);
@@ -51,7 +55,7 @@ class UserService {
       if(data.statusCode == 200){
 
         final Map<String, dynamic> jsonData = json.decode(data.body);
-         print(jsonData);
+         print(jsonData["token"]);
 
            var item = jsonData["user"];
            print(item);
@@ -61,7 +65,8 @@ class UserService {
                item['name'],
                item['email'],
                item['type'],
-               item['password']);
+               item['password'],
+               token: jsonData["token"]);
 
            print(user.name);
 
@@ -94,7 +99,7 @@ class UserService {
               item['name'],
               item['email'],
               item['type'],
-              item['password']);
+              item['password'],);
 
           print(user.name);
 

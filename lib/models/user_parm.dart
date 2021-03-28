@@ -5,6 +5,7 @@ class UserParam{
   String email;
   String password;
   String type;
+  String token;
 
   UserParam({@required this.name,
              @required this.email,
@@ -17,6 +18,7 @@ class UserParam{
       "email": email,
       "password": password,
       "type": type,
+      "token":token,
     };
   }
 }
