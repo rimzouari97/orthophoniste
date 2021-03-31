@@ -8,6 +8,7 @@ import 'package:orthophoniste/Screens/Home/home.dart';
 import 'package:orthophoniste/Screens/Home/screens/details_screen.dart';
 import 'package:orthophoniste/Screens/Home/widgets/category_card.dart';
 import 'package:orthophoniste/Screens/Signup/signup_screen.dart';
+import 'package:orthophoniste/backend/backHome.dart';
 import 'package:orthophoniste/components/already_have_an_account_acheck.dart';
 import 'package:orthophoniste/components/rounded_button.dart';
 import 'package:orthophoniste/components/rounded_input_field.dart';
@@ -136,35 +137,56 @@ class _BodyState extends State<Body> {
                   if(!_keyForm.currentState.validate())
                     return;
                 _keyForm.currentState.save();
+                UserParam userP = UserParam( email: widget._email, password: widget._pwd);
 
-                 final result = await service.Login(UserParam( email: widget._email, password: widget._pwd));
+                 final result = await service.Login(userP);
                   if (result.data != null){
-                    pref.addUserEmail(result.data.email);
-                    pref.addUserName(result.data.name);
-                    pref.addUserType(result.data.type);
-                    pref.addUserId(result.data.id);
-                    pref.addUserCon();
-                    print("done");
-
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                        builder: (BuildContext context) => HomeScreen(),
-                      ),
-                          (route) => false,
-                    );
+                   await pref.addUserEmail(result.data.email);
+                   await pref.addUserName(result.data.name);
+                   await pref.addUserType(result.data.type);
+                   await pref.addUserId(result.data.id);
+                   await pref.addUserCode(result.data.code);
+                   await pref.addUserCon();
+                    print(result.data.type);
+                      if(result.data.type == "patient") {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) => HomeScreen(),
+                        ),
+                            (route) => false,
+                      );
+                    }else{
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) => backHome(),
+                        ),
+                            (route) => false,
+                      );
+                    }
 
                   }
 
 
 
-                  final text = result.errer ? (result.errorMessage ?? " An errer 1") : 'you are connected';
+                  String text ;//= result.errer ? (result.errorMessage ?? " An errer 1") : 'you are connected';
+                  if(result.errer){
+                    text = "Address or password incorrect";
+                  }else{
+                    text = 'you are connected';
+                  }
 
                  showDialog(
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                          title: Text("test"),
+                          title: Row(
+                              children:[
+                                Icon(Icons.info,color: Colors.blueAccent),
+                                Text('  Erorr. ')
+                              ]
+                          ),
                           content: Text(text)
                       );
                     },

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:orthophoniste/Screens/Profile/ProfilePage.dart';
 import 'package:orthophoniste/main.dart';
 import 'package:orthophoniste/shared_preferences.dart';
-
 import 'profile_menu.dart';
 import 'profile_pic.dart';
 
@@ -18,7 +18,16 @@ class Body extends StatelessWidget {
           ProfileMenu(
             text: "My Account",
             icon: "assets/icons/User Icon.svg",
-            press: () => {},
+            press: () => {
+            Navigator.push(
+            context,
+            MaterialPageRoute(
+            builder: (context) {
+            return ProfilePage();
+            },
+            ),
+            ),
+            },
           ),
           ProfileMenu(
             text: "Notifications",
