@@ -20,6 +20,7 @@ class _HomeState extends State<Home> {
     super.initState();
     reStart();
   }
+
   void reStart() {
 
     myPairs = getPairs();

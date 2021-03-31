@@ -24,6 +24,8 @@ dependencies:
   google_fonts: ^0.2.0
   flutter:
     sdk: flutter
+  flutter_tts:
+
 
   get_it: ^3.0.3
   http: ^0.12.2
@@ -43,7 +45,7 @@ dependencies:
   intl: ^0.16.1
   flutter_linkify: ^3.1.2
   soundpool: ^1.0.1
-
+  frideos:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -62,10 +64,15 @@ dev_dependencies:
   flutter_launcher_icons: ^0.7.5
   flutter_native_splash: ^0.1.9
 
+#flutter_icons:
+  #android: "ic_launcher"
+  #ios: false
+  #image_path: "images/virus.png"
 flutter_icons:
-  android: "ic_launcher"
-  ios: false
-  image_path: "images/virus.png"
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/logo.png"
+
 
 flutter_native_splash:
   image: "images/virus.png"
@@ -113,6 +120,14 @@ flutter:
           weight: 700
         - asset: assets/fonts/Cairo/Cairo-Black.ttf
           weight: 900
+
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/RobotoMono-Regular.ttf
+        - asset: assets/fonts/RobotoMono-Italic.ttf
+        - asset: assets/fonts/RobotoMono-Medium.ttf
+        - asset: assets/fonts/RobotoMono-Bold.ttf
+
   #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
