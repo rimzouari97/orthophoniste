@@ -7,6 +7,7 @@ import 'package:orthophoniste/Screens/Welcome/welcome_screen.dart';
 import 'package:orthophoniste/backend/backHome.dart';
 import 'package:orthophoniste/constants.dart';
 import 'package:orthophoniste/models/score.dart';
+import 'package:orthophoniste/models/user_info.dart';
 import 'package:orthophoniste/services/user_service.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:orthophoniste/shared_preferences.dart';
@@ -59,16 +60,24 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  //User data;
+
   @override
   Widget build(BuildContext context) => FutureBuilder(
     future: fetchData(),
     builder: (context, snapshot) {
+      //print("test 500");
+      print(snapshot.hasData);
       if(snapshot.hasData) {
-           if (snapshot.data == true) {
-                return HomeScreen() ;
-           } else  {
-              return  WelcomeScreen();
-        }
+           if (snapshot.data == "patient") {
+              return HomeScreen();
+           } else {
+              return backHome();
+          }
+       }else if (snapshot.data == null) {
+        return WelcomeScreen();
+
       }else {
          // We can show the loading view until the data comes back.
           debugPrint('Step 1, build loading widget');
@@ -89,10 +98,11 @@ class _MyHomePageState extends State<MyHomePage> {
       },
   );
 
-  Future<bool> fetchData() => Future.delayed(Duration(microseconds: 100), () {
+  Future<String> fetchData() => Future.delayed(Duration(microseconds: 3000), () {
     debugPrint('Step 2, fetch data');
     SharedPref pref = SharedPref();
-    return pref.isConnect();
+
+    return pref.getUserType();
     //return false;
   });
 }

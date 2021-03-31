@@ -55,7 +55,7 @@ class UserService {
       if(data.statusCode == 200){
 
         final Map<String, dynamic> jsonData = json.decode(data.body);
-         print(jsonData["token"]);
+         print(jsonData["user"]);
 
            var item = jsonData["user"];
            print(item);
@@ -63,12 +63,13 @@ class UserService {
            final user = User(
                item['id'],
                item['name'],
+               item['password'],
                item['email'],
                item['type'],
-               item['password'],
+               code :item['code'],
                token: jsonData["token"]);
 
-           print(user.name);
+          // print(user.type+"  "+user.name);
 
            return APIResponse<User>(data: user);
 
@@ -100,6 +101,40 @@ class UserService {
               item['email'],
               item['type'],
               item['password'],);
+
+          print(user.name);
+
+          return APIResponse<User>(data: user);
+        }
+      }
+      return APIResponse<User>(errer: true,errorMessage: " An errer 1");
+    }).catchError((_) =>  APIResponse<User>(errer: true,errorMessage: " Opps server Errer"));
+  }
+
+  Future<APIResponse<User>> SignUpOrtho(UserParam item){
+    print(json.encode(item.toJson()));
+    return http.post(API+"registerOrtho" ,headers: headers,body: json.encode(item.toJson()))
+        .then((data) {
+      print(data.statusCode.toString() );
+      if(data.statusCode == 200){
+
+        final Map<String, dynamic> jsonData = json.decode(data.body);
+        print(jsonData);
+
+        if(jsonData["message"] != null){
+          print(jsonData["message"]);
+          return APIResponse<User>(errer: true,errorMessage: jsonData["message"]);
+        }else {
+          var item = jsonData["user"];
+          print(item);
+
+          final user = User(
+            item['id'],
+            item['name'],
+            item['email'],
+            item['type'],
+            item['password'],
+            code: item['code']);
 
           print(user.name);
 
