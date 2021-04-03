@@ -6,7 +6,6 @@ import 'package:orthophoniste/Screens/Login/login_screen.dart';
 import 'package:orthophoniste/Screens/Signup/components/background.dart';
 import 'package:orthophoniste/Screens/Signup/components/or_divider.dart';
 import 'package:orthophoniste/Screens/Signup/components/social_icon.dart';
-import 'package:orthophoniste/Screens/Signup/signup_ortho_screen.dart';
 import 'package:orthophoniste/backend/backHome.dart';
 import 'package:orthophoniste/components/already_have_an_account_acheck.dart';
 import 'package:orthophoniste/components/rounded_button.dart';
@@ -20,19 +19,19 @@ import 'package:orthophoniste/services/user_service.dart';
 import 'package:orthophoniste/shared_preferences.dart';
 
 
-class Body extends StatefulWidget {
+class BodyOrtho extends StatefulWidget {
 
   String _email;
   String _pwd;
   String _name;
-  String _type;
+  String _code;
   GlobalKey<FormState> _keyForm = new GlobalKey<FormState>();
 
   @override
   _BodyState createState() => _BodyState();
 }
 
-class _BodyState extends State<Body> {
+class _BodyState extends State<BodyOrtho> {
   GlobalKey<FormState> _keyForm = new GlobalKey<FormState>();
   UserService get service => GetIt.I<UserService>();
   APIResponse <User> _apiResponse;
@@ -144,15 +143,15 @@ class _BodyState extends State<Body> {
                     obscureText: _obscureText,
                   ),
                   Text(""),
-                   /*
+
                    TextFormField(
-                    keyboardType: TextInputType.text,
+                    keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       icon:  IconButton(
-                         icon: new Icon(Icons.merge_type_rounded),
+                         icon: new Icon(Icons.vpn_key),
 
                   ),
-                      labelText: 'Type',
+                      labelText: 'Code',
                       border:  OutlineInputBorder(
                         borderRadius: BorderRadius.circular(50),
                         borderSide: BorderSide(
@@ -168,10 +167,10 @@ class _BodyState extends State<Body> {
                       }
                     },
                     onSaved: (String value) {
-                      widget._type = value;
+                      widget._code = value;
                     },
                   ),
-                  */
+
 
                   SizedBox(child: Text(""),height: 25,),
                   RoundedButton(
@@ -183,15 +182,16 @@ class _BodyState extends State<Body> {
                   UserParam userP = UserParam(name: widget._name,
                       email: widget._email,
                       password: widget._pwd,
-                      type: "patient");
-               //   userP.code = userP.hashCode;
-               //   print(userP.code);
-                  final result = await service.SignUp(userP);
+                      type: "ortho",
+                      codeV: widget._code);
+                      userP.code = userP.hashCode;
+                      print(userP.code);
+                  final result = await service.SignUpOrtho(userP);
 
                   if (result.data != null) {
 
 
-                      showDialog(
+                    showDialog(
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
@@ -222,8 +222,12 @@ class _BodyState extends State<Body> {
 
                             ],
                           );
-                          }
-    );
+                        }
+                    );
+
+
+
+
 
                   } else {
                     final text = result.errorMessage;
@@ -233,7 +237,7 @@ class _BodyState extends State<Body> {
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                            title: Text("Error"),
+                            title: Text("test"),
                             content: Text(text)
                         );
                       },
@@ -262,8 +266,7 @@ class _BodyState extends State<Body> {
                      children: <Widget>[
                      SocalIcon(
                        iconSrc: "assets/icons/facebook.svg",
-                       press: () {
-                      },
+                       press: () {},
                   ),
                      SocalIcon(
                        iconSrc: "assets/icons/twitter.svg",
@@ -275,35 +278,7 @@ class _BodyState extends State<Body> {
                     ),
                   ],
                 ),
-                  Text(""),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        " je suis un orthophoniste",
-                        style: TextStyle(color: kPrimaryColor),
-                      ),
-                      GestureDetector(
-                        onTap: (){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return SignUpOrthoScreen();
-                              },
-                            ),
-                          );
-                        },
-                        child: Text(
-                          "  OUI",
-                          style: TextStyle(
-                            color: kPrimaryColor,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
+
 
               ],
            ),

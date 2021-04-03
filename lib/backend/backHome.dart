@@ -1,11 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:orthophoniste/shared_preferences.dart';
 
 import 'griddashboard.dart';
+
+
 class backHome extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+
+    return MyHomeBack();
+  }
+}
+
+class MyHomeBack extends StatefulWidget {
+  @override
+  _MyHomeBackState createState() => _MyHomeBackState();
+}
+
+class _MyHomeBackState extends State<MyHomeBack> {
+  final Future<String> _name = Future<String>.delayed(
+      const Duration(microseconds: 100),() {
+    SharedPref pref = SharedPref();
+    return  pref.getUserName();
+  }
+  );
+
+  @override
+  Widget build(BuildContext context) => FutureBuilder(
+  future: _name, //fetchData(),
+  builder: (context, snapshot) {
+  if(snapshot.hasData) {
     return Scaffold(
       backgroundColor: Color(0xff392850),
       body: Column(
@@ -22,7 +47,7 @@ class backHome extends StatelessWidget{
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      "DASHBOARD",
+                      snapshot.data.toString(),
                       style: GoogleFonts.openSans(
                           textStyle: TextStyle(
                               color: Colors.white,
@@ -60,6 +85,21 @@ class backHome extends StatelessWidget{
         ],
       ),
     );
+      }else {
+      debugPrint('Step 3, build loading widget');
+         // return CircularProgressIndicator();
+         return Center(
+            child:
+            SizedBox(
+               child: CircularProgressIndicator(backgroundColor:  Colors.white,),
+               width: 60,
+               height: 60,
+            ),
+
+  );
   }
+  },
+  );
   }
+
   

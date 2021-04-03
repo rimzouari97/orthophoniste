@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:orthophoniste/models/user_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPref {
@@ -18,6 +19,18 @@ class SharedPref {
     return stringValue;
   }
 
+
+  addUserCode(String code) async {
+    _prefs = await SharedPreferences.getInstance();
+    _prefs.setString('UserCode', code);
+  }
+  getUserCode() async {
+    _prefs = await SharedPreferences.getInstance();
+    //Return String
+    String stringValue = _prefs.getString('UserCode');
+    return stringValue;
+  }
+
   addUserName(String name) async {
      _prefs = await SharedPreferences.getInstance();
      _prefs.setString('UserName', name);
@@ -28,7 +41,7 @@ class SharedPref {
   Future<String> getUserName() async {
     _prefs = await SharedPreferences.getInstance();
     String stringValue = _prefs.getString('UserName');
-   // print(stringValue);
+    print(stringValue);
     return stringValue;
   }
 
@@ -49,9 +62,10 @@ class SharedPref {
     _prefs.setString('UserType', type);
   }
 
-  getUserType() async {
+  Future<String> getUserType() async {
     _prefs = await SharedPreferences.getInstance();
     String stringValue = _prefs.getString('UserType');
+    print(stringValue);
     return stringValue;
   }
 
@@ -95,8 +109,27 @@ class SharedPref {
     _prefs.remove("UserType");
     _prefs.remove("Token");
     _prefs.remove("con");
+    _prefs.remove("UserCode");
     _prefs.clear();
     print("dane");
+  }
+
+  getAll() async{
+    _prefs = await SharedPreferences.getInstance();
+
+
+    User data = User("id", "name", "email", "password", "type") ;
+    data.id = _prefs.getString("UserId");
+    data.name = _prefs.getString("UserName");
+    data.email = _prefs.getString("UserEmail");
+  //  data.type = _prefs.getString("UserType");
+   // data.token = _prefs.getString("Token");
+   // data.code =
+
+    print(data.type);
+  return  data;
+
+
   }
 
 

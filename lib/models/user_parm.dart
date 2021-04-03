@@ -6,11 +6,14 @@ class UserParam{
   String password;
   String type;
   String token;
+  int code;
+  String codeV;
 
   UserParam({@required this.name,
              @required this.email,
              @required this.password,
-             @required this.type});
+             @required this.type,
+              this.codeV});
 
   Map<String, dynamic> toJson() {
     return {
@@ -18,7 +21,9 @@ class UserParam{
       "email": email,
       "password": password,
       "type": type,
+      "code":code,
       "token":token,
+      "codeV":codeV
     };
   }
 }
