@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:orthophoniste/data/draggable_animal.dart';
+import 'package:audioplayers/audio_cache.dart';
 
 class DragPicture extends StatefulWidget {
   @override
@@ -36,12 +37,20 @@ class _DragPictureState extends State<DragPicture> {
                           .map((item) => Padding(
                                 padding: const EdgeInsets.all(20),
                                 child: DragTarget<Itemdata>(
-                                  onWillAccept: (data) =>
-                                      data.name == item.name,
+                                  onWillAccept: (data) {
+                                    if (data.name == item.name) {
+                                      return true;
+                                    } else {
+                                      print('wrong');
+                                      plyr.play('wrong.mp3');
+                                      return false;
+                                    }
+                                  },
                                   onAccept: (e) {
                                     setState(() {
                                       _isDone[itemlist.indexOf(e)] = true;
                                       elementState[itemlist.indexOf(e)] = true;
+                                      plyr.play('success.mp3');
                                     });
                                   },
                                   builder: (BuildContext context, List incoming,
@@ -130,3 +139,5 @@ class _DragPictureState extends State<DragPicture> {
     );
   }
 }
+
+AudioCache plyr = AudioCache();

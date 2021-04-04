@@ -88,7 +88,12 @@ class ColorGameState extends State<ColorGame> {
           plyr.play('success.mp3');
         });
       },
-      onLeave: (data) {},
+      onLeave: (data) {
+        setState(() {
+          score[emoji] = false;
+          plyr.play('wrong.mp3');
+        });
+      },
     );
   }
 }
