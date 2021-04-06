@@ -146,8 +146,9 @@ class _BodyState extends State<Body> {
                    await pref.addUserType(result.data.type);
                    await pref.addUserId(result.data.id);
                    await pref.addUserCode(result.data.code);
+                   await pref.addUserPhone(result.data.phone);
+                   await pref.addUserScore(result.data.score);
                    await pref.addUserCon();
-                    print(result.data.type);
                       if(result.data.type == "patient") {
                       Navigator.pushAndRemoveUntil(
                         context,

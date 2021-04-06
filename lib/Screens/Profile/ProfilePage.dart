@@ -9,10 +9,18 @@ class ProfilePage extends StatefulWidget {
   MapScreenState createState() => MapScreenState();
 }
 
+
 class MapScreenState extends State<ProfilePage>
     with SingleTickerProviderStateMixin {
   bool _status = true;
   final FocusNode myFocusNode = FocusNode();
+  String _name;
+  String _email;
+  String _phone = "",_score;
+  String _idUser;
+  String _newname,_newEmail,newPhone;
+
+
 
   @override
   void initState() {
@@ -20,29 +28,25 @@ class MapScreenState extends State<ProfilePage>
     super.initState();
   }
 
-  Future<User> fetchData() => Future.delayed(Duration(microseconds: 3000), () {
+  Future<bool> fetchData() => Future.delayed(Duration(microseconds: 3000), () async {
     debugPrint('Step 2, fetch data');
-    SharedPref pref = SharedPref();
-    User u =  pref.getAll();
-    return  u;
-    //return false;
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+     _name = preferences.getString('UserName');
+     _email = preferences.getString("UserEmail");
+     _idUser = preferences.getString('UserId');
+     _phone = preferences.getString("UserPhone");
+     _score = preferences.getString("UserScore");
+
+    return  true;
   });
 
 
 
   @override
   Widget build(BuildContext context) => FutureBuilder(
-    future: SharedPreferences.getInstance(),
-    builder:  (BuildContext context, AsyncSnapshot<SharedPreferences> snapshot) {
-      //print("test 500");
-      print(snapshot.data.getString("UserEmail"));
+    future: fetchData(),
+    builder:  (BuildContext context, AsyncSnapshot<bool> snapshot) {
       if(snapshot.hasData) {
-        String name="";
-        String email="";
-       name = snapshot.data.getString('UserEmail');
-       email = snapshot.data.getString("UserEmail");
-       print("ddddddddddddddddddddddddddddddddddddddddddd");
-       print(name);
             return
               Scaffold(
                   body: new Container(
@@ -91,7 +95,7 @@ class MapScreenState extends State<ProfilePage>
                                                 shape: BoxShape.circle,
                                                 image: new DecorationImage(
                                                   image: new ExactAssetImage(
-                                                      'assets/images/as.png'),
+                                                      'assets/fox.png'),
                                                   fit: BoxFit.cover,
                                                 ),
                                               )),
@@ -164,7 +168,7 @@ class MapScreenState extends State<ProfilePage>
                                               mainAxisSize: MainAxisSize.min,
                                               children: <Widget>[
                                                 new Text(
-                                                  name,
+                                                  "User Name",
                                                   style: TextStyle(
                                                       fontSize: 16.0,
                                                       fontWeight: FontWeight.bold),
@@ -181,11 +185,14 @@ class MapScreenState extends State<ProfilePage>
                                           children: <Widget>[
                                             new Flexible(
                                               child: new TextField(
-                                                decoration: const InputDecoration(
-                                                  labelText:  "name",
+                                                decoration:  InputDecoration(
+                                                  hintText:  _name,
                                                 ),
                                                 enabled: !_status,
                                                 autofocus: !_status,
+                                                onChanged: (val){
+                                                  _newname = val;
+                                                },
 
                                               ),
                                             ),
@@ -202,7 +209,7 @@ class MapScreenState extends State<ProfilePage>
                                               mainAxisSize: MainAxisSize.min,
                                               children: <Widget>[
                                                 new Text(
-                                                   "email",
+                                                   "Email",
                                                   style: TextStyle(
                                                       fontSize: 16.0,
                                                       fontWeight: FontWeight.bold),
@@ -219,9 +226,12 @@ class MapScreenState extends State<ProfilePage>
                                           children: <Widget>[
                                             new Flexible(
                                               child: new TextField(
-                                                decoration: const InputDecoration(
-                                                    hintText: "Enter Email ID"),
-                                                enabled: !_status,
+                                                decoration:  InputDecoration(
+                                                    hintText: _email),
+                                                enabled: false,
+                                                onChanged: (val){
+                                                  _newEmail = val;
+                                                },
                                               ),
                                             ),
                                           ],
@@ -254,72 +264,15 @@ class MapScreenState extends State<ProfilePage>
                                           children: <Widget>[
                                             new Flexible(
                                               child: new TextField(
-                                                decoration: const InputDecoration(
-                                                    hintText: "Enter Mobile Number"),
+                                                decoration:  InputDecoration(
+                                                    hintText: _phone),
                                                 enabled: !_status,
                                               ),
                                             ),
                                           ],
                                         )),
-                                    Padding(
-                                        padding: EdgeInsets.only(
-                                            left: 25.0, right: 25.0, top: 25.0),
-                                        child: new Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          children: <Widget>[
-                                            Expanded(
-                                              child: Container(
-                                                child: new Text(
-                                                  'Pin Code',
-                                                  style: TextStyle(
-                                                      fontSize: 16.0,
-                                                      fontWeight: FontWeight.bold),
-                                                ),
-                                              ),
-                                              flex: 2,
-                                            ),
-                                            Expanded(
-                                              child: Container(
-                                                child: new Text(
-                                                  'State',
-                                                  style: TextStyle(
-                                                      fontSize: 16.0,
-                                                      fontWeight: FontWeight.bold),
-                                                ),
-                                              ),
-                                              flex: 2,
-                                            ),
-                                          ],
-                                        )),
-                                    Padding(
-                                        padding: EdgeInsets.only(
-                                            left: 25.0, right: 25.0, top: 2.0),
-                                        child: new Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          children: <Widget>[
-                                            Flexible(
-                                              child: Padding(
-                                                padding: EdgeInsets.only(right: 10.0),
-                                                child: new TextField(
-                                                  decoration: const InputDecoration(
-                                                      hintText: "Enter Pin Code"),
-                                                  enabled: !_status,
-                                                ),
-                                              ),
-                                              flex: 2,
-                                            ),
-                                            Flexible(
-                                              child: new TextField(
-                                                decoration: const InputDecoration(
-                                                    hintText: "Enter State"),
-                                                enabled: !_status,
-                                              ),
-                                              flex: 2,
-                                            ),
-                                          ],
-                                        )),
+
+
                                     !_status ? _getActionButtons() : new Container(),
                                   ],
                                 ),
