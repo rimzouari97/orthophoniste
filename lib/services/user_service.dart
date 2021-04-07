@@ -50,6 +50,7 @@ class UserService {
         final Map<String, dynamic> jsonData = json.decode(data.body);
            var item = jsonData["user"];
         print(item);
+       // print(jsonData["hasOrtho"]);
            final user = User(
                item['id'],
                item['name'],
@@ -59,7 +60,8 @@ class UserService {
                code :item['code'],
                phone: item['phone'],
                score: item['score'],
-               token: jsonData["token"]);
+               token: jsonData["token"],
+               hasOrtho: item["hasOrtho"]);
            return APIResponse<User>(data: user);
       }
       return APIResponse<User>(errer: true,errorMessage: " An errer 1");
@@ -154,6 +156,63 @@ class UserService {
       }
       return APIResponse<User>(errer: true,errorMessage: " An errer 1");
     }).catchError((_) =>  APIResponse<User>(errer: true,errorMessage: " Opps server Errer"));
+  }
+
+
+
+  Future<APIResponse<User>> hasOrtho(UserParam item){
+    print(json.encode(item.toJson()));
+    return http.post(BASE_URL+"hasOrth/"+"add" ,headers: headers,body: json.encode(item.toJson()))
+        .then((data) {
+      print(data.statusCode.toString() );
+      if(data.statusCode == 200){
+
+        final Map<String, dynamic> jsonData = json.decode(data.body);
+
+        if(jsonData["message"] != null){
+          print(jsonData["message"]);
+          return APIResponse<User>(errer: true,errorMessage: jsonData["message"]);
+        }else {
+          var item = jsonData["hasOrth"];
+          final user = User(
+              item['id'],
+              item['name'],
+              item['email'],
+              item['type'],
+              item['password'],
+              code: item['code'],
+              phone: item['phone'],
+              score: item['score']
+          );
+          return APIResponse<User>(data: user);
+        }
+      }
+      return APIResponse<User>(errer: true,errorMessage: " An errer 1");
+    }).catchError((_) =>  APIResponse<User>(errer: true,errorMessage: " Opps server Errer"));
+  }
+
+  Future<bool> getHasOrthoByIdP(UserParam item){
+    print(json.encode(item.toJson()));
+    return http.post(BASE_URL+"hasOrth/"+"getByIdP" ,headers: headers,body: json.encode(item.toJson()))
+        .then((data) {
+      print(data.statusCode.toString() );
+      if(data.statusCode == 200){
+
+        final Map<String, dynamic> jsonData = json.decode(data.body);
+
+        if(jsonData["success"] != null){
+          print(jsonData["success"]);
+          return  jsonData["success"];
+        }else {
+          var item = jsonData["success"];
+          print("hmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
+          print(item);
+
+          return jsonData["success"];
+        }
+      }
+      return false;
+    }).catchError((_) =>  false);
   }
 
 

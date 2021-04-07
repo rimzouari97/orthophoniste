@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orthophoniste/Screens/Profile/profile_screen.dart';
+import 'package:orthophoniste/Screens/ProfileOrtho/profile_screen.dart';
 
 class GridDashboard extends StatelessWidget {
   Items item1 = new Items(
@@ -39,7 +40,7 @@ class GridDashboard extends StatelessWidget {
     subtitle: "",
     event: "2 Items",
     img: "assets/images/setting.png",
-    Navigator: ProfileScreen(),
+    Navigator: ProfileScreenOrtho(),
   );
 
   @override
