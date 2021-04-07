@@ -43,9 +43,15 @@ dependencies:
   hive_flutter: ^0.3.0+2
   path_provider: ^1.6.7
   intl: ^0.16.1
+
   flutter_linkify: ^3.1.2
   soundpool: ^1.0.1
   frideos:
+  speech_to_text: ^3.2.0
+  highlight_text: ^0.7.2
+  avatar_glow: ^1.2.0
+  flutter_text_to_speech: ^3.0.7
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -127,6 +133,9 @@ flutter:
         - asset: assets/fonts/RobotoMono-Italic.ttf
         - asset: assets/fonts/RobotoMono-Medium.ttf
         - asset: assets/fonts/RobotoMono-Bold.ttf
+    - family: Stolzl
+      fonts:
+        - asset: assets/fonts/StolzlMedium.ttf
 
   #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf

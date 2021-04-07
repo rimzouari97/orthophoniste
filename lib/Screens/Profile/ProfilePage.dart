@@ -39,10 +39,10 @@ class MapScreenState extends State<ProfilePage>
       if(snapshot.hasData) {
         String name="";
         String email="";
-       name = snapshot.data.getString('UserEmail');
-       email = snapshot.data.getString("UserEmail");
+      // name = snapshot.data.getString('UserEmail');
+      // email = snapshot.data.getString("UserEmail");
        print("ddddddddddddddddddddddddddddddddddddddddddd");
-       print(name);
+     //  print(name);
             return
               Scaffold(
                   body: new Container(
@@ -91,7 +91,7 @@ class MapScreenState extends State<ProfilePage>
                                                 shape: BoxShape.circle,
                                                 image: new DecorationImage(
                                                   image: new ExactAssetImage(
-                                                      'assets/images/as.png'),
+                                                      'assets/chat.jpg'),
                                                   fit: BoxFit.cover,
                                                 ),
                                               )),

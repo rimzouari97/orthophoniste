@@ -148,6 +148,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             CategoryCard(
                               title: "Exercices d'apprentissage",
                               svgSrc: "assets/icons/yoga.svg",
+
                               press: () {
                                 Navigator.push(
                                   context,
