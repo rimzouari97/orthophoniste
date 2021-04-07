@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get_it/get_it.dart';
 import 'package:orthophoniste/models/user_info.dart';
+import 'package:orthophoniste/models/user_parm.dart';
+import 'package:orthophoniste/services/user_service.dart';
 import 'package:orthophoniste/shared_preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,12 +16,14 @@ class ProfilePage extends StatefulWidget {
 class MapScreenState extends State<ProfilePage>
     with SingleTickerProviderStateMixin {
   bool _status = true;
+  UserService get service => GetIt.I<UserService>();
   final FocusNode myFocusNode = FocusNode();
   String _name;
   String _email;
   String _phone = "",_score;
   String _idUser;
-  String _newname,_newEmail,newPhone;
+  String _newname,_newEmail;
+  String  newPhone;
 
 
 
@@ -266,6 +271,9 @@ class MapScreenState extends State<ProfilePage>
                                               child: new TextField(
                                                 decoration:  InputDecoration(
                                                     hintText: _phone),
+                                                onChanged: (val){
+                                                  newPhone = val;
+                                                },
                                                 enabled: !_status,
                                               ),
                                             ),
@@ -329,10 +337,33 @@ class MapScreenState extends State<ProfilePage>
                 textColor: Colors.white,
                 color: Colors.green,
                 onPressed: () {
+                  print(_newname);
+                  String name1= _name;
+                  if(_newname != null){
+                    name1 = _newname;
+                  }
+                  String phone= _phone;
+                  if(newPhone != null){
+                    phone = newPhone;
+                  }
+
+                  
+                  service.Update(UserParam(id: _idUser,name: name1,email: _email,phone: phone)).then((result) {
+                    SharedPref pref = SharedPref();
+                    pref.addUserName(result.data.name);
+                    pref.addUserPhone(result.data.phone);
+                    print(result.data.name);
+
+                    setState(() {});
+
+                  });
                   setState(() {
                     _status = true;
                     FocusScope.of(context).requestFocus(new FocusNode());
                   });
+
+
+
                 },
                 shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(20.0)),
