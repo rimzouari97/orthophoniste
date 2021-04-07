@@ -41,11 +41,12 @@ class SharedPref {
   Future<String> getUserName() async {
     _prefs = await SharedPreferences.getInstance();
     String stringValue = _prefs.getString('UserName');
-    print(stringValue);
     return stringValue;
   }
 
   addUserEmail(String email) async {
+
+    print(email);
     _prefs = await SharedPreferences.getInstance();
     _prefs.setString('UserEmail', email);
   }
@@ -91,6 +92,28 @@ class SharedPref {
     return boolValue;
   }
 
+  addUserPhone(String code) async {
+    _prefs = await SharedPreferences.getInstance();
+    _prefs.setString('UserPhone', code);
+  }
+  getUserPhone() async {
+    _prefs = await SharedPreferences.getInstance();
+    //Return String
+    String stringValue = _prefs.getString('UserPhone');
+    return stringValue;
+  }
+
+  addUserScore (String code) async {
+    _prefs = await SharedPreferences.getInstance();
+    _prefs.setString('UserScore', code);
+  }
+  getUserScore() async {
+    _prefs = await SharedPreferences.getInstance();
+    //Return String
+    String stringValue = _prefs.getString('UserScore');
+    return stringValue;
+  }
+
    Future<bool> isConnect() async{
     _prefs = await SharedPreferences.getInstance();
    // print("tesssssssssssssssssssssssst");
@@ -122,6 +145,7 @@ class SharedPref {
     data.id = _prefs.getString("UserId");
     data.name = _prefs.getString("UserName");
     data.email = _prefs.getString("UserEmail");
+    print(data.email);
   //  data.type = _prefs.getString("UserType");
    // data.token = _prefs.getString("Token");
    // data.code =

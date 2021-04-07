@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:orthophoniste/Screens/Home/level4/widget/exercice.dart';
 import 'package:orthophoniste/Screens/Home/level4/widget/speech_to_text.dart';
 import 'package:orthophoniste/Screens/Home/level4/widget/text_to_speech.dart';
 
@@ -23,7 +24,8 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
   Widget build(BuildContext context) {
      final _listPage = <Widget>[
       SpeechToText(),
-      TextToSpeech()
+       Exercice()
+     // TextToSpeech()
     ];
 
     final _navBarItems = <BottomNavigationBarItem>[

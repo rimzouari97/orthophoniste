@@ -15,6 +15,7 @@ class _TextToSpeechState extends State<TextToSpeech> {
   void initState() {
     super.initState();
     controller.init();
+
   }
 
   @override
@@ -30,7 +31,9 @@ class _TextToSpeechState extends State<TextToSpeech> {
         repeat: true,
         child: FloatingActionButton(
           onPressed: () {
-            controller.speak("${textController.text}");
+          //  controller.speak("${textController.text}");
+            controller.setLanguage("fr-FR");
+            controller.speak("rouge");
           },
           child: Icon(Icons.volume_up),
         ),

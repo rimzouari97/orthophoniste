@@ -14,22 +14,16 @@ class UserService {
   SharedPref pref = SharedPref();
   
  Future<APIResponse<List<User>>> getUsersList(){
-      print("jsonData");
+    //  print("jsonData");
       const uri = API+"list";
    return http.get(uri)
        .then((data) {
-     print(data);
+   //  print(data);
          if(data.statusCode == 200){
            final Map<String, dynamic> jsonData = json.decode(data.body);
            final users = <User>[];
-           print("jsonData");
-
            pref.addUserToken(jsonData["token"]);
-           print(pref.getUserToken());
-
           for(var item in jsonData.values.first ){
-            print(item);
-
              final user = User(
                  item['_id'],
                  item['name'],
@@ -48,62 +42,52 @@ class UserService {
 
 
   Future<APIResponse<User>> Login(UserParam item){
-    print(item.email+' '+item.password);
+    //print(item.email+' '+item.password);
     return http.post(API+"auth" ,headers: headers,body: json.encode(item.toJson()))
         .then((data) {
-          print(data.statusCode.toString() );
+
       if(data.statusCode == 200){
-
         final Map<String, dynamic> jsonData = json.decode(data.body);
-         print(jsonData["user"]);
-
            var item = jsonData["user"];
-           print(item);
-
+        print(item);
            final user = User(
                item['id'],
                item['name'],
-               item['password'],
                item['email'],
+               item['password'],
                item['type'],
                code :item['code'],
+               phone: item['phone'],
+               score: item['score'],
                token: jsonData["token"]);
-
-          // print(user.type+"  "+user.name);
-
            return APIResponse<User>(data: user);
-
       }
       return APIResponse<User>(errer: true,errorMessage: " An errer 1");
     }).catchError((_) =>  APIResponse<User>(errer: true,errorMessage: " An errer 2"));
   }
 
   Future<APIResponse<User>> SignUp(UserParam item){
-    print(json.encode(item.toJson()));
+    item.score="0";
+    item.phone="null";
+   // print(json.encode(item.toJson()));
     return http.post(API+"register" ,headers: headers,body: json.encode(item.toJson()))
         .then((data) {
-      print(data.statusCode.toString() );
+     // print(data.statusCode.toString() );
       if(data.statusCode == 200){
 
         final Map<String, dynamic> jsonData = json.decode(data.body);
-        print(jsonData);
-
         if(jsonData["message"] != null){
-          print(jsonData["message"]);
           return APIResponse<User>(errer: true,errorMessage: jsonData["message"]);
         }else {
           var item = jsonData["user"];
-          print(item);
-
           final user = User(
               item['id'],
               item['name'],
               item['email'],
               item['type'],
-              item['password'],);
-
-          print(user.name);
-
+              item['password'],
+              phone: item['phone'],
+              score: item['score']);
           return APIResponse<User>(data: user);
         }
       }
@@ -119,25 +103,52 @@ class UserService {
       if(data.statusCode == 200){
 
         final Map<String, dynamic> jsonData = json.decode(data.body);
-        print(jsonData);
 
         if(jsonData["message"] != null){
           print(jsonData["message"]);
           return APIResponse<User>(errer: true,errorMessage: jsonData["message"]);
         }else {
           var item = jsonData["user"];
-          print(item);
-
           final user = User(
             item['id'],
             item['name'],
             item['email'],
             item['type'],
             item['password'],
-            code: item['code']);
+            code: item['code'],
+              phone: item['phone'],
+              score: item['score']);
+          return APIResponse<User>(data: user);
+        }
+      }
+      return APIResponse<User>(errer: true,errorMessage: " An errer 1");
+    }).catchError((_) =>  APIResponse<User>(errer: true,errorMessage: " Opps server Errer"));
+  }
 
-          print(user.name);
+  Future<APIResponse<User>> Update(UserParam item){
+    print(json.encode(item.toJson()));
+    return http.post(API+"update" ,headers: headers,body: json.encode(item.toJson()))
+        .then((data) {
+      print(data.statusCode.toString() );
+      if(data.statusCode == 200){
 
+        final Map<String, dynamic> jsonData = json.decode(data.body);
+
+        if(jsonData["message"] != null){
+          print(jsonData["message"]);
+          return APIResponse<User>(errer: true,errorMessage: jsonData["message"]);
+        }else {
+          var item = jsonData["user"];
+          final user = User(
+              item['id'],
+              item['name'],
+              item['email'],
+              item['type'],
+              item['password'],
+              code: item['code'],
+              phone: item['phone'],
+              score: item['score']
+              );
           return APIResponse<User>(data: user);
         }
       }
