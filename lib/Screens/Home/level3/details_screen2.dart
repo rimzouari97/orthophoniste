@@ -5,6 +5,7 @@ import 'package:orthophoniste/Screens/Home/level1/work1.dart';
 import 'package:orthophoniste/Screens/Home/level2/work1_img.dart';
 import 'package:orthophoniste/Screens/Home/level3/pages/home.dart';
 import 'package:orthophoniste/Screens/Home/level4/screens/bottom_navigation_screen.dart';
+import 'package:orthophoniste/Screens/Home/level4/widget/exercice.dart';
 
 
 import 'package:orthophoniste/Screens/Home/widgets/bottom_nav_bar.dart';
@@ -81,7 +82,7 @@ class DetailsScreen2 extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) {
-                                return BottomNavigationScreen();
+                                return Exercice();
                               }),
                             );
                           },

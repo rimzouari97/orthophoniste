@@ -21,8 +21,8 @@ class _TextToSpeechState extends State<Exercice> {
 
   }
   final Map<String, HighlightedWord> _highlights = {
-    'Rouge': HighlightedWord(
-      onTap: () => print('flutter'),
+    'Red': HighlightedWord(
+      onTap: () => print('red'),
       textStyle: const TextStyle(
         color: Colors.red,
         fontWeight: FontWeight.bold,
@@ -59,13 +59,13 @@ class _TextToSpeechState extends State<Exercice> {
   };
 
 
+
   stt.SpeechToText _speech;
   bool _isListening = false;
   String _text = 'Tap the button and start speaking';
-  String _text1 = 'Rouge';
+  String _text1 = 'rouge';
+  String _text2 = 'Black';
   double _confidence = 1.0;
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -110,9 +110,10 @@ class _TextToSpeechState extends State<Exercice> {
                       repeat: true,
                       child: FloatingActionButton(
                         onPressed: () {
-                          //  controller.speak("${textController.text}");
+                           // controller.speak("${textController.text}");
                           controller.setLanguage("fr-FR");
                           controller.speak(_text1);
+                          //controller.speak(_text2);
                         },
                         child: Icon(Icons.volume_up),
                       ),
