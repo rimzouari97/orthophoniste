@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:orthophoniste/Screens/Home/level1/TileModel.dart';
 import 'package:orthophoniste/Screens/Home/level1/data.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants.dart';
 class Home extends StatefulWidget {
@@ -20,13 +22,14 @@ class _HomeState extends State<Home> {
     super.initState();
     reStart();
   }
+
   void reStart() {
 
     myPairs = getPairs();
     myPairs.shuffle();
 
     gridViewTiles = myPairs;
-    Future.delayed(const Duration(seconds: 10), () {
+    Future.delayed(const Duration(seconds: 5), () {
 // Here you can write your code
       setState(() {
         print("2 seconds done");
@@ -45,25 +48,29 @@ class _HomeState extends State<Home> {
 
   Timer timer;
 
-  void handleTick() {
-    if (isActive) {
-      setState(() {
-        secondsPassed = secondsPassed + 1;
-      });
-    }
-  }
+
+
 
   @override
   Widget build(BuildContext context) {
     if (timer == null) {
       timer = Timer.periodic(duration, (Timer t) {
-        handleTick();
+        if (isActive) {
+          setState(() {
+            secondsPassed = secondsPassed + 1;
+
+          });
+        }
       });
     }
     int seconds = secondsPassed % 60;
     int minutes = secondsPassed ~/ 60;
     int hours = secondsPassed ~/ (60 * 60);
-    return Scaffold(
+
+
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
           child: Container(
@@ -124,7 +131,7 @@ class _HomeState extends State<Home> {
                               borderRadius: BorderRadius.circular(24),
                             ),
                             child: Text("Replay", style: TextStyle(
-                                color: Colors.white,
+                                color: Colors.black,
                                 fontSize: 17,
                                 fontWeight: FontWeight.w500
                             ),),
@@ -135,7 +142,7 @@ class _HomeState extends State<Home> {
                       ],
                     )
                 ),
-            Row(
+             Row(
 
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -150,6 +157,7 @@ class _HomeState extends State<Home> {
               ],
             ),
                 SizedBox(height: 60),
+
                 Container(
                   width: 200,
                   height: 47,
@@ -158,21 +166,23 @@ class _HomeState extends State<Home> {
                     color: Colors.amber[400],
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25)),
-                    child: Text(isActive ? 'STOP' : 'START'),
+                    child: Text(isActive ? '':'START'),
                     onPressed: () {
                       setState(() {
-                        isActive = !isActive;
+                        isActive =true;
+
                       });
                     },
-                  ),
-                )
+
+                ),
+                ),
               ],
             ),
 
           ),
 
       ),
-    );
+    ),);
   }
 }
 

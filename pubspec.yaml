@@ -24,6 +24,8 @@ dependencies:
   google_fonts: ^1.1.2
   flutter:
     sdk: flutter
+  flutter_tts:
+
 
   get_it: ^3.0.3
   http: ^0.12.2
@@ -41,8 +43,14 @@ dependencies:
   hive_flutter: ^0.3.0+2
   path_provider: ^1.6.7
   intl: ^0.16.1
+
   flutter_linkify: ^3.1.2
   soundpool: ^1.0.1
+  frideos:
+  speech_to_text: ^3.2.0
+  highlight_text: ^0.7.2
+  avatar_glow: ^1.2.0
+  flutter_text_to_speech: ^3.0.7
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -62,10 +70,15 @@ dev_dependencies:
   flutter_launcher_icons: ^0.7.5
   flutter_native_splash: ^0.1.9
 
+#flutter_icons:
+  #android: "ic_launcher"
+  #ios: false
+  #image_path: "images/virus.png"
 flutter_icons:
-  android: "ic_launcher"
-  ios: false
-  image_path: "images/virus.png"
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/logo.png"
+
 
 flutter_native_splash:
   image: "images/virus.png"
@@ -113,6 +126,17 @@ flutter:
           weight: 700
         - asset: assets/fonts/Cairo/Cairo-Black.ttf
           weight: 900
+
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/RobotoMono-Regular.ttf
+        - asset: assets/fonts/RobotoMono-Italic.ttf
+        - asset: assets/fonts/RobotoMono-Medium.ttf
+        - asset: assets/fonts/RobotoMono-Bold.ttf
+    - family: Stolzl
+      fonts:
+        - asset: assets/fonts/StolzlMedium.ttf
+
   #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic

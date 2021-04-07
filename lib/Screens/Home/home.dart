@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:orthophoniste/Screens/Home/level3/details_screen2.dart';
+import 'package:orthophoniste/Screens/Home/level3/pages/home.dart';
 import 'package:orthophoniste/Screens/Home/screens/details_screen.dart';
 import 'package:orthophoniste/Screens/Home/widgets/bottom_nav_bar.dart';
 import 'package:orthophoniste/Screens/Home/widgets/category_card.dart';
@@ -146,11 +148,12 @@ class _MyHomePageState extends State<MyHomePage> {
                             CategoryCard(
                               title: "Exercices d'apprentissage",
                               svgSrc: "assets/icons/yoga.svg",
+
                               press: () {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(builder: (context) {
-                                    return DetailsScreen();
+                                    return DetailsScreen2();
                                   }),
                                 );
                               },
