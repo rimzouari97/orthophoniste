@@ -6,6 +6,7 @@ import 'package:orthophoniste/Screens/Profile/profile_screen.dart';
 
 
 class BottomNavBar extends StatelessWidget {
+  static int k ;
   const BottomNavBar({
     Key key,
   }) : super(key: key);
@@ -52,6 +53,19 @@ class _BottomNavBarState extends State<MyBottomNavBar> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if(BottomNavBar.k ==0 ){
+      _Active = true;
+    }else if(BottomNavBar.k == 1){
+      _Active1 = true;
+    }else if (BottomNavBar.k == 2){
+      _Active2 = true;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     const bool active = false;
     return Container(
@@ -67,6 +81,7 @@ class _BottomNavBarState extends State<MyBottomNavBar> {
             isActive: _Active,
             press: (){
               _toggle();
+              BottomNavBar.k ==0;
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {
@@ -81,6 +96,7 @@ class _BottomNavBarState extends State<MyBottomNavBar> {
             isActive: _Active1,
             press: (){
               _toggle1();
+              BottomNavBar.k ==1;
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {
@@ -95,6 +111,7 @@ class _BottomNavBarState extends State<MyBottomNavBar> {
             isActive: _Active2,
             press: (){
               _toggle2();
+              BottomNavBar.k ==2;
             },
           ),
         ],

@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
-import 'package:orthophoniste/Screens/ProfileOrtho/profile_screen.dart';
 import 'package:orthophoniste/models/user_info.dart';
 import 'package:orthophoniste/models/user_parm.dart';
 import 'package:orthophoniste/services/user_service.dart';
 import 'package:orthophoniste/shared_preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ProfilePage extends StatefulWidget {
+class ProfilePageOrtho  extends StatefulWidget {
   @override
   MapScreenState createState() => MapScreenState();
 }
 
 
-class MapScreenState extends State<ProfilePage>
+class MapScreenState extends State<ProfilePageOrtho >
     with SingleTickerProviderStateMixin {
   bool _status = true;
   UserService get service => GetIt.I<UserService>();
@@ -55,9 +54,9 @@ class MapScreenState extends State<ProfilePage>
       if(snapshot.hasData) {
             return
               Scaffold(
-                appBar: AppBar(
-                  title: Text(_name),
-                ),
+                  appBar: AppBar(
+                    title: Text(_name),
+                  ),
                   body: new Container(
                     color: Colors.white,
                     child: new ListView(
@@ -69,7 +68,27 @@ class MapScreenState extends State<ProfilePage>
                               color: Colors.white,
                               child: new Column(
                                 children: <Widget>[
-
+                                  Padding(
+                                      padding: EdgeInsets.only(left: 20.0, top: 20.0),
+                                      child: new Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          new Icon(
+                                            Icons.arrow_back_ios,
+                                            color: Colors.black,
+                                            size: 22.0,
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.only(left: 25.0),
+                                            child: new Text('PROFILE',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 20.0,
+                                                    fontFamily: 'sans-serif-light',
+                                                    color: Colors.black)),
+                                          )
+                                        ],
+                                      )),
                                   Padding(
                                     padding: EdgeInsets.only(top: 20.0),
                                     child: new Stack(fit: StackFit.loose, children: <Widget>[

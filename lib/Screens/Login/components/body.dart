@@ -7,6 +7,7 @@ import 'package:get_it/get_it.dart';
 import 'package:orthophoniste/Screens/Home/home.dart';
 import 'package:orthophoniste/Screens/Home/screens/details_screen.dart';
 import 'package:orthophoniste/Screens/Home/widgets/category_card.dart';
+import 'package:orthophoniste/Screens/Login/hasOrth.dart';
 import 'package:orthophoniste/Screens/Signup/signup_screen.dart';
 import 'package:orthophoniste/backend/backHome.dart';
 import 'package:orthophoniste/components/already_have_an_account_acheck.dart';
@@ -150,15 +151,31 @@ class _BodyState extends State<Body> {
                    pref.addUserCode(result.data.code);
                    pref.addUserPhone(result.data.phone);
                    pref.addUserScore(result.data.score);
+                   pref.addHasOrtho(result.data.hasOrtho);
+                   print("result.data.hasOrtho");
+                      print(result.data.hasOrtho);
                    pref.addUserCon();
                   if(result.data.type == "patient") {
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                        builder: (BuildContext context) => HomeScreen(),
-                      ),
-                          (route) => false,
-                    );
+
+                      if(result.data.hasOrtho == "true"){
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) => HomeScreen(),
+                          ),
+                              (route) => false,
+                        );
+
+                      }else {
+                        print('gggggggggggggggggggggg');
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) => HasOrth(),
+                          ),
+                              (route) => false,
+                        );
+                      }
                   }else{
                     Navigator.pushAndRemoveUntil(
                       context,
@@ -175,25 +192,25 @@ class _BodyState extends State<Body> {
 
                   String text ;//= result.errer ? (result.errorMessage ?? " An errer 1") : 'you are connected';
                   if(result.errer){
-                  text = "Address or password incorrect";
-                  }else{
-                  text = 'you are connected';
+                     text = "Address or password incorrect";
+                   }else{
+                      text = 'you are connected';
                   }
 
                   showDialog(
                   context: context,
                   builder: (BuildContext context) {
                   return AlertDialog(
-                  title: Row(
-                  children:[
-                  Icon(Icons.info,color: Colors.blueAccent),
-                  Text('  Erorr. ')
-                  ]
-                  ),
-                  content: Text(text)
-                  );
-                  },
-                  );
+                    title: Row(
+                    children:[
+                      Icon(Icons.info,color: Colors.blueAccent),
+                      Text('  Erorr. ')
+                       ]
+                   ),
+                      content: Text(text)
+                      );
+                     },
+                    );
 
                  });
 

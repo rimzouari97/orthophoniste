@@ -6,11 +6,12 @@ class UserParam{
   String password;
   String type;
   String token;
-  int code;
+  String code;
   String codeV;
   String phone;
   String id;
   String score;
+  String hasOrtho;
 
   UserParam({ this.id,
               this.name,
@@ -18,7 +19,9 @@ class UserParam{
               this.password,
               this.type,
               this.codeV,
-              this.phone});
+              this.code,
+              this.phone,
+              this.hasOrtho});
 
   Map<String, dynamic> toJson() {
     return {
@@ -29,7 +32,8 @@ class UserParam{
       "type": type,
       "code":code,
       "token":token,
-      "codeV":codeV
+      "codeV":codeV,
+      "hasOrtho":hasOrtho
     };
   }
 }

@@ -4,6 +4,8 @@ import 'package:hive/hive.dart';
 import 'package:orthophoniste/Screens/Home/level3/pages/game.dart';
 import 'package:orthophoniste/Screens/Home/level4/screens/bottom_navigation_screen.dart';
 import 'package:orthophoniste/Screens/Login/components/background.dart';
+import 'package:orthophoniste/Screens/Login/components/bodyHas.dart';
+import 'package:orthophoniste/Screens/Login/hasOrth.dart';
 import 'package:orthophoniste/Screens/Profile/profile_screen.dart';
 import 'package:orthophoniste/Screens/Welcome/welcome_screen.dart';
 import 'package:orthophoniste/backend/backHome.dart';
@@ -32,12 +34,14 @@ void main() async {
   final appDocumentDirectory = await getApplicationDocumentsDirectory();
   Hive.init(appDocumentDirectory.path);
   Hive.registerAdapter(ScoreAdapter());
+
   setupLocator();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -67,6 +71,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   //User data;
+  String ortho;
 
   @override
   Widget build(BuildContext context) => FutureBuilder(
@@ -76,6 +81,9 @@ class _MyHomePageState extends State<MyHomePage> {
       print(snapshot.hasData);
       if(snapshot.hasData) {
            if (snapshot.data == "patient") {
+             if(ortho == "false"){
+               return HasOrth();
+             }
               return HomeScreen();
            } else {
               return backHome();
@@ -103,9 +111,13 @@ class _MyHomePageState extends State<MyHomePage> {
       },
   );
 
-  Future<String> fetchData() => Future.delayed(Duration(microseconds: 3000), () {
+  Future<String> fetchData() => Future.delayed(Duration(microseconds: 3000), () async{
     debugPrint('Step 2, fetch data');
     SharedPref pref = SharedPref();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    ortho  = prefs.getString('HasOrtho');
+    print("ortho");
+    print(ortho);
     return pref.getUserType();
     //return false;
   });

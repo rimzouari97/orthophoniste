@@ -113,6 +113,16 @@ class SharedPref {
     String stringValue = _prefs.getString('UserScore');
     return stringValue;
   }
+  addHasOrtho (String has) async {
+    _prefs = await SharedPreferences.getInstance();
+    _prefs.setString('HasOrtho', has);
+  }
+  getHasOrtho() async {
+    _prefs = await SharedPreferences.getInstance();
+    //Return String
+    String stringValue = _prefs.getString('HasOrtho');
+    return stringValue;
+  }
 
    Future<bool> isConnect() async{
     _prefs = await SharedPreferences.getInstance();
