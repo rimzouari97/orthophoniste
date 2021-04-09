@@ -19,6 +19,9 @@ class _DragPictureState extends State<DragPicture> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('jeux des formes'),
+      ),
       body: SafeArea(
         child: Center(
           child: Column(
@@ -42,7 +45,7 @@ class _DragPictureState extends State<DragPicture> {
                                       return true;
                                     } else {
                                       print('wrong');
-                                      plyr.play('wrong.mp3');
+                                      // plyr.play('wrong.mp3');
                                       return false;
                                     }
                                   },
@@ -51,6 +54,11 @@ class _DragPictureState extends State<DragPicture> {
                                       _isDone[itemlist.indexOf(e)] = true;
                                       elementState[itemlist.indexOf(e)] = true;
                                       plyr.play('success.mp3');
+                                    });
+                                  },
+                                  onLeave: (data) {
+                                    setState(() {
+                                      plyr.play('wrong.mp3');
                                     });
                                   },
                                   builder: (BuildContext context, List incoming,

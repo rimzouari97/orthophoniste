@@ -29,7 +29,7 @@ class ColorGameState extends State<ColorGame> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text('Score ${score.length} / 6'),
+          title: Text('jeux des couleurs            Score ${score.length} / 6'),
           backgroundColor: Colors.pink),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.refresh),
@@ -72,7 +72,8 @@ class ColorGameState extends State<ColorGame> {
         if (score[emoji] == true) {
           return Container(
             color: Colors.white,
-            child: Text('Correct!'),
+            child: Emoji(emoji: emoji),
+            //child: Text('Correct!'),
             alignment: Alignment.center,
             height: 80,
             width: 200,
@@ -109,8 +110,10 @@ class Emoji extends StatelessWidget {
       color: Colors.transparent,
       child: Container(
         alignment: Alignment.center,
-        height: 50,
-        padding: EdgeInsets.all(10),
+        //height: 50,
+        height: 60,
+        //padding: EdgeInsets.all(10),
+        padding: EdgeInsets.all(0),
         child: Text(
           emoji,
           style: TextStyle(color: Colors.black, fontSize: 50),

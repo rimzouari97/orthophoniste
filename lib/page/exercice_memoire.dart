@@ -81,12 +81,12 @@ class ExerciceConcentration extends StatelessWidget {
                         SeassionCard(
                           seassionNum: 2,
                           press: () {
-                            Navigator.push(
+                            /*Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) {
                                 return HomePage();
                               }),
-                            );
+                            );*/
                           },
                         ),
                         SeassionCard(
