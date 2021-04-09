@@ -139,58 +139,63 @@ class _BodyState extends State<Body> {
                 _keyForm.currentState.save();
                 UserParam userP = UserParam( email: widget._email, password: widget._pwd);
 
-                 final result = await service.Login(userP);
-                  if (result.data != null){
-                   await pref.addUserEmail(result.data.email);
-                   await pref.addUserName(result.data.name);
-                   await pref.addUserType(result.data.type);
-                   await pref.addUserId(result.data.id);
-                   await pref.addUserCode(result.data.code);
-                   await pref.addUserCon();
-                    print(result.data.type);
-                      if(result.data.type == "patient") {
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (BuildContext context) => HomeScreen(),
-                        ),
-                            (route) => false,
-                      );
-                    }else{
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (BuildContext context) => backHome(),
-                        ),
-                            (route) => false,
-                      );
-                    }
+                 final result1 = await service.Login(userP).then((result)
+                 {
 
+                 if (result.data != null){
+                      pref.addUserEmail(result.data.email);
+                   pref.addUserName(result.data.name);
+                   pref.addUserType(result.data.type);
+                   pref.addUserId(result.data.id);
+                   pref.addUserCode(result.data.code);
+                   pref.addUserPhone(result.data.phone);
+                   pref.addUserScore(result.data.score);
+                   pref.addUserCon();
+                  if(result.data.type == "patient") {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) => HomeScreen(),
+                      ),
+                          (route) => false,
+                    );
+                  }else{
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) => backHome(),
+                      ),
+                          (route) => false,
+                    );
                   }
+
+                }
 
 
 
                   String text ;//= result.errer ? (result.errorMessage ?? " An errer 1") : 'you are connected';
                   if(result.errer){
-                    text = "Address or password incorrect";
+                  text = "Address or password incorrect";
                   }else{
-                    text = 'you are connected';
+                  text = 'you are connected';
                   }
 
-                 showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                          title: Row(
-                              children:[
-                                Icon(Icons.info,color: Colors.blueAccent),
-                                Text('  Erorr. ')
-                              ]
-                          ),
-                          content: Text(text)
-                      );
-                    },
+                  showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                  return AlertDialog(
+                  title: Row(
+                  children:[
+                  Icon(Icons.info,color: Colors.blueAccent),
+                  Text('  Erorr. ')
+                  ]
+                  ),
+                  content: Text(text)
                   );
+                  },
+                  );
+
+                 });
 
 
               },
