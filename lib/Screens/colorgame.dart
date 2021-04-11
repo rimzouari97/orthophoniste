@@ -9,6 +9,9 @@ class ColorGame extends StatefulWidget {
 }
 
 class ColorGameState extends State<ColorGame> {
+  int endgame = 0;
+  int scoore = 0;
+
   /// Map to keep track of score
   final Map<String, bool> score = {};
 
@@ -29,13 +32,16 @@ class ColorGameState extends State<ColorGame> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text('jeux des couleurs            Score ${score.length} / 6'),
+          title: Text('les couleurs    Score ${scoore} '),
+          //Text('les couleurs    Score ${score.length} /6'),
           backgroundColor: Colors.pink),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.refresh),
         onPressed: () {
           setState(() {
             score.clear();
+            scoore = 0;
+            endgame = 0;
             seed++;
           });
         },
@@ -87,12 +93,20 @@ class ColorGameState extends State<ColorGame> {
         setState(() {
           score[emoji] = true;
           plyr.play('success.mp3');
+          scoore += 5;
+          print(scoore);
+          endgame++;
+          if (endgame == 6) {
+            print('end of the game');
+          }
         });
       },
       onLeave: (data) {
         setState(() {
           score[emoji] = false;
           plyr.play('wrong.mp3');
+          scoore -= 2;
+          print(scoore);
         });
       },
     );

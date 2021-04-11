@@ -11,7 +11,12 @@ import 'package:orthophoniste/data/categories.dart';
 
 import 'category_page.dart';
 
-class ExerciceConcentration extends StatelessWidget {
+class ExerciceConcentration extends StatefulWidget {
+  @override
+  _Quiz createState() => _Quiz();
+}
+
+class _Quiz extends State<ExerciceConcentration> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -70,12 +75,15 @@ class ExerciceConcentration extends StatelessWidget {
                           seassionNum: 1,
                           isDone: true,
                           press: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) {
-                                return CategoryPage(category: categories.last);
-                              }),
-                            );
+                            setState(() {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) {
+                                  return CategoryPage(
+                                      category: categories.last);
+                                }),
+                              );
+                            });
                           },
                         ),
                         SeassionCard(
@@ -92,12 +100,14 @@ class ExerciceConcentration extends StatelessWidget {
                         SeassionCard(
                           seassionNum: 3,
                           press: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) {
-                                return ColorGame();
-                              }),
-                            );
+                            setState(() {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) {
+                                  return ColorGame();
+                                }),
+                              );
+                            });
                           },
                         ),
                         SeassionCard(
