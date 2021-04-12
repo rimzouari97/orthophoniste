@@ -191,7 +191,7 @@ class UserService {
     }).catchError((_) =>  APIResponse<User>(errer: true,errorMessage: " Opps server Errer"));
   }
 
-  Future<bool> getHasOrthoByIdP(UserParam item){
+  Future<APIResponse<User>> getHasOrthoByIdP(UserParam item){
     print(json.encode(item.toJson()));
     return http.post(BASE_URL+"hasOrth/"+"getByIdP" ,headers: headers,body: json.encode(item.toJson()))
         .then((data) {
@@ -200,19 +200,20 @@ class UserService {
 
         final Map<String, dynamic> jsonData = json.decode(data.body);
 
-        if(jsonData["success"] != null){
-          print(jsonData["success"]);
-          return  jsonData["success"];
-        }else {
-          var item = jsonData["success"];
-          print("hmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
-          print(item);
+        print(jsonData);
 
-          return jsonData["success"];
+      if( jsonData["success"] == "true"){
+          return APIResponse<User>(errer: true);
+        }else{
+          return APIResponse<User>(errer: false);
         }
+
+
+
+
       }
-      return false;
-    }).catchError((_) =>  false);
+      return APIResponse<User>(errer: false);
+    }).catchError((_) =>  APIResponse<User>(errer: false));
   }
 
 

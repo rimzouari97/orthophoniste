@@ -54,7 +54,10 @@ class _BodyState extends State<BodyHas> {
         SharedPreferences preferences = await SharedPreferences.getInstance();
         widget._name = await preferences.getString('UserName');
         widget._id = await preferences.getString('UserId');
-        await service.getHasOrthoByIdP(UserParam(id: widget._id)).then((value) => b =value );
+        final b1 = await service.getHasOrthoByIdP(UserParam(id: widget._id));
+        b = b1.errer;
+        print("b");
+        print(b);
         return true;
       });
 
@@ -67,7 +70,8 @@ class _BodyState extends State<BodyHas> {
             Size size = MediaQuery
                 .of(context)
                 .size;
-            if(snapshot.hasData){
+            if(!b){
+
               return Form(
                 key: _keyForm,
                 child: Background(
@@ -119,6 +123,7 @@ class _BodyState extends State<BodyHas> {
                                 final result = await service.hasOrtho(userP);
 
                                 if (!result.errer) {
+
                                   showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
@@ -140,6 +145,7 @@ class _BodyState extends State<BodyHas> {
                                                 Navigator.of(context).pop();
                                                 print('ok');
 
+
                                               },
                                             ),
 
@@ -148,6 +154,9 @@ class _BodyState extends State<BodyHas> {
                                         );
                                       }
                                   );
+                                  setState(() {
+
+                                  });
                                 } else if (result.errer) {
 
                                   final text = result.errorMessage;
@@ -185,6 +194,7 @@ class _BodyState extends State<BodyHas> {
                   ),
                 ),
               );
+
             }else{
 
               debugPrint('Step 1, build loading widget');
