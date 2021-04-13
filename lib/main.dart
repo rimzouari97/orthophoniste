@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
+import 'package:orthophoniste/Screens/Home/level3/details_screen2.dart';
 import 'package:orthophoniste/Screens/Home/level3/pages/game.dart';
 import 'package:orthophoniste/Screens/Home/level4/screens/bottom_navigation_screen.dart';
+import 'package:orthophoniste/Screens/Home/screens/details_screen.dart';
 import 'package:orthophoniste/Screens/Login/components/background.dart';
 import 'package:orthophoniste/Screens/Profile/profile_screen.dart';
 import 'package:orthophoniste/Screens/Welcome/welcome_screen.dart';
@@ -53,7 +55,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {'/game': (context) => Game()},
       // home :ProfileScreen(),
-      home: MyHomePage(),
+      home: DetailsScreen2(),
     );
   }
 }
