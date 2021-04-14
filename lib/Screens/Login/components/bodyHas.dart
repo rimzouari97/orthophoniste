@@ -40,7 +40,7 @@ class _BodyState extends State<BodyHas> {
   bool _obscureText = true;
   SharedPref _prefs = SharedPref();
   SharedPref pref = SharedPref();
-  bool b ;
+  bool b = true ;
 
   void _toggle() {
     setState(() {
@@ -54,8 +54,10 @@ class _BodyState extends State<BodyHas> {
         SharedPreferences preferences = await SharedPreferences.getInstance();
         widget._name = await preferences.getString('UserName');
         widget._id = await preferences.getString('UserId');
-        await service.getHasOrthoByIdP(UserParam(id: widget._id)).then((value) => b =value );
-        return true;
+       b = await service.getHasOrthoByIdP(UserParam(id: widget._id));
+       print("b");
+        print(b);
+        return b;
       });
 
 
@@ -67,7 +69,8 @@ class _BodyState extends State<BodyHas> {
             Size size = MediaQuery
                 .of(context)
                 .size;
-            if(snapshot.hasData){
+            print(snapshot.data);
+            if(!b){
               return Form(
                 key: _keyForm,
                 child: Background(
@@ -122,6 +125,8 @@ class _BodyState extends State<BodyHas> {
                                   showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
+                                         setState(() {
+                                         });
                                         return AlertDialog(
                                           title: Row(
                                               children: [

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orthophoniste/Screens/Profile/profile_screen.dart';
 import 'package:orthophoniste/Screens/ProfileOrtho/profile_screen.dart';
+import 'package:orthophoniste/backend/patient_list.dart';
 
 class GridDashboard extends StatelessWidget {
   Items item1 = new Items(
@@ -16,6 +17,7 @@ class GridDashboard extends StatelessWidget {
     subtitle: "FROM 1 TO 10",
     event: "4 Items",
     img: "assets/images/score1.png",
+    Navigator: PatientList()
   );
   Items item3 = new Items(
     title: "Contacts",
@@ -99,14 +101,7 @@ class GridDashboard extends StatelessWidget {
                     SizedBox(
                       height: 14,
                     ),
-                    Text(
-                      data.event,
-                      style: GoogleFonts.openSans(
-                          textStyle: TextStyle(
-                              color: Colors.white70,
-                              fontSize: 11,
-                              fontWeight: FontWeight.w600)),
-                    ),
+
 
                   ],
                 ),
