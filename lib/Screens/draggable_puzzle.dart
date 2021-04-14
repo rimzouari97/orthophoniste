@@ -3,8 +3,13 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_it/get_it.dart';
 import 'package:orthophoniste/data/draggable_animal.dart';
 import 'package:audioplayers/audio_cache.dart';
+import 'package:orthophoniste/models/done.dart';
+import 'package:orthophoniste/services/done_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:giffy_dialog/giffy_dialog.dart';
 
 class DragPicture extends StatefulWidget {
   @override
@@ -14,6 +19,17 @@ class DragPicture extends StatefulWidget {
 class _DragPictureState extends State<DragPicture> {
   int scoore = 0;
   int endgame = 0;
+  String _idUser;
+  DoneService get service => GetIt.I<DoneService>();
+  Future<bool> fetchData() =>
+      Future.delayed(Duration(microseconds: 3000), () async {
+        debugPrint('Step 2, fetch data');
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        _idUser = preferences.getString('UserId');
+
+        return true;
+      });
+
   List<bool> _isDone = [false, false, false];
   List<bool> elementState = [false, false, false];
   double itemsize = 70;
@@ -45,6 +61,16 @@ class _DragPictureState extends State<DragPicture> {
                                   padding: const EdgeInsets.all(20),
                                   child: DragTarget<Itemdata>(
                                     onWillAccept: (data) {
+                                      String networkimg =
+                                          'https://c.tenor.com/MOLq4Zd9tqcAAAAj/clap-around-of-applause.gif';
+                                      const List<Key> keys = [
+                                        Key('Network'),
+                                        Key('Network Dialog'),
+                                        Key('Flare'),
+                                        Key('Flare Dialog'),
+                                        Key('Asset'),
+                                        Key('Asset dialog'),
+                                      ];
                                       if (data.name == item.name) {
                                         return true;
                                       } else {
@@ -54,6 +80,16 @@ class _DragPictureState extends State<DragPicture> {
                                       }
                                     },
                                     onAccept: (e) {
+                                      String networkimg =
+                                          'https://c.tenor.com/MOLq4Zd9tqcAAAAj/clap-around-of-applause.gif';
+                                      const List<Key> keys = [
+                                        Key('Network'),
+                                        Key('Network Dialog'),
+                                        Key('Flare'),
+                                        Key('Flare Dialog'),
+                                        Key('Asset'),
+                                        Key('Asset dialog'),
+                                      ];
                                       setState(() {
                                         _isDone[itemlist.indexOf(e)] = true;
                                         elementState[itemlist.indexOf(e)] =
@@ -63,7 +99,46 @@ class _DragPictureState extends State<DragPicture> {
                                         print(scoore);
                                         endgame++;
                                         if (endgame == 3) {
+                                          showDialog(
+                                              context: context,
+                                              builder: (_) =>
+                                                  NetworkGiffyDialog(
+                                                    key: keys[1],
+                                                    image: Image.network(
+                                                      networkimg,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                    title: Text(
+                                                      "Bravo",
+                                                      style: TextStyle(
+                                                        fontSize: 22.0,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                    description: Text(
+                                                      'Bravo votre score est ${scoore}',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                    ),
+                                                    entryAnimation:
+                                                        EntryAnimation.RIGHT,
+                                                    onOkButtonPressed: () {},
+                                                  ));
+
                                           print('end of the game');
+                                          Done done = Done(
+                                              idExercice:
+                                                  "6074abf282c71b0015918da3",
+                                              exerciceName: "shape game",
+                                              idToDo: "fff",
+                                              score: scoore.toString(),
+                                              idUser: _idUser);
+
+                                          service.addEx(done).then((result) => {
+                                                if (!result.errer)
+                                                  {print(result.errorMessage)}
+                                              });
                                         }
                                       });
                                     },
