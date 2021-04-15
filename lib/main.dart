@@ -54,8 +54,8 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {'/game': (context) => Game()},
-      // home :ProfileScreen(),
-      home: DetailsScreen2(),
+       //home :ProfileScreen(),
+      home: DetailsScreen(),
     );
   }
 }
