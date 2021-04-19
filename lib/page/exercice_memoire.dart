@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:orthophoniste/Screens/Home/constants.dart';
-import 'package:orthophoniste/Screens/Home/level1/work1.dart';
+import 'package:orthophoniste/Screens/draggable_puzzle.dart';
 
 import 'package:orthophoniste/Screens/Home/widgets/bottom_nav_bar.dart';
 import 'package:orthophoniste/Screens/Home/widgets/search_bar.dart';
@@ -11,7 +11,12 @@ import 'package:orthophoniste/data/categories.dart';
 
 import 'category_page.dart';
 
-class ExerciceConcentration extends StatelessWidget {
+class ExerciceConcentration extends StatefulWidget {
+  @override
+  _Quiz createState() => _Quiz();
+}
+
+class _Quiz extends State<ExerciceConcentration> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -70,39 +75,51 @@ class ExerciceConcentration extends StatelessWidget {
                           seassionNum: 1,
                           isDone: true,
                           press: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) {
-                                return CategoryPage(category: categories.last);
-                              }),
-                            );
+                            setState(() {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) {
+                                  return CategoryPage(
+                                      category: categories.last);
+                                }),
+                              );
+                            });
                           },
                         ),
                         SeassionCard(
                           seassionNum: 2,
                           press: () {
-                            Navigator.push(
+                            /*Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) {
                                 return HomePage();
                               }),
-                            );
+                            );*/
                           },
                         ),
                         SeassionCard(
                           seassionNum: 3,
                           press: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) {
-                                return ColorGame();
-                              }),
-                            );
+                            setState(() {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) {
+                                  return ColorGame();
+                                }),
+                              );
+                            });
                           },
                         ),
                         SeassionCard(
                           seassionNum: 4,
-                          press: () {},
+                          press: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) {
+                                return DragPicture();
+                              }),
+                            );
+                          },
                         ),
                         SeassionCard(
                           seassionNum: 5,

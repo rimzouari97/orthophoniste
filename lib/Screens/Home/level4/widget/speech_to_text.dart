@@ -50,7 +50,7 @@ class _SpeechToTextState extends State<SpeechToText> {
 
   stt.SpeechToText _speech;
   bool _isListening = false;
-  String _text = 'Tap the button and start speaking';
+  String _text = 'Hello';
   double _confidence = 1.0;
 
   @override
@@ -61,7 +61,8 @@ class _SpeechToTextState extends State<SpeechToText> {
   
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return MaterialApp(
+      home: Scaffold(
        appBar: AppBar(
         title: Center(
           child:
@@ -71,7 +72,7 @@ class _SpeechToTextState extends State<SpeechToText> {
            )
            )
          ),),
-      
+
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: AvatarGlow(
         animate: _isListening,
@@ -98,8 +99,11 @@ class _SpeechToTextState extends State<SpeechToText> {
               fontFamily: 'Stolzl'
             ),
           ),
+
         ),
+
       ),
+      )
     );
   }
 

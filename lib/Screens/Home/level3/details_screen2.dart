@@ -4,7 +4,10 @@ import 'package:orthophoniste/Screens/Home/constants.dart';
 import 'package:orthophoniste/Screens/Home/level1/work1.dart';
 import 'package:orthophoniste/Screens/Home/level2/work1_img.dart';
 import 'package:orthophoniste/Screens/Home/level3/pages/home.dart';
+import 'package:orthophoniste/Screens/Home/level3/services/level.dart';
 import 'package:orthophoniste/Screens/Home/level4/screens/bottom_navigation_screen.dart';
+import 'package:orthophoniste/Screens/Home/level4/widget/exercice.dart';
+import 'package:orthophoniste/Screens/Home/level5/views/level.dart';
 
 
 import 'package:orthophoniste/Screens/Home/widgets/bottom_nav_bar.dart';
@@ -81,14 +84,19 @@ class DetailsScreen2 extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) {
-                                return BottomNavigationScreen();
+                                return Exercice();
                               }),
                             );
                           },
                         ),
                         SeassionCard(
                           seassionNum: 3,
-                          press: () {},
+                          press: () {Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) {
+                              return Levels();
+                            }),
+                          );},
                         ),
                         SeassionCard(
                           seassionNum: 4,

@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:orthophoniste/constants.dart';
 import 'package:orthophoniste/models/API_response.dart';
-import 'package:orthophoniste/models/ortho_parm.dart';
 import 'package:orthophoniste/models/user_info.dart';
 import 'package:http/http.dart'as http;
 import 'package:orthophoniste/models/user_parm.dart';
@@ -192,7 +191,7 @@ class UserService {
     }).catchError((_) =>  APIResponse<User>(errer: true,errorMessage: " Opps server Errer"));
   }
 
-  Future<bool> getHasOrthoByIdP(UserParam   item){
+  Future<APIResponse<User>> getHasOrthoByIdP(UserParam item){
     print(json.encode(item.toJson()));
     return http.post(BASE_URL+"hasOrth/"+"getByIdP" ,headers: headers,body: json.encode(item.toJson()))
         .then((data) {
@@ -200,120 +199,22 @@ class UserService {
       if(data.statusCode == 200){
 
         final Map<String, dynamic> jsonData = json.decode(data.body);
-        print('jsonData["success"]');
-        print(jsonData["success"]);
-        if(jsonData["success"] != null){
-          print('jsonData["success"]1');
-          print(jsonData["success"]);
 
-           if(jsonData["success"].toString() == "true"){
-             print('jsonData["success"]2');
-             print(jsonData["success"]);
-             return true;
+        print(jsonData);
 
-           }else{
-             print('jsonData["success"]3');
-             print(jsonData["success"]);
-             return false;
-           }
-
-        }else {
-
-          return false;
-        }
-      }
-      return false;
-    }).catchError((_) =>  false);
-  }
-
-
-
-
-  Future<APIResponse<OrthoParam>> gatAllByIdOrtho(UserParam item){
-  //  print(json.encode(item.toJson()));
-    var parm ={"id" :item.id};
-    print(json.encode(parm));
-    return http.post(BASE_URL+"hasOrth/"+"getByIdOrtho" ,headers: headers,body: json.encode(item.toJson()))
-        .then((data) {
-      print(data.statusCode.toString() );
-     // print(data.body);
-      List<OrthoParam>  list = <OrthoParam>[];
-      if(data.statusCode == 200){
-
-        Map<String, dynamic> jsonData = json.decode(data.body);
-
-       print(jsonData);
-
-        for(var item in jsonData.values.last ){
-
-          print("item");
-          print(item);
-
-
-          OrthoParam orthoParam = OrthoParam(
-            valid: item["valid"],
-            id: item["_id"],
-            idOrtho: item['idOrtho'],
-            idP: item["idP"],
-            nameP: item["nameP"]
-          );
-
-         list.add(orthoParam);
-        }
-
-
-      }
-      return APIResponse(errer: false,data1: list);
-    });
-  }
-
-
-  Future<APIResponse<User>> Approuve(OrthoParam item){
-    print(json.encode(item.toJson()));
-    return http.post(BASE_URL+"hasOrth/"+"update" ,headers: headers,body: json.encode(item.toJson()))
-        .then((data) {
-      print(data.statusCode.toString() );
-      if(data.statusCode == 200){
-
-        final Map<String, dynamic> jsonData = json.decode(data.body);
-
-        if(jsonData["success"] != null){
-          print(jsonData["message"]);
-          return APIResponse<User>(errer: true,errorMessage: jsonData["message"]);
-        }else {
-
+      if( jsonData["success"] == "true"){
+          return APIResponse<User>(errer: true);
+        }else{
           return APIResponse<User>(errer: false);
         }
+
+
+
+
       }
-      return APIResponse<User>(errer: true,errorMessage: " An errer 1");
-    }).catchError((_) =>  APIResponse<User>(errer: true,errorMessage: " Opps server Errer"));
+      return APIResponse<User>(errer: false);
+    }).catchError((_) =>  APIResponse<User>(errer: false));
   }
-
-  Future<APIResponse<User>> deleteHasOrth(OrthoParam item){
-    print(json.encode(item.toJson()));
-    return http.post("http://192.168.1.11:3000/"+"hasOrth/"+"delete" ,headers: headers,body: json.encode(item.toJson()))
-        .then((data) {
-      print(data.statusCode.toString() );
-      if(data.statusCode == 200){
-
-        final Map<String, dynamic> jsonData = json.decode(data.body);
-
-        if(jsonData["success"] != null){
-          print(jsonData["message"]);
-          return APIResponse<User>(errer: true,errorMessage: jsonData["message"]);
-        }else {
-
-          return APIResponse<User>(errer: false);
-        }
-      }
-      return APIResponse<User>(errer: true,errorMessage: " An errer 1");
-    }).catchError((_) =>  APIResponse<User>(errer: true,errorMessage: " Opps server Errer"));
-  }
-
-
-
-
-
 
 
 

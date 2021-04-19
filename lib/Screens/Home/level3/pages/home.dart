@@ -13,10 +13,10 @@ class HomeSpell extends StatefulWidget {
 
 class _HomeState extends State<HomeSpell> {
   final List <Level> levels = [
-    Level(name: "Easy", number: 1, color: Colors.green),
-    Level(name: "Medium", number: 2, color: Colors.greenAccent),
-    Level(name: "Hard", number: 3, color: Colors.blueAccent),
-    Level(name: "Extreme", number: 4, color: Colors.red)
+    Level(name: "Easy", number: 1, color: Colors.greenAccent),
+    Level(name: "Medium", number: 2, color: Colors.grey),
+    Level(name: "Hard", number: 3, color: Colors.grey),
+    Level(name: "Extreme", number: 4, color: Colors.grey)
   ];
 
   bool isLoading = false;
@@ -104,10 +104,10 @@ class _HomeState extends State<HomeSpell> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-
+    return MaterialApp(
+      home: Scaffold(
       body: Padding(
-        padding: EdgeInsets.fromLTRB(8.0, 30.0, 8.0, 0.0),
+        padding: EdgeInsets.fromLTRB(8.0, 150.0, 8.0, 0.0),
         child: Column(
           children: <Widget>[
             Padding(
@@ -149,7 +149,7 @@ class _HomeState extends State<HomeSpell> {
             )
           ],
         ),
-      )
+      ),)
     );
   }
 }

@@ -27,6 +27,9 @@ class _CategoryPageState extends State<CategoryPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          title: Text('jeux quiz'),
+        ),
         body: QuestionsWidget(
           category: widget.category,
           controller: controller,
