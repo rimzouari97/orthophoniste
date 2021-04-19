@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:orthophoniste/Screens/Home/level3/pages/game.dart';
 import 'package:orthophoniste/Screens/Home/level4/screens/bottom_navigation_screen.dart';
+import 'package:orthophoniste/Screens/Home/screens/details_screen.dart';
 import 'package:orthophoniste/Screens/Login/components/background.dart';
 import 'package:orthophoniste/Screens/Login/components/bodyHas.dart';
 import 'package:orthophoniste/Screens/Login/hasOrth.dart';
@@ -57,7 +58,7 @@ class MyApp extends StatelessWidget {
         '/game': (context) => Game()
       },
        // home :ProfileScreen(),
-      home: MyHomePage(),
+      home: DetailsScreen(),
      );
 
   }
