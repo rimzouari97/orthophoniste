@@ -11,33 +11,33 @@ import 'package:orthophoniste/shared_preferences.dart';
 class UserService {
 
   static  const API = BASE_URL+"users/";
-
+  
   SharedPref pref = SharedPref();
-
-  Future<APIResponse<List<User>>> getUsersList(){
+  
+ Future<APIResponse<List<User>>> getUsersList(){
     //  print("jsonData");
-    const uri = API+"list";
-    return http.get(uri)
-        .then((data) {
-      //  print(data);
-      if(data.statusCode == 200){
-        final Map<String, dynamic> jsonData = json.decode(data.body);
-        final users = <User>[];
-        pref.addUserToken(jsonData["token"]);
-        for(var item in jsonData.values.first ){
-          final user = User(
-              item['_id'],
-              item['name'],
-              item['email'],
-              item['type'],
-              item['password']);
-          users.add(user);
-        }
+      const uri = API+"list";
+   return http.get(uri)
+       .then((data) {
+   //  print(data);
+         if(data.statusCode == 200){
+           final Map<String, dynamic> jsonData = json.decode(data.body);
+           final users = <User>[];
+           pref.addUserToken(jsonData["token"]);
+          for(var item in jsonData.values.first ){
+             final user = User(
+                 item['_id'],
+                 item['name'],
+                 item['email'],
+                 item['type'],
+                 item['password']);
+             users.add(user);
+           }
 
-        return APIResponse<List<User>>(data: users);
-      }
-      return APIResponse<List<User>>(errer: true,errorMessage: " An errer 1");
-    }).catchError((_) =>  APIResponse<List<User>>(errer: true,errorMessage: " An errer 2"));
+           return APIResponse<List<User>>(data: users);
+         }
+         return APIResponse<List<User>>(errer: true,errorMessage: " An errer 1");
+   }).catchError((_) =>  APIResponse<List<User>>(errer: true,errorMessage: " An errer 2"));
   }
 
 
@@ -49,21 +49,21 @@ class UserService {
 
       if(data.statusCode == 200){
         final Map<String, dynamic> jsonData = json.decode(data.body);
-        var item = jsonData["user"];
+           var item = jsonData["user"];
         print(item);
-        // print(jsonData["hasOrtho"]);
-        final user = User(
-            item['id'],
-            item['name'],
-            item['email'],
-            item['password'],
-            item['type'],
-            code :item['code'],
-            phone: item['phone'],
-            score: item['score'],
-            token: jsonData["token"],
-            hasOrtho: item["hasOrtho"]);
-        return APIResponse<User>(data: user);
+       // print(jsonData["hasOrtho"]);
+           final user = User(
+               item['id'],
+               item['name'],
+               item['email'],
+               item['password'],
+               item['type'],
+               code :item['code'],
+               phone: item['phone'],
+               score: item['score'],
+               token: jsonData["token"],
+               hasOrtho: item["hasOrtho"]);
+           return APIResponse<User>(data: user);
       }
       return APIResponse<User>(errer: true,errorMessage: " An errer 1");
     }).catchError((_) =>  APIResponse<User>(errer: true,errorMessage: " An errer 2"));
@@ -72,10 +72,10 @@ class UserService {
   Future<APIResponse<User>> SignUp(UserParam item){
     item.score="0";
     item.phone="null";
-    // print(json.encode(item.toJson()));
+   // print(json.encode(item.toJson()));
     return http.post(API+"register" ,headers: headers,body: json.encode(item.toJson()))
         .then((data) {
-      // print(data.statusCode.toString() );
+     // print(data.statusCode.toString() );
       if(data.statusCode == 200){
 
         final Map<String, dynamic> jsonData = json.decode(data.body);
@@ -113,12 +113,12 @@ class UserService {
         }else {
           var item = jsonData["user"];
           final user = User(
-              item['id'],
-              item['name'],
-              item['email'],
-              item['type'],
-              item['password'],
-              code: item['code'],
+            item['id'],
+            item['name'],
+            item['email'],
+            item['type'],
+            item['password'],
+            code: item['code'],
               phone: item['phone'],
               score: item['score']);
           return APIResponse<User>(data: user);
@@ -151,7 +151,7 @@ class UserService {
               code: item['code'],
               phone: item['phone'],
               score: item['score']
-          );
+              );
           return APIResponse<User>(data: user);
         }
       }
@@ -206,16 +206,16 @@ class UserService {
           print('jsonData["success"]1');
           print(jsonData["success"]);
 
-          if(jsonData["success"].toString() == "true"){
-            print('jsonData["success"]2');
-            print(jsonData["success"]);
-            return true;
+           if(jsonData["success"].toString() == "true"){
+             print('jsonData["success"]2');
+             print(jsonData["success"]);
+             return true;
 
-          }else{
-            print('jsonData["success"]3');
-            print(jsonData["success"]);
-            return false;
-          }
+           }else{
+             print('jsonData["success"]3');
+             print(jsonData["success"]);
+             return false;
+           }
 
         }else {
 
@@ -229,20 +229,20 @@ class UserService {
 
 
 
-  Future<APIResponse<OrthoParam>> gatAllByIdOrtho(UserParam item){
-    //  print(json.encode(item.toJson()));
+  Future<List<OrthoParam>> gatAllByIdOrtho(UserParam item){
+  //  print(json.encode(item.toJson()));
     var parm ={"id" :item.id};
     print(json.encode(parm));
     return http.post(BASE_URL+"hasOrth/"+"getByIdOrtho" ,headers: headers,body: json.encode(item.toJson()))
         .then((data) {
       print(data.statusCode.toString() );
-      // print(data.body);
+     // print(data.body);
       List<OrthoParam>  list = <OrthoParam>[];
       if(data.statusCode == 200){
 
         Map<String, dynamic> jsonData = json.decode(data.body);
 
-        print(jsonData);
+       print(jsonData);
 
         for(var item in jsonData.values.last ){
 
@@ -251,19 +251,19 @@ class UserService {
 
 
           OrthoParam orthoParam = OrthoParam(
-              valid: item["valid"],
-              id: item["_id"],
-              idOrtho: item['idOrtho'],
-              idP: item["idP"],
-              nameP: item["nameP"]
+            valid: item["valid"],
+            id: item["_id"],
+            idOrtho: item['idOrtho'],
+            idP: item["idP"],
+            nameP: item["nameP"]
           );
 
-          list.add(orthoParam);
+         list.add(orthoParam);
         }
 
 
       }
-      return APIResponse(errer: false,data1: list);
+      return list;
     });
   }
 
