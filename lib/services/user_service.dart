@@ -229,7 +229,7 @@ class UserService {
 
 
 
-  Future<APIResponse<OrthoParam>> gatAllByIdOrtho(UserParam item){
+  Future<List<OrthoParam>> gatAllByIdOrtho(UserParam item){
   //  print(json.encode(item.toJson()));
     var parm ={"id" :item.id};
     print(json.encode(parm));
@@ -263,7 +263,7 @@ class UserService {
 
 
       }
-      return APIResponse(errer: false,data1: list);
+      return list;
     });
   }
 
