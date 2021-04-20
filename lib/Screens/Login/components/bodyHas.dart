@@ -40,7 +40,7 @@ class _BodyState extends State<BodyHas> {
   bool _obscureText = true;
   SharedPref _prefs = SharedPref();
   SharedPref pref = SharedPref();
-  bool b ;
+  bool b = true ;
 
   void _toggle() {
     setState(() {
@@ -54,11 +54,10 @@ class _BodyState extends State<BodyHas> {
         SharedPreferences preferences = await SharedPreferences.getInstance();
         widget._name = await preferences.getString('UserName');
         widget._id = await preferences.getString('UserId');
-        final b1 = await service.getHasOrthoByIdP(UserParam(id: widget._id));
-        b = b1.errer;
+        b = await service.getHasOrthoByIdP(UserParam(id: widget._id));
         print("b");
         print(b);
-        return true;
+        return b;
       });
 
 
@@ -70,8 +69,8 @@ class _BodyState extends State<BodyHas> {
             Size size = MediaQuery
                 .of(context)
                 .size;
+            print(snapshot.data);
             if(!b){
-
               return Form(
                 key: _keyForm,
                 child: Background(
@@ -123,10 +122,11 @@ class _BodyState extends State<BodyHas> {
                                 final result = await service.hasOrtho(userP);
 
                                 if (!result.errer) {
-
                                   showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
+                                        setState(() {
+                                        });
                                         return AlertDialog(
                                           title: Row(
                                               children: [
@@ -145,7 +145,6 @@ class _BodyState extends State<BodyHas> {
                                                 Navigator.of(context).pop();
                                                 print('ok');
 
-
                                               },
                                             ),
 
@@ -154,9 +153,6 @@ class _BodyState extends State<BodyHas> {
                                         );
                                       }
                                   );
-                                  setState(() {
-
-                                  });
                                 } else if (result.errer) {
 
                                   final text = result.errorMessage;
@@ -194,7 +190,6 @@ class _BodyState extends State<BodyHas> {
                   ),
                 ),
               );
-
             }else{
 
               debugPrint('Step 1, build loading widget');

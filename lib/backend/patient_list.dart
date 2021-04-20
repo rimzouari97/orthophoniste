@@ -16,15 +16,15 @@ import 'griddashboard.dart';
 
 class PatientList extends StatelessWidget{
 
-
   @override
   Widget build(BuildContext context) {
-
     return MyPatientList();
   }
+
 }
 
 class MyPatientList extends StatefulWidget {
+
   @override
   _MyPatientListState createState() => _MyPatientListState();
   String _name;
@@ -36,6 +36,7 @@ class MyPatientList extends StatefulWidget {
 class _MyPatientListState extends State<MyPatientList> {
   UserService get service => GetIt.I<UserService>();
   APIResponse rep;
+
   Future<APIResponse<OrthoParam>> fetchData() =>
       Future.delayed(Duration(microseconds: 3000), () async {
         SharedPreferences preferences = await SharedPreferences.getInstance();
