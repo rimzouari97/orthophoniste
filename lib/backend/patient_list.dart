@@ -86,11 +86,9 @@ class _MyPatientListState extends State<MyPatientList> {
         return ListView.builder(
           itemCount: Snap.data.data1.length,
           itemBuilder: (context, index) {
-            try {
-              rep = Snap.data as APIResponse;
-            }catch( e){
 
-            }
+              rep = Snap.data as APIResponse;
+
             /*
                     Text(rep.data1[index].nameP),
                     Text(rep.data1[index].valid),
@@ -105,7 +103,7 @@ class _MyPatientListState extends State<MyPatientList> {
                         Image.network("https://scontent.ftun12-1.fna.fbcdn.net/v/t1.6435-9/48405342_1823459577765035_1096277873884397568_n.jpg?_nc_cat=111&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=24WMN-QgMioAX-NzwGI&_nc_ht=scontent.ftun12-1.fna&oh=10f7bf58608579869ca8b83704157ea3&oe=609BD258",
                         height: 60,
                         width: 60,),
-                        Text(" "),
+                        Text(Snap.data.data1),
                         Text(rep.data1[index].nameP),
                         Text(" "),
                         Text(" "),
