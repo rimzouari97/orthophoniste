@@ -6,10 +6,12 @@ import 'package:orthophoniste/Screens/draggable_puzzle.dart';
 import 'package:orthophoniste/Screens/Home/widgets/bottom_nav_bar.dart';
 import 'package:orthophoniste/Screens/Home/widgets/search_bar.dart';
 import 'package:orthophoniste/Screens/colorgame.dart';
-import 'package:orthophoniste/Screens/homepage.dart';
+import 'package:orthophoniste/page/main_quizz.dart';
 import 'package:orthophoniste/data/categories.dart';
 
 import 'category_page.dart';
+import 'category_page.dart';
+import 'options_widget.dart';
 
 class ExerciceConcentration extends StatefulWidget {
   @override
@@ -74,16 +76,18 @@ class _Quiz extends State<ExerciceConcentration> {
                         SeassionCard(
                           seassionNum: 1,
                           isDone: true,
+                          seassionName: "Quiz",
                           press: () {
                             setState(() {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) {
-                                  return CategoryPage(
-                                      category: categories.last);
-                                }),
-                              );
+                              build(context);
+                              //CategoryPage(category: categories.last);
                             });
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) {
+                                return CategoryPage(category: categories.last);
+                              }),
+                            );
                           },
                         ),
                         SeassionCard(
@@ -99,6 +103,7 @@ class _Quiz extends State<ExerciceConcentration> {
                         ),
                         SeassionCard(
                           seassionNum: 3,
+                          seassionName: "Couleurs",
                           press: () {
                             setState(() {
                               Navigator.push(
@@ -112,6 +117,7 @@ class _Quiz extends State<ExerciceConcentration> {
                         ),
                         SeassionCard(
                           seassionNum: 4,
+                          seassionName: "Forme",
                           press: () {
                             Navigator.push(
                               context,
@@ -123,7 +129,15 @@ class _Quiz extends State<ExerciceConcentration> {
                         ),
                         SeassionCard(
                           seassionNum: 5,
-                          press: () {},
+                          seassionName: "Quizz 2",
+                          press: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) {
+                                return Myquizz();
+                              }),
+                            );
+                          },
                         ),
                         SeassionCard(
                           seassionNum: 6,
@@ -195,10 +209,12 @@ class _Quiz extends State<ExerciceConcentration> {
 class SeassionCard extends StatelessWidget {
   final int seassionNum;
   final bool isDone;
+  final String seassionName;
   final Function press;
   const SeassionCard({
     Key key,
     this.seassionNum,
+    this.seassionName,
     this.isDone = false,
     this.press,
   }) : super(key: key);
@@ -247,7 +263,8 @@ class SeassionCard extends StatelessWidget {
                     ),
                     SizedBox(width: 10),
                     Text(
-                      "Session $seassionNum",
+                      //"Session $seassionNum",
+                      " $seassionName",
                       style: Theme.of(context).textTheme.subtitle,
                     )
                   ],

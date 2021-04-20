@@ -151,8 +151,9 @@ class ColorGameState extends State<ColorGame> {
                     ));
 
             print('end of the game');
-            print("scoore.toString()");
+            print(scoore.toString());
             print(String.fromCharCode(scoore));
+            print(_idUser);
             Done done = Done(
                 idExercice: "6074ab5b82c71b0015918da2",
                 exerciceName: "color game",
@@ -161,7 +162,8 @@ class ColorGameState extends State<ColorGame> {
                 idUser: _idUser);
 
             service.addEx(done).then((result) => {
-                  if (!result.errer) {print(result.errorMessage)}
+                  print(result.data)
+                  //  if (!result.errer) {print(result.errorMessage)}
                 });
           }
         });

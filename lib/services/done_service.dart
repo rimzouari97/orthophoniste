@@ -6,6 +6,7 @@ import 'package:orthophoniste/shared_preferences.dart';
 import 'package:orthophoniste/models/done.dart';
 
 class DoneService {
+  //static const API = "http://172.16.76.38:3000/" + "done/";
   static const API = BASE_URL + "done/";
 
   Future<APIResponse<Done>> addEx(Done item) {
@@ -17,6 +18,7 @@ class DoneService {
       if (data.statusCode == 200) {
         final Map<String, dynamic> jsonData = json.decode(data.body);
 
+        print(jsonData);
         var item = jsonData["exercice"];
         final done = Done(id: item["_id"], exerciceName: item["exerciceName"]);
         return APIResponse<Done>(
