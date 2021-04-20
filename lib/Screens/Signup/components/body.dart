@@ -18,7 +18,6 @@ import 'package:orthophoniste/models/user_info.dart';
 import 'package:orthophoniste/models/user_parm.dart';
 import 'package:orthophoniste/services/user_service.dart';
 import 'package:orthophoniste/shared_preferences.dart';
-import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 
 
 class Body extends StatefulWidget {
