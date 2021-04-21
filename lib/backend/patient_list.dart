@@ -36,6 +36,13 @@ class MyPatientList extends StatefulWidget {
 class _MyPatientListState extends State<MyPatientList> {
   UserService get service => GetIt.I<UserService>();
   APIResponse rep;
+
+  void initState() {
+    super.initState();
+
+  }
+
+
   Future<List<OrthoParam>> fetchData() =>
       Future.delayed(Duration(microseconds: 3000), () async {
         SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -123,8 +130,11 @@ class _MyPatientListState extends State<MyPatientList> {
                          MaterialButton(
                             padding: EdgeInsets.only(right: 0.0),
                             onPressed:  Snap.data[index].valid == "false"
-                                ? () => Approuve(Snap.data, index)
-                                : null,
+                                ? () => {
+                              Approuve(Snap.data, index),
+                             setState(() {})
+                            }
+                              : null,
 
                             child: Text( Snap.data[index].valid == "false"
                                     ? "Approuve"
@@ -147,6 +157,7 @@ class _MyPatientListState extends State<MyPatientList> {
                             print("Supprime");
                             print(Snap.data[index].nameP);
                             Delete(Snap.data, index);
+                            setState(() {});
                           },
                           child: Text('supprime', style: TextStyle(
                               color: Colors.green
@@ -194,10 +205,10 @@ class _MyPatientListState extends State<MyPatientList> {
       });
 
   }
-  dynamic Delete(APIResponse<OrthoParam> rep,int index) async {
-    print(rep.data1[index].id);
+  dynamic Delete(List<OrthoParam> rep,int index) async {
+    print(rep[index].id);
 
-    await service.deleteHasOrth(OrthoParam(id:rep.data1[index].id ,idP: rep.data1[index].idP)).then((res) => {
+    await service.deleteHasOrth(OrthoParam(id:rep[index].id ,idP: rep[index].idP)).then((res) => {
       if(!res.errer){
         Navigator.pushReplacement(
             context,

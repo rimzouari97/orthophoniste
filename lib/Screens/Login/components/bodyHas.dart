@@ -35,6 +35,11 @@ class BodyHas extends StatefulWidget {
 class _BodyState extends State<BodyHas> {
   GlobalKey<FormState> _keyForm = new GlobalKey<FormState>();
 
+  void initState() {
+    super.initState();
+
+  }
+
   UserService get service => GetIt.I<UserService>();
   APIResponse <User> _apiResponse;
   bool _obscureText = true;
@@ -42,11 +47,7 @@ class _BodyState extends State<BodyHas> {
   SharedPref pref = SharedPref();
   bool b = true ;
 
-  void _toggle() {
-    setState(() {
-      _obscureText = !_obscureText;
-    });
-  }
+
 
   Future<bool> fetchData() =>
       Future.delayed(Duration(microseconds: 3000), () async {
@@ -122,34 +123,37 @@ class _BodyState extends State<BodyHas> {
                                 final result = await service.hasOrtho(userP);
 
                                 if (!result.errer) {
+                                  setState(() {
+                                  });
                                   showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
-                                         setState(() {
-                                         });
+
                                         return AlertDialog(
                                           title: Row(
                                               children: [
                                                 Icon(Icons.info,
                                                     color: Colors.blueAccent),
-                                                Text('  Info. ')
+                                                Text('  Info. '),
+
                                               ]
                                           ),
+                                          actions: [
+                                            FlatButton(
+                                                child: Text('Yes'),
+                                                onPressed: () {
+                                                  setState(() {
+                                                  });
+                                                  Navigator.of(context).pop();
+                                                }),
+                                          ],
+
                                           content: Text(
                                               "Wiating ortho for approve"),
-                                          actions: <Widget>[
-                                            FlatButton(
-                                              child: Text("YES"),
-                                              onPressed: () {
-                                                //Put your code here which you want to execute on Yes button click.
-                                                Navigator.of(context).pop();
-                                                print('ok');
-
-                                              },
-                                            ),
 
 
-                                          ],
+
+
                                         );
                                       }
                                   );
@@ -163,7 +167,16 @@ class _BodyState extends State<BodyHas> {
                                     builder: (BuildContext context) {
                                       return AlertDialog(
                                           title: Text("Info"),
-                                          content: Text(text)
+                                          content: Text(text),
+                                        actions: [
+                                          FlatButton(
+                                              child: Text('Yes'),
+                                              onPressed: () {
+                                                setState(() {
+                                                });
+                                                Navigator.of(context).pop();
+                                              }),
+                                        ],
                                       );
                                     },
                                   );
