@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:orthophoniste/Screens/Home/level3/components/alert.dart';
 import 'package:orthophoniste/Screens/Home/level3/pages/game.dart';
 import 'package:orthophoniste/Screens/Home/level3/services/game_data.dart';
 import 'package:orthophoniste/Screens/Home/level3/services/level.dart';
 import 'package:orthophoniste/Screens/Home/level3/services/score.dart';
+import 'package:orthophoniste/services/done_service.dart';
 
 class HomeSpell extends StatefulWidget {
 
@@ -86,7 +88,8 @@ class _HomeState extends State<HomeSpell> {
       Score gameScore = Score(level: level.name);
 
       List<dynamic> gameScoreList = await gameScore.getScore();
-     
+
+
       Navigator.pushNamed(context, '/game', arguments: {
         'level': level,
         'questions': instance.questions,
@@ -94,7 +97,7 @@ class _HomeState extends State<HomeSpell> {
         'gameScore': gameScore
       });
     } else {
-      Alert().showAlert(context, "Oops!", "Please finish 60% of questions from ${levels[level.number - 2].name} level to unlock ${level.name} level!");
+      Alert().showAlert(context, "Oops!", "Please finish questions from ${levels[level.number - 2].name} level to unlock ${level.name} level!");
     }
 
     setState(() {
@@ -112,29 +115,30 @@ class _HomeState extends State<HomeSpell> {
           children: <Widget>[
             Padding(
               padding: EdgeInsets.fromLTRB(0, 0, 0, 12.0),
-
             ),
+            Text("Dyslexie lexicale",
+                style: TextStyle(
+                fontSize: 20, fontWeight: FontWeight.w500),),
+            SizedBox(height: 40),
             !isLoading ? Expanded(
                 child: GridView.count(
                 crossAxisCount: 2,
                 children: List.generate(4, (index) {
                   return Center(
                     child: Card(
+                      semanticContainer: true,
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
                       color: levels[index].color,
                       child: ListTile(
                         onTap: () {
                           _goToGame(levels[index]);
                         },
                         title: Center(
-                          child: Text(
-                            "${levels[index].name}",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 30.0,
-                              letterSpacing: 5.0
-                            ),
-                          ),
+                          child: Image.asset("assets/lock.png"),
                         ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
                         contentPadding: EdgeInsets.fromLTRB(10.0, 50.0, 10.0, 50.0)
                       ),
                     )

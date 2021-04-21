@@ -17,8 +17,13 @@ class Levels extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
+            SizedBox(height: 100),
+            Text("Dysorthographie",
+              style: TextStyle(
+                  fontSize: 20, fontWeight: FontWeight.w500),),
+
             Spacer(
-              flex: 2,
+              flex: 1,
             ),
             Expanded(
               flex: 3,

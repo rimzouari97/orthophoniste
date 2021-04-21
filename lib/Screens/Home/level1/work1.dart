@@ -2,8 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:orthophoniste/Screens/Home/level1/TileModel.dart';
 import 'package:orthophoniste/Screens/Home/level1/data.dart';
+import 'package:orthophoniste/models/done.dart';
+import 'package:orthophoniste/services/done_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants.dart';
@@ -28,7 +31,6 @@ class _HomeState extends State<Home> {
 
     myPairs = getPairs();
     myPairs.shuffle();
-
     gridViewTiles = myPairs;
     Future.delayed(const Duration(seconds: 5), () {
 // Here you can write your code
@@ -40,6 +42,7 @@ class _HomeState extends State<Home> {
         selected = false;
       });
     });
+
   }
 
   static const duration = const Duration(seconds: 1);
@@ -58,12 +61,24 @@ class _HomeState extends State<Home> {
     }
   }
 
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
+  }
+
+
+
 
   @override
   Widget build(BuildContext context) {
     if (timer == null) {
       timer = Timer.periodic(duration, (Timer t) {
         handleTick();
+      });
+    } else {
+      setState(() {
+        timer.cancel();
       });
     }
     int seconds = secondsPassed % 60;
@@ -89,13 +104,15 @@ class _HomeState extends State<Home> {
                       style: TextStyle(
                           fontSize: 20, fontWeight: FontWeight.w500),
                     ),
+
                     Text(
                       "Points",
                       textAlign: TextAlign.start,
                       style: TextStyle(
                           fontSize: 14, fontWeight: FontWeight.w300),
                     ),
-                  ],
+
+                    ],
                 ) : Container(),
                 SizedBox(
                   height: 20,
@@ -121,6 +138,7 @@ class _HomeState extends State<Home> {
                             if (mounted) setState(() {
                               points = 0;
                               reStart();
+
                             });
                           },
                           child: Container(
@@ -136,10 +154,10 @@ class _HomeState extends State<Home> {
                                 fontSize: 17,
                                 fontWeight: FontWeight.w500
                             ),),
+
                           ),
                         ),
                         SizedBox(height: 20,),
-
                       ],
                     )
                 ),
@@ -189,12 +207,30 @@ class _HomeState extends State<Home> {
 
 
 
+  int points = 0;
+  String _idUser;
+  DoneService get service => GetIt.I<DoneService>();
+  List<int> score = new List<int>();
+
+  Future<bool> fetchData() =>
+      Future.delayed(Duration(microseconds: 3000), () async {
+        debugPrint('Step 2, fetch data');
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        _idUser = preferences.getString('UserId');
+
+        return true;
+      });
+
+
+
+
 class Tile extends StatefulWidget {
   String imagePathUrl;
   int tileIndex;
   _HomeState parent;
 
   Tile({this.imagePathUrl, this.tileIndex, this.parent});
+
 
   @override
   _TileState createState() => _TileState();
@@ -203,6 +239,7 @@ class Tile extends StatefulWidget {
 class _TileState extends State<Tile> {
   @override
   Widget build(BuildContext context) {
+
     return GestureDetector(
       onTap: () {
         if (!selected) {
@@ -212,9 +249,9 @@ class _TileState extends State<Tile> {
           if (selectedTile != "") {
             /// testing if the selected tiles are same
             if (selectedTile == myPairs[widget.tileIndex].getImageAssetPath()) {
-              print("add point");
               points = points + 100;
-              print(selectedTile + " thishis" + widget.imagePathUrl);
+              print(points);
+              print(selectedTile + " this " + widget.imagePathUrl);
 
               TileModel tileModel = new TileModel();
               print(widget.tileIndex);
@@ -224,16 +261,20 @@ class _TileState extends State<Tile> {
                 myPairs[widget.tileIndex] = tileModel;
                 print(selectedIndex);
                 myPairs[selectedIndex] = tileModel;
-                if (mounted) this.widget.parent.setState(() {});
+                if (mounted) this.widget.parent.setState(() {
+                });
 
                 if (mounted) setState(() {
                   selected = false;
+
                 });
                 selectedTile = "";
+
               });
+
             } else {
               print(selectedTile +
-                  " thishis " +
+                  " this " +
                   myPairs[widget.tileIndex].getImageAssetPath());
               print("wrong choice");
               print(widget.tileIndex);
@@ -252,6 +293,7 @@ class _TileState extends State<Tile> {
 
               selectedTile = "";
             }
+
           } else {
             if (mounted) setState(() {
               selectedTile = myPairs[widget.tileIndex].getImageAssetPath();
@@ -263,6 +305,7 @@ class _TileState extends State<Tile> {
           }
         }
       },
+
       child: Container(
         margin: EdgeInsets.all(5),
         child: myPairs[widget.tileIndex].getImageAssetPath() != ""
@@ -275,7 +318,10 @@ class _TileState extends State<Tile> {
         ),
       ),
     );
+
   }
+
+
 }
 class LabelText extends StatelessWidget {
   LabelText({this.label, this.value});

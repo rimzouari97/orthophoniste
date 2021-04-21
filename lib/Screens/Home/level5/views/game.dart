@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:orthophoniste/Screens/Home/level5/models/question_model.dart';
 import 'package:orthophoniste/Screens/Home/level5/styles/styles.dart';
 import 'package:orthophoniste/Screens/Home/level5/views/level.dart';
 
 import 'package:orthophoniste/Screens/Home/level5/data/data.dart';
+import 'package:orthophoniste/models/done.dart';
+import 'package:orthophoniste/services/done_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class Game extends StatefulWidget {
@@ -44,15 +48,54 @@ class _GameState extends State<Game> {
                       onPressed: () {
                         Navigator.of(context).push(
                             MaterialPageRoute(builder: (context) => Levels()));
+                        scoore += 100;
+                        print('end of the game');
+                        print(String.fromCharCode(scoore));
+                        print(_idUser);
+                        Done done = Done(
+                            idExercice: "3",
+                            exerciceName: "Dysorthographie "+ nextLevel.id.toString(),
+                            idToDo: "mm",
+                            score: scoore.toString(),
+                            idUser: _idUser);
+                        service.addEx(done).then((result) => {
+                          print(result.data),
+                          if (!result.errer) {print(result.errorMessage)}
+                        });
                       },
                     )
                   ],
                 ));
       });
     } else {
-      print('NOT YET!');
+     /* showDialog(context: context,
+          builder: (_) => AlertDialog(
+            title: Text('wrong answer'),
+            actions: [
+          RaisedButton(
+          child: Text('Next'),
+        onPressed: () {Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => Levels()));
+        },
+      )
+            ],
+          ));*/
+
     }
   }
+  int scoore = 0;
+  String _idUser;
+
+  DoneService get service => GetIt.I<DoneService>();
+
+  Future<bool> fetchData() =>
+      Future.delayed(Duration(microseconds: 3000), () async {
+        debugPrint('Step 2, fetch data');
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        _idUser = preferences.getString('UserId');
+
+        return true;
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +130,7 @@ class _GameState extends State<Game> {
                               setState(() {
                                 addedLetters[index] = data;
                                 compareWord();
+
                               });
                             }, builder: (context, _, __) {
                               return GestureDetector(
@@ -105,7 +149,9 @@ class _GameState extends State<Game> {
                                 ),
                               );
                             })),
+
                   ),
+
                   Expanded(
                     child: GridView.builder(
                       itemCount: letters.length,
