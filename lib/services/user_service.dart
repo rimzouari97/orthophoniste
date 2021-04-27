@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:orthophoniste/backend/dropdowe_mune_exercice.dart';
 import 'package:orthophoniste/constants.dart';
@@ -315,21 +314,21 @@ class UserService {
 
 
   Future<APIResponse<OrthoParam>> getPatient(OrthoParam item){
-    print(json.encode(item.toJson()));
+   // print(json.encode(item.toJson()));
     return http.post(BASE_URL+"hasOrth/"+"getPatient" ,headers: headers,body: json.encode(item.toJson()))
         .then((data) {
-      print(data.statusCode.toString() );
+     // print(data.statusCode.toString() );
       List<OrthoParam>  list = <OrthoParam>[];
       if(data.statusCode == 200){
 
         Map<String, dynamic> jsonData = json.decode(data.body);
 
-        print(jsonData);
+       // print(jsonData);
 
         for(var item in jsonData.values.last ){
 
-          print("item");
-          print(item);
+        //  print("item");
+        //  print(item);
 
 
           OrthoParam orthoParam = OrthoParam(
@@ -341,6 +340,7 @@ class UserService {
           );
 
           list.add(orthoParam);
+
         }
         return APIResponse<OrthoParam>(data1: list,errer: false);
         }else {
@@ -381,7 +381,7 @@ class UserService {
           list.add(exercice);
         }
         print(list.length);
-        return true ;
+        return list ;
         print("");
       }else {
 
@@ -401,11 +401,13 @@ class UserService {
     return http.post(BASE_URL+"todo/"+"add" ,headers: headers,body: json.encode(item.toJson()))
         .then((data) {
       print(data.statusCode.toString() );
+      print(data.body);
       if(data.statusCode == 200){
 
         final Map<String, dynamic> jsonData = json.decode(data.body);
 
-          var item = jsonData["hasOrth"];
+          var item = jsonData["todo"];
+          print(item);
           final todo = ToDoParam(
               id : item['_id'],
               AvgScore:  item['AvgScore'],
