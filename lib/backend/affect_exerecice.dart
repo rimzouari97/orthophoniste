@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:orthophoniste/backend/dropdowe_mune_exercice.dart';
+import 'package:orthophoniste/constants.dart';
 import 'package:orthophoniste/models/exercice.dart';
 import 'package:orthophoniste/models/ortho_parm.dart';
 import 'package:orthophoniste/models/todo_param.dart';
-import 'package:orthophoniste/models/user_parm.dart';
 import 'package:orthophoniste/services/user_service.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart'as http;
+import 'dart:convert';
 
 
 
@@ -23,24 +25,16 @@ class _HomeState extends State<AffectExercice> {
   ];
 
   List<DropdownMenuItem<OrthoParam>> _dropdownMenuItems;
-  OrthoParam _selectedItem;
+  OrthoParam _selectedItem ;
   List<Exercice> dropdownItems1 = [
-    Exercice(id: "2",name: "Exercice 1"),
-    Exercice(id: "2",name: "Exercice 2"),
-    Exercice(id: "3",name: "Exercice 3"),
-    Exercice(id: "4",name: "Exercice 4"),
+ //   Exercice(id: "2",name: "Exercice 1"),
+ //   Exercice(id: "2",name: "Exercice 2"),
+ //   Exercice(id: "3",name: "Exercice 3"),
+  //  Exercice(id: "4",name: "Exercice 4"),
   ];
-  void initState() {
-    super.initState();
-   // _dropdownMenuItems = buildDropDownMenuItems(_dropdownItems);
-   // _selectedItem = _dropdownMenuItems[0].value;
-    //_selectedItem1 = _dropdownMenuItems1[0].value;
-
-
-  }
 
   List<DropdownMenuItem<Exercice>> _dropdownMenuItems1;
-  Exercice _selectedItem1;
+  Exercice _selectedItem1 ;
   UserService get service => GetIt.I<UserService>();
 
 
@@ -48,9 +42,42 @@ class _HomeState extends State<AffectExercice> {
     debugPrint('Step 2, fetch data');
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String id  = prefs.getString('UserId');
-    print(id);
+    //print(id);
+
+    http.get(BASE_URL+"exercices/list",headers: headers)
+        .then((data) {
+   //   print(data.statusCode.toString() );
+      if(data.statusCode == 200){
+        Map<String, dynamic> jsonData = json.decode(data.body);
+      //  print(jsonData);
+       // List<Exercice>  list = <Exercice>[];
+        dropdownItems1.clear();
+
+        for(var item in jsonData.values.last ){
+        //  print("item");
+          Exercice exercice = Exercice(
+              category: item["category"],
+              id: item["_id"],
+              type: item['type'],
+              score: item["score"],
+              name: item["name"],
+              niveau :item["niveau"]
+          );
+         // print(exercice.id);
+          //print(exercice.name);
+
+
+         // list.add(exercice);
+          dropdownItems1.add(exercice);
+        }
+      //  print(list.length);
+
+      }
+
+    });
 
     var res  = await service.getPatient(OrthoParam(idOrtho: id));
+    _dropdownItems = res.data1;
     return res.data1;
     //return false;
   });
@@ -66,38 +93,14 @@ class _HomeState extends State<AffectExercice> {
     if(snapshot.hasData){
 
 
-      List<DropdownMenuItem<OrthoParam>> buildDropDownMenuItems(List listItems) {
-        List<DropdownMenuItem<OrthoParam>> items = List();
-        for (OrthoParam listItem in listItems) {
-          items.add(
-            DropdownMenuItem(
-              child: Text(listItem.nameP),
-              value: listItem,
-            ),
-          );
-        }
-        return items;
-      }
 
-      List<DropdownMenuItem<Exercice>> buildDropDownMenuItems1(List listItems1) {
-        List<DropdownMenuItem<Exercice>> items = List();
-        for (Exercice listItem1 in listItems1) {
-          items.add(
-            DropdownMenuItem(
-              child: Text(listItem1.name),
-              value: listItem1,
-            ),
-          );
-        }
-        return items;
-      }
       try {
         _dropdownItems = snapshot.data;
         _dropdownMenuItems = buildDropDownMenuItems(_dropdownItems);
-        _selectedItem = _dropdownMenuItems[0].value;
-        _dropdownMenuItems1 = buildDropDownMenuItems1(dropdownItems1);
-        _selectedItem1 = _dropdownMenuItems1[0].value;
 
+
+        _dropdownMenuItems1 = buildDropDownMenuItems1(dropdownItems1);
+      //  _selectedItem1 = f
       }catch(e){
         print(e);
       }
@@ -113,14 +116,17 @@ class _HomeState extends State<AffectExercice> {
                 Row(
                   children: [
                     Text("Patient  : "),
-                    DropdownButton<OrthoParam>(
-                        value: _selectedItem,
+                    DropdownButton(
+                    //    value: _selectedItem  ,
+                        hint: Text("select Patient"),
                         items: _dropdownMenuItems,
-                        onChanged: (value) {
-                          setState(() {
-                            print(value);
-                            _selectedItem = value;
-                          });
+                        onChanged: ( value) {
+                      //    print("_selectedItem");
+                      //    print(value);
+                          _selectedItem = value;
+
+
+
                         }),
                   ],
                 ),
@@ -128,13 +134,15 @@ class _HomeState extends State<AffectExercice> {
                   children: [
                     Text("Exercice : "),
                     DropdownButton<Exercice>(
-                        value: _selectedItem1,
+                      //  value: _selectedItem1  ,
+                        hint: Text("select Exercice"),
                         items: _dropdownMenuItems1,
+
                         onChanged: (value) {
-                     //     setState(() {
-                            print(value.name);
-                            _selectedItem1 = value;
-                        //  });
+                         //   print("value.name");
+                         //   print(value.name);
+                           _selectedItem1 = value;
+
                         }),
                   ],
                 ),
@@ -142,12 +150,28 @@ class _HomeState extends State<AffectExercice> {
                 FlatButton(
                     onPressed:() async {
                       print("text");
-                     var res = await service.addToDo(ToDoParam(idUser:_selectedItem.idP ,idExercice: _selectedItem1.id));
-                     if(res.errer == false){
-                       setState(() {
-                         _selectedItem = _dropdownItems.first;
-                       });
-                     }
+                      print(_selectedItem.nameP);
+                      print(_selectedItem1.name);
+                     await service.addToDo(ToDoParam(idUser:_selectedItem.idP ,idExercice: _selectedItem1.id)).then((res)  {
+                      // print(res.data.id);
+                     if(!res.errer){
+                       showDialog(
+                       context: context,
+                       builder: (BuildContext context) {
+                         return AlertDialog(
+                             title: Row(
+                                 children:[
+                                   Icon(Icons.info,color: Colors.blueAccent),
+                                   Text('  Info . ')
+                                 ]
+                             ),
+                             content: Text("Exercice affecter")
+                         );
+                       },
+                     );
+                    }
+                     });
+
                     },
                     child:Container(
                       decoration: BoxDecoration(
@@ -175,6 +199,32 @@ class _HomeState extends State<AffectExercice> {
 
   }
   );
+
+  List<DropdownMenuItem<OrthoParam>> buildDropDownMenuItems(List listItems) {
+    List<DropdownMenuItem<OrthoParam>> items = List();
+    for (OrthoParam listItem in listItems) {
+      items.add(
+        DropdownMenuItem(
+          child: Text(listItem.nameP),
+          value: listItem,
+        ),
+      );
+    }
+    return items;
+  }
+
+  List<DropdownMenuItem<Exercice>> buildDropDownMenuItems1(List listItems1) {
+    List<DropdownMenuItem<Exercice>> items = List();
+    for (Exercice listItem1 in listItems1) {
+      items.add(
+        DropdownMenuItem(
+          child: Text(listItem1.name),
+          value: listItem1,
+        ),
+      );
+    }
+    return items;
+  }
 }
 
 class ListItem {
