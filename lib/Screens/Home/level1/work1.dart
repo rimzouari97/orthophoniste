@@ -2,9 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get_it/get_it.dart';
 import 'package:orthophoniste/Screens/Home/level1/TileModel.dart';
 import 'package:orthophoniste/Screens/Home/level1/data.dart';
+import 'package:orthophoniste/Screens/Home/level2/custom_dialog.dart';
+import 'package:orthophoniste/Screens/Home/screens/details_screen.dart';
 import 'package:orthophoniste/models/done.dart';
 import 'package:orthophoniste/services/done_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -43,58 +46,43 @@ class _HomeState extends State<Home> {
       });
     });
 
+
   }
-
-  static const duration = const Duration(seconds: 1);
-
-  int secondsPassed = 0;
-  bool isActive = false;
-
-  Timer timer;
-
-
-  void handleTick() {
-    if (isActive) {
-      if (mounted) setState(() {
-        secondsPassed = secondsPassed + 1;
-      });
-    }
-  }
-
-  @override
-  void dispose() {
-    timer.cancel();
-    super.dispose();
-  }
-
 
 
 
   @override
   Widget build(BuildContext context) {
-    if (timer == null) {
-      timer = Timer.periodic(duration, (Timer t) {
-        handleTick();
-      });
-    } else {
-      setState(() {
-        timer.cancel();
-      });
-    }
-    int seconds = secondsPassed % 60;
-    int minutes = secondsPassed ~/ 60;
-    int hours = secondsPassed ~/ (60 * 60);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.teal,
         body: SingleChildScrollView(
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 50),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+                Neumorphic(
+                  child: AppBar(
+                    iconTheme: IconThemeData.fallback(),
+                    backgroundColor: Colors.grey[300],
+
+                    title: Text(
+                      "      Mémoire visuelle",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  style: NeumorphicStyle(
+                    depth: -8
+                  ),
+                ),
                 SizedBox(
-                  height: 40,
+                  height: 20,
                 ),
                 points != 800 ? Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -112,89 +100,111 @@ class _HomeState extends State<Home> {
                           fontSize: 14, fontWeight: FontWeight.w300),
                     ),
 
-                    ],
+                  ],
                 ) : Container(),
                 SizedBox(
                   height: 20,
                 ),
-                points != 800 ? GridView(
-                  shrinkWrap: true,
-                  //physics: ClampingScrollPhysics(),
-                  scrollDirection: Axis.vertical,
-                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                      mainAxisSpacing: 0.0, maxCrossAxisExtent: 100.0),
-                  children: List.generate(gridViewTiles.length, (index) {
-                    return Tile(
-                      imagePathUrl: gridViewTiles[index].getImageAssetPath(),
-                      tileIndex: index,
-                      parent: this,
-                    );
-                  }),
-                ) : Container(
-                    child: Column(
-                      children: <Widget>[
-                        GestureDetector(
-                          onTap: (){
-                            if (mounted) setState(() {
-                              points = 0;
-                              reStart();
+                Neumorphic(
+                  margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                  padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                  style: NeumorphicStyle(
+                      color: Colors.grey[300],
+                      boxShape:
+                      NeumorphicBoxShape.roundRect(BorderRadius.circular(12))),
+                  child: points != 800 ? GridView(
+                    shrinkWrap: true,
+                    //physics: ClampingScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                        mainAxisSpacing: 0.0, maxCrossAxisExtent: 100.0),
+                    children: List.generate(gridViewTiles.length, (index) {
+                      return Tile(
+                        imagePathUrl: gridViewTiles[index].getImageAssetPath(),
+                        tileIndex: index,
+                        parent: this,
+                      );
+                    }),
+                  ) : Container(
+                      child: Column(
+                        children: <Widget>[
+                          GestureDetector(
+                            onTap: (){
+                              if (mounted) setState(() {
+                                points = 0;
+                                reStart();
 
-                            });
-                          },
-                          child: Container(
-                            height: 50,
-                            width: 200,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: Colors.amber[400],
-                              borderRadius: BorderRadius.circular(24),
+                              });
+                            },
+                            child: Container(
+                              height: 50,
+                              width: 200,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: Colors.amber[400],
+                                borderRadius: BorderRadius.circular(24),
+                              ),
+                              child: Text("Replay", style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w500
+                              ),),
+
                             ),
-                            child: Text("Replay", style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 17,
-                                fontWeight: FontWeight.w500
-                            ),),
-
                           ),
-                        ),
-                        SizedBox(height: 20,),
-                      ],
-                    )
-                ),
-                Row(
+                          SizedBox(height: 20,),
+                          GestureDetector(
+                            onTap: (){
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context){
+                                    return DetailsScreen();
+                                  }));
+                            },
+                            child: Container(
+                              height: 50,
+                              width: 200,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: Colors.amber[400],
+                                borderRadius: BorderRadius.circular(24),
+                              ),
+                              child: Text("Home", style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w500
+                              ),),
+                            ),
+                          ),
+                          SizedBox(height: 20,),
+                          NeumorphicButton(
+                            style: NeumorphicStyle(
+                              color: Colors.amber[400],
+                                boxShape:
+                                NeumorphicBoxShape.roundRect(BorderRadius.circular(24)),
 
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    LabelText(
-                        label: 'HRS', value: hours.toString().padLeft(2, '0')),
-                    LabelText(
-                        label: 'MIN',
-                        value: minutes.toString().padLeft(2, '0')),
-                    LabelText(
-                        label: 'SEC',
-                        value: seconds.toString().padLeft(2, '0')),
-                  ],
-                ),
-                SizedBox(height: 60),
+                            ),
+                              onPressed: () async {
+                                await showDialog(context: context,
+                                    builder: (BuildContext context) => CustomDialog(
+                                        title: "GOOD JOB!",
+                                        description: points.toString(),
+                                        buttonText: "OK"));
 
-                Container(
-                  width: 200,
-                  height: 47,
-                  margin: EdgeInsets.only(top: 5),
-                  child: RaisedButton(
-                    color: Colors.amber[400],
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25)),
-                    child: Text(isActive ? 'STOP':'START'),
-                    onPressed: () {
-                      if (mounted) setState(() {
-                        isActive =!isActive;
+                              },
+                            padding: const EdgeInsets.fromLTRB(72, 13, 72, 13),
+                            child: Text(
+                              "Score",
+                              style: TextStyle(color: Colors.black, fontSize: 17),
 
-                      });
-                    },
-
+                            ),
+                          )
+                        ],
+                      )
                   ),
                 ),
+
+
+
               ],
             ),
 
@@ -204,23 +214,6 @@ class _HomeState extends State<Home> {
       ),);
   }
 }
-
-
-
-  int points = 0;
-  String _idUser;
-  DoneService get service => GetIt.I<DoneService>();
-  List<int> score = new List<int>();
-
-  Future<bool> fetchData() =>
-      Future.delayed(Duration(microseconds: 3000), () async {
-        debugPrint('Step 2, fetch data');
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        _idUser = preferences.getString('UserId');
-
-        return true;
-      });
-
 
 
 
@@ -239,7 +232,6 @@ class Tile extends StatefulWidget {
 class _TileState extends State<Tile> {
   @override
   Widget build(BuildContext context) {
-
     return GestureDetector(
       onTap: () {
         if (!selected) {
@@ -251,11 +243,11 @@ class _TileState extends State<Tile> {
             if (selectedTile == myPairs[widget.tileIndex].getImageAssetPath()) {
               points = points + 100;
               print(points);
-              print(selectedTile + " this " + widget.imagePathUrl);
-
+              //print(selectedTile + " this " + widget.imagePathUrl);
               TileModel tileModel = new TileModel();
-              print(widget.tileIndex);
+              //print(widget.tileIndex);
               selected = true;
+
               Future.delayed(const Duration(seconds: 2), () {
                 tileModel.setImageAssetPath("");
                 myPairs[widget.tileIndex] = tileModel;
@@ -277,8 +269,8 @@ class _TileState extends State<Tile> {
                   " this " +
                   myPairs[widget.tileIndex].getImageAssetPath());
               print("wrong choice");
-              print(widget.tileIndex);
-              print(selectedIndex);
+              //print(widget.tileIndex);
+              //print(selectedIndex);
               selected = true;
               Future.delayed(const Duration(seconds: 2), () {
                 if (mounted) this.widget.parent.setState(() {
@@ -300,10 +292,10 @@ class _TileState extends State<Tile> {
               selectedIndex = widget.tileIndex;
             });
 
-            print(selectedTile);
-            print(selectedIndex);
+           
           }
         }
+
       },
 
       child: Container(
@@ -313,7 +305,7 @@ class _TileState extends State<Tile> {
             ? myPairs[widget.tileIndex].getImageAssetPath()
             : widget.imagePathUrl)
             : Container(
-          color: Colors.white,
+
           child: Image.asset("assets/correct.png"),
         ),
       ),
@@ -322,38 +314,4 @@ class _TileState extends State<Tile> {
   }
 
 
-}
-class LabelText extends StatelessWidget {
-  LabelText({this.label, this.value});
-
-  final String label;
-  final String value;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 5),
-      padding: EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25),
-        color: Colors.white,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Text(
-            '$value',
-            style: TextStyle(
-                color: Colors.black, fontSize: 30, fontWeight: FontWeight.bold),
-          ),
-          Text(
-            '$label',
-            style: TextStyle(
-              color: Colors.white70,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orthophoniste/Screens/Profile/profile_screen.dart';
 import 'package:orthophoniste/Screens/ProfileOrtho/profile_screen.dart';
+import 'package:orthophoniste/backend/done_list.dart';
 import 'package:orthophoniste/backend/patient_list.dart';
 
 class GridDashboard extends StatelessWidget {
@@ -30,6 +31,7 @@ class GridDashboard extends StatelessWidget {
     subtitle: "Rose favirited your Post",
     event: "",
     img: "assets/images/festival.png",
+    Navigator: DoneList()
   );
   Items item5 = new Items(
     title: "To do",

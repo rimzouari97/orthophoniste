@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get_it/get_it.dart';
+import 'package:orthophoniste/Screens/Home/level2/custom_dialog.dart';
 import 'package:orthophoniste/Screens/Home/level5/models/question_model.dart';
 import 'package:orthophoniste/Screens/Home/level5/styles/styles.dart';
 import 'package:orthophoniste/Screens/Home/level5/views/level.dart';
@@ -67,19 +69,7 @@ class _GameState extends State<Game> {
                   ],
                 ));
       });
-    } else {
-     /* showDialog(context: context,
-          builder: (_) => AlertDialog(
-            title: Text('wrong answer'),
-            actions: [
-          RaisedButton(
-          child: Text('Next'),
-        onPressed: () {Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => Levels()));
-        },
-      )
-            ],
-          ));*/
+
 
     }
   }
@@ -100,7 +90,7 @@ class _GameState extends State<Game> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: Colors.teal,
       body: Column(
         children: [
           Expanded(
@@ -112,8 +102,8 @@ class _GameState extends State<Game> {
                       image: NetworkImage(widget.question.imageUrl))),
             ),
           ),
+
           Expanded(
-            flex: 1,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -134,11 +124,21 @@ class _GameState extends State<Game> {
                               });
                             }, builder: (context, _, __) {
                               return GestureDetector(
-                                onLongPress: () {
+                                onLongPress: () async {
                                   setState(() => addedLetters[index] = null);
+                                  showDialog(context: context,
+                                      builder: (BuildContext context) => CustomDialog(
+                                          title: "GOOD JOB!",
+                                          description: scoore.toString(),
+                                          buttonText: "OK"));
                                 },
-                                child: Container(
-                                  color: Colors.grey[400],
+                                child: NeumorphicButton(
+                                  style: NeumorphicStyle(
+                                    color: Colors.grey[400],
+                                    boxShape:
+                                    NeumorphicBoxShape.roundRect(BorderRadius.circular(24)),
+
+                                  ),
                                   child: Center(
                                     child: Text(
                                         addedLetters[index] != null
@@ -162,15 +162,20 @@ class _GameState extends State<Game> {
                       itemBuilder: (context, index) => Draggable(
                         data: letters[index],
                         feedback: Container(
-                          color: Colors.lightBlue,
+                          color: Colors.amber,
                           height: 50,
                           width: 50,
                           child: Center(
                               child:
                                   Text(letters[index], style: mainTextStyle)),
                         ),
-                        child: Container(
-                          color: Colors.blue[900],
+                        child: NeumorphicButton(
+                          style: NeumorphicStyle(
+                            color: Colors.amber,
+                            boxShape:
+                            NeumorphicBoxShape.roundRect(BorderRadius.circular(24)),
+
+                          ),
                           child: Center(
                             child: Text(letters[index], style: mainTextStyle),
                           ),

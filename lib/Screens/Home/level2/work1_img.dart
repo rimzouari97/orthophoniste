@@ -3,8 +3,12 @@ import 'dart:async';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:orthophoniste/Screens/Home/level2/TileModel_img.dart';
+import 'package:orthophoniste/Screens/Home/level2/custom_dialog.dart';
 import 'package:orthophoniste/Screens/Home/level2/data_img.dart';
+import 'package:orthophoniste/Screens/Home/level3/details_screen2.dart';
+import 'package:orthophoniste/Screens/Home/screens/details_screen.dart';
 
 import '../constants.dart';
 class Home2 extends StatefulWidget {
@@ -47,21 +51,38 @@ class _HomeState extends State<Home2> {
     });
   }
 
-  static const duration = const Duration(seconds: 1);
+
 
 
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.teal,
       body: SingleChildScrollView(
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 50),
             child: Column(
               children: <Widget>[
+                Neumorphic(
+                  child: AppBar(
+                    iconTheme: IconThemeData.fallback(),
+                    backgroundColor: Colors.grey[300],
+                    title: Text(
+                      "  Mémoire auditive",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  style: NeumorphicStyle(
+                      depth: -8
+                  ),
+                ),
                 SizedBox(
-                  height: 40,
+                  height: 20,
                 ),
                 points != 800 ? Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -82,54 +103,107 @@ class _HomeState extends State<Home2> {
                 SizedBox(
                   height: 20,
                 ),
-                points != 800 ? GridView(
-                  shrinkWrap: true,
-                  //physics: ClampingScrollPhysics(),
-                  scrollDirection: Axis.vertical,
-                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                      mainAxisSpacing: 0.0, maxCrossAxisExtent: 100.0),
-                  children: List.generate(gridViewTiles.length, (index) {
-                 //   print(questionPairs[index].getSound());
-                    // print(index);
-                 //   print(gridViewTiles[index].imageAssetPath);
-                    return Tile(
-                      imagePathUrl: gridViewTiles[index].getImageAssetPath(),
-                      tileIndex: index,
-                      parent: this,
-                      sound: gridViewTiles[index].getSound()
-                    );
+      Neumorphic(
+        margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+        padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+        style: NeumorphicStyle(
+            color: Colors.grey[300],
+            boxShape:
+            NeumorphicBoxShape.roundRect(BorderRadius.circular(12))),
+        child: points != 800 ? GridView(
+          shrinkWrap: true,
+          //physics: ClampingScrollPhysics(),
+          scrollDirection: Axis.vertical,
+          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+              mainAxisSpacing: 0.0, maxCrossAxisExtent: 100.0),
+          children: List.generate(gridViewTiles.length, (index) {
+            //   print(questionPairs[index].getSound());
+            // print(index);
+            //   print(gridViewTiles[index].imageAssetPath);
+            return Tile(
+                imagePathUrl: gridViewTiles[index].getImageAssetPath(),
+                tileIndex: index,
+                parent: this,
+                sound: gridViewTiles[index].getSound()
+            );
 
-                  }),
-                ) : Container(
-                    child: Column(
-                      children: <Widget>[
-                        GestureDetector(
-                          onTap: (){
-                            setState(() {
-                              points = 0;
-                              reStart();
-                            });
-                          },
-                          child: Container(
-                            height: 50,
-                            width: 200,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: Colors.amber[400],
-                              borderRadius: BorderRadius.circular(24),
-                            ),
-                            child: Text("Replay", style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 17,
-                                fontWeight: FontWeight.w500
-                            ),),
-                          ),
-                        ),
-                        SizedBox(height: 20,),
-
-                      ],
-                    )
+          }),
+        ) : Container(
+            child: Column(
+              children: <Widget>[
+                GestureDetector(
+                  onTap: (){
+                    setState(() {
+                      points = 0;
+                      reStart();
+                    });
+                  },
+                  child: Container(
+                    height: 50,
+                    width: 200,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Colors.amber[400],
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                    child: Text("Replay", style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 17,
+                        fontWeight: FontWeight.w500
+                    ),),
+                  ),
                 ),
+                SizedBox(height: 20,),
+                GestureDetector(
+                  onTap: (){
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context){
+                          return DetailsScreen();
+                        }));
+                  },
+                  child: Container(
+                    height: 50,
+                    width: 200,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Colors.amber[400],
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                    child: Text("Home", style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 17,
+                        fontWeight: FontWeight.w500
+                    ),),
+                  ),
+                ),
+                NeumorphicButton(
+                  style: NeumorphicStyle(
+                    color: Colors.amber[400],
+                    boxShape:
+                    NeumorphicBoxShape.roundRect(BorderRadius.circular(24)),
+
+                  ),
+                  onPressed: () async {
+                    await showDialog(context: context,
+                        builder: (BuildContext context) => CustomDialog(
+                            title: "GOOD JOB!",
+                            description: points.toString(),
+                            buttonText: "OK"));
+
+                  },
+                  padding: const EdgeInsets.fromLTRB(72, 13, 72, 13),
+                  child: Text(
+                    "Score",
+                    style: TextStyle(color: Colors.black, fontSize: 17),
+
+                  ),
+                )
+
+              ],
+            )
+        ),
+      )
+
 
 
               ],
@@ -227,7 +301,6 @@ class _TileState extends State<Tile> {
             ? myPairs[widget.tileIndex].getImageAssetPath()
             : widget.imagePathUrl)
             : Container(
-          color: Colors.white,
           child: Image.asset("assets/correct.png"),
         ),
       ),

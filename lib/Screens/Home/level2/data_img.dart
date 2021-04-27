@@ -29,8 +29,8 @@ List<TileModelImage>  getPairs(){
 
   //1
   tileModel.setImageAssetPath("assets/speaker.png");
-  tileModel.setSound("cat.mp3");
   tileModel.setIsSelected(false);
+  tileModel.setSound("chat.mp3");
   pairs.add(tileModel);
   pairs.add(tileModel);
   tileModel = new TileModelImage();
@@ -38,7 +38,7 @@ List<TileModelImage>  getPairs(){
   //2
   tileModel.setImageAssetPath("assets/speaker.png");
   tileModel.setIsSelected(false);
-  tileModel.setSound("dog.wav");
+  tileModel.setSound("chien.mp3");
   pairs.add(tileModel);
   pairs.add(tileModel);
   tileModel = new TileModelImage();
@@ -69,7 +69,7 @@ List<TileModelImage>  getPairs(){
   //6
   tileModel.setImageAssetPath("assets/speaker.png");
   tileModel.setIsSelected(false);
-  tileModel.setSound("cat.mp3");
+  tileModel.setSound("grenouille.mp3");
   pairs.add(tileModel);
   pairs.add(tileModel);
   tileModel = new TileModelImage();

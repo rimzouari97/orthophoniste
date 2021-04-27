@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get_it/get_it.dart';
 import 'package:orthophoniste/Screens/Home/level3/components/alert.dart';
 import 'package:orthophoniste/Screens/Home/level3/pages/game.dart';
@@ -109,16 +110,30 @@ class _HomeState extends State<HomeSpell> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        backgroundColor: Colors.teal,
       body: Padding(
-        padding: EdgeInsets.fromLTRB(8.0, 150.0, 8.0, 0.0),
+        padding: EdgeInsets.fromLTRB(8.0, 80.0, 8.0, 0.0),
         child: Column(
           children: <Widget>[
-            Padding(
-              padding: EdgeInsets.fromLTRB(0, 0, 0, 12.0),
+            Neumorphic(
+              child: AppBar(
+                iconTheme: IconThemeData.fallback(),
+                backgroundColor: Colors.grey[300],
+
+                title: Text(
+                  "      Dyslexie lexicale",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              style: NeumorphicStyle(
+                  depth: -8
+              ),
             ),
-            Text("Dyslexie lexicale",
-                style: TextStyle(
-                fontSize: 20, fontWeight: FontWeight.w500),),
+
             SizedBox(height: 40),
             !isLoading ? Expanded(
                 child: GridView.count(

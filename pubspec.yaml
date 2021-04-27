@@ -51,6 +51,8 @@ dependencies:
   highlight_text: ^0.7.2
   avatar_glow: ^1.2.0
   flutter_text_to_speech: ^3.0.7
+  flutter_neumorphic: ^3.0.3
+  lottie: ^0.7.0+1
 
 
 
