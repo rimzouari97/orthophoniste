@@ -32,11 +32,10 @@ class MyDoneList extends StatefulWidget {
   String _name;
   String _id;
 
-
 }
 
 class _MyDoneListState extends State<MyDoneList> {
-  DoneService get service => GetIt.I<DoneService>();
+  DoneService get service => GetIt.I<DoneService> ();
   APIResponse rep;
   Future<List<Done>> fetchData() =>
       Future.delayed(Duration(microseconds: 3000), () async {
@@ -44,7 +43,7 @@ class _MyDoneListState extends State<MyDoneList> {
         widget._name = await preferences.getString('exerciceName');
         widget._id = await preferences.getString('idExercice');
 
-       // return  await service.
+        return  await service.getAllByIdDone(Done(id: widget._id));
 
         // return list;
 
@@ -60,7 +59,7 @@ class _MyDoneListState extends State<MyDoneList> {
         if(snapshot.data.length == 0){
           return Scaffold(
             appBar: AppBar(
-              title: Text("List Exercices"),
+              title: Text("List Patient"),
             ),
             body:Container(child: Center(child: Text(" pas de patient"),)),
           );
@@ -68,7 +67,7 @@ class _MyDoneListState extends State<MyDoneList> {
 
         return Scaffold(
           appBar: AppBar(
-            title: Text("List Exercices"),
+            title: Text("List Patient"),
           ),
           body: ListWidget(),
         );
@@ -122,6 +121,7 @@ class _MyDoneListState extends State<MyDoneList> {
                       // Text("Approuve",style: TextStyle(color: Colors.green),),
                       Text(" "),Text(" "),Text(" "),
 
+
                       Text(" "),
 
 
@@ -141,6 +141,9 @@ class _MyDoneListState extends State<MyDoneList> {
       future: fetchData(),
     );
   }
+
+
+
 
 
 }

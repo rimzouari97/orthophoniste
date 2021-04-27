@@ -1,6 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'package:orthophoniste/constants.dart';
 import 'package:orthophoniste/models/API_response.dart';
+import 'package:orthophoniste/models/exercice.dart';
 import 'package:orthophoniste/models/user_parm.dart';
 import 'dart:convert';
 import 'package:orthophoniste/shared_preferences.dart';
@@ -28,7 +29,8 @@ class DoneService {
             APIResponse<Done>(errer: true, errorMessage: " Opps server Errer"));
   }
 
-  Future<List<Done>> getByIdEx(Done item){
+
+  Future<List<Done>> getAllByIdDone(Done item){
     //  print(json.encode(item.toJson()));
     var parm ={"id" :item.id};
     print(json.encode(parm));
@@ -48,11 +50,10 @@ class DoneService {
           print("item");
           print(item);
 
-
           Done done = Done(
-              score: item["score"],
               id: item["_id"],
-              iteration: item['iteration'],
+              score: item['score'],
+              iteration: item["iteration"],
               idUser: item["idUser"],
               idToDo: item["idToDo"],
               idExercice: item["idExercice"],
@@ -66,6 +67,37 @@ class DoneService {
       }
       return list;
     });
+  }
+
+  //SharedPref pref = SharedPref();
+
+  Future<APIResponse<List<Done>>> getDoneList(){
+    //  print("jsonData");
+    const uri = API+"list";
+    return http.get(uri)
+        .then((data) {
+      //  print(data);
+      if(data.statusCode == 200){
+        final Map<String, dynamic> jsonData = json.decode(data.body);
+        final dones = <Done>[];
+        //pref.addUserToken(jsonData["token"]);
+        for(var item in jsonData.values.first ){
+          final done = Done(
+              id: item["_id"],
+              score: item['score'],
+              iteration: item["iteration"],
+              idUser: item["idUser"],
+              idToDo: item["idToDo"],
+              idExercice: item["idExercice"],
+              exerciceName: item["exerciceName"]
+          );
+          dones.add(done);
+        }
+
+        return APIResponse<List<Done>>(data: dones);
+      }
+      return APIResponse<List<Done>>(errer: true,errorMessage: " An errer 1");
+    }).catchError((_) =>  APIResponse<List<Done>>(errer: true,errorMessage: " An errer 2"));
   }
 
 
