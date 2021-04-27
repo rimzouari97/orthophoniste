@@ -27,12 +27,12 @@ class Alert {
           ),
           actions: <Widget>[
             FlatButton(
-              child: Text("Ok"),
+              child: Text("NEXT"),
               onPressed: () {
                 Navigator.of(context).pop();
               },
-            )
-          ],
+            ),
+            ],
         );
       }
     );

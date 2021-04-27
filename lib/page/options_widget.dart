@@ -1,3 +1,4 @@
+import 'package:audioplayers/audio_cache.dart';
 import 'package:flutter/material.dart';
 import 'package:orthophoniste/models/option.dart';
 import 'package:orthophoniste/models/question.dart';
@@ -75,7 +76,19 @@ class OptionsWidget extends StatelessWidget {
     if (!isSelected) {
       return Colors.grey.shade200;
     } else {
-      return option.isCorrect ? Colors.green : Colors.red;
+      if (option.isCorrect) {
+        print('correct');
+        player.play(question.sound);
+        //player.play('success.mp3');
+        return Colors.green;
+      } else {
+        player.play('wrong.mp3');
+        print('false!!!!');
+        return Colors.red;
+      }
+      //return option.isCorrect ? Colors.green : Colors.red;
     }
   }
 }
+
+final player = AudioCache();
