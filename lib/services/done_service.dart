@@ -2,6 +2,7 @@ import 'package:http/http.dart' as http;
 import 'package:orthophoniste/constants.dart';
 import 'package:orthophoniste/models/API_response.dart';
 import 'package:orthophoniste/models/exercice.dart';
+import 'package:orthophoniste/models/todo_param.dart';
 import 'package:orthophoniste/models/user_parm.dart';
 import 'dart:convert';
 import 'package:orthophoniste/shared_preferences.dart';
@@ -98,6 +99,42 @@ class DoneService {
       }
       return APIResponse<List<Done>>(errer: true,errorMessage: " An errer 1");
     }).catchError((_) =>  APIResponse<List<Done>>(errer: true,errorMessage: " An errer 2"));
+  }
+
+  Future<List<ToDoParam>> getToDoListByIdP(Done item){
+    //  print(json.encode(item.toJson()));
+    var parm ={"idUser" :item.idUser};
+    print(json.encode(parm));
+    return http.post(BASE_URL+"done/"+"getByIdP" ,headers: headers,body: json.encode(item.toJson()))
+        .then((data) {
+      print(data.statusCode.toString() );
+      // print(data.body);
+      List<ToDoParam>  list = <ToDoParam>[];
+      if(data.statusCode == 200){
+
+        Map<String, dynamic> jsonData = json.decode(data.body);
+
+        print(jsonData);
+
+        for(var item in jsonData.values.last ){
+
+          print("item");
+          print(item);
+
+          ToDoParam done = ToDoParam(
+              id: item["_id"],
+              idUser: item["idUser"],
+              idExercice: item["idExercice"],
+              AvgScore: item["AvgScore"]
+          );
+
+          list.add(done);
+        }
+
+
+      }
+      return list;
+    });
   }
 
 
