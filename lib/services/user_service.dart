@@ -420,30 +420,42 @@ class UserService {
     }).catchError((_) =>  APIResponse<ToDoParam>(errer: true,errorMessage: " Opps server Errer"));
   }
 
-  Future<APIResponse<List<User>>> getToDoByIdOrtho(){
-    //  print("jsonData");
-    const uri = API+"list";
-    return http.get(uri)
+  Future<List<ToDoParam>> getToDoByIdUser(ToDoParam user){
+
+    //  print(json.encode(item.toJson()));
+    var parm ={"idUser" :user.idUser};
+    print(json.encode(parm));
+    return http.post(BASE_URL+"todo/getByIdUser" ,headers: headers,body: json.encode(user.toJson()))
         .then((data) {
-      //  print(data);
+      print(data.statusCode.toString() );
+      // print(data.body);
+      List<ToDoParam>  list = <ToDoParam>[];
       if(data.statusCode == 200){
-        final Map<String, dynamic> jsonData = json.decode(data.body);
-        final users = <User>[];
-        pref.addUserToken(jsonData["token"]);
-        for(var item in jsonData.values.first ){
-          final user = User(
-              item['_id'],
-              item['name'],
-              item['email'],
-              item['type'],
-              item['password']);
-          users.add(user);
+
+        Map<String, dynamic> jsonData = json.decode(data.body);
+
+        print(jsonData);
+
+        for(var item in jsonData.values.last ){
+
+          print("item");
+          print(item);
+
+          ToDoParam done = ToDoParam(
+              id: item["_id"],
+              idUser: item["idUser"],
+              idExercice: item["idExercice"],
+              AvgScore: item["AvgScore"]
+          );
+
+          list.add(done);
         }
 
-        return APIResponse<List<User>>(data: users);
+
       }
-      return APIResponse<List<User>>(errer: true,errorMessage: " An errer 1");
-    }).catchError((_) =>  APIResponse<List<User>>(errer: true,errorMessage: " An errer 2"));
+      return list;
+    });
+
   }
 
 
