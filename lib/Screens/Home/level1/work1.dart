@@ -49,7 +49,18 @@ class _HomeState extends State<Home> {
 
   }
 
+  String _idUser;
 
+  DoneService get service => GetIt.I<DoneService>();
+
+  Future<bool> fetchData() =>
+      Future.delayed(Duration(microseconds: 3000), () async {
+        debugPrint('Step 2, fetch data');
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        _idUser = preferences.getString('UserId');
+
+        return true;
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -189,6 +200,19 @@ class _HomeState extends State<Home> {
                                         title: "GOOD JOB!",
                                         description: points.toString(),
                                         buttonText: "OK"));
+                                print('end of the game');
+                                print(String.fromCharCode(points));
+                                print(_idUser);
+                                Done done = Done(
+                                    idExercice: "4",
+                                    exerciceName: "Memory game ",
+                                    idToDo: "mm",
+                                    score: points.toString(),
+                                    idUser: _idUser);
+                                service.addEx(done).then((result) => {
+                                  print(result.data),
+                                  if (!result.errer) {print(result.errorMessage)}
+                                });
 
                               },
                             padding: const EdgeInsets.fromLTRB(72, 13, 72, 13),
