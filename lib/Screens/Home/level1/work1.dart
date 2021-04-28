@@ -204,6 +204,7 @@ class _HomeState extends State<Home> {
                                 print(String.fromCharCode(points));
                                 print(_idUser);
                                 Done done = Done(
+                                    
                                     exerciceName: "Memory game ",
                                     idToDo: "mm",
                                     score: points.toString(),
