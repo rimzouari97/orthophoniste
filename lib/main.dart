@@ -6,6 +6,7 @@ import 'package:orthophoniste/Screens/Home/level3/pages/game.dart';
 import 'package:orthophoniste/Screens/Home/level4/screens/bottom_navigation_screen.dart';
 import 'package:orthophoniste/Screens/Home/screens/details_screen.dart';
 import 'package:orthophoniste/Screens/Login/components/background.dart';
+import 'package:orthophoniste/Screens/Login/hasOrth.dart';
 import 'package:orthophoniste/Screens/Login/login_screen.dart';
 import 'package:orthophoniste/Screens/Profile/profile_screen.dart';
 import 'package:orthophoniste/Screens/Welcome/welcome_screen.dart';
@@ -42,6 +43,8 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -56,7 +59,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {'/game': (context) => Game()},
        //home :ProfileScreen(),
-      home: backHome(),
+      home: MyHomePage(),
     );
   }
 }
@@ -67,16 +70,32 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  //User data;
+  String hasOr;
+
+  Future<String> fetchData() =>
+      Future.delayed(Duration(microseconds: 3000), () async{
+        debugPrint('Step 2, fetch data');
+        SharedPreferences   _prefs = await SharedPreferences.getInstance();
+        SharedPref pref = SharedPref();
+        hasOr = _prefs.getString('HasOrtho');
+        print('hasOr');
+        print(hasOr);
+        return pref.getUserType();
+        //return false;
+      });
+
 
   @override
   Widget build(BuildContext context) => FutureBuilder(
         future: fetchData(),
         builder: (context, snapshot) {
-          //print("test 500");
+          print("test 500");
           print(snapshot.hasData);
           if (snapshot.hasData) {
             if (snapshot.data == "patient") {
+              if(hasOr == "false"){
+                return HasOrth();
+              }
               return HomeScreen();
             } else {
               return backHome();
@@ -86,9 +105,11 @@ class _MyHomePageState extends State<MyHomePage> {
           } else {
             // We can show the loading view until the data comes back.
             debugPrint('Step 1, build loading widget');
+            print("test 5554");
             return Center(
               child: SizedBox(
                 child: CircularProgressIndicator(
+
                   backgroundColor: Colors.white,
                 ),
                 width: 60,
@@ -103,11 +124,5 @@ class _MyHomePageState extends State<MyHomePage> {
         },
       );
 
-  Future<String> fetchData() =>
-      Future.delayed(Duration(microseconds: 3000), () {
-        debugPrint('Step 2, fetch data');
-        SharedPref pref = SharedPref();
-        return pref.getUserType();
-        //return false;
-      });
+
 }
