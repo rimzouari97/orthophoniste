@@ -37,7 +37,7 @@ class DoneService {
     var parm = {"id": item.id};
     print(json.encode(parm));
     return http
-        .post(BASE_URL + "done/" + "getById",
+        .post(BASE_URL + "done/" + "getByIdP",
             headers: headers, body: json.encode(item.toJson()))
         .then((data) {
       print(data.statusCode.toString());
