@@ -32,24 +32,23 @@ class DoneService {
             APIResponse<Done>(errer: true, errorMessage: " Opps server Errer"));
   }
 
-
-  Future<List<Done>> getAllByIdDone(Done item){
+  Future<List<Done>> getAllByIdDone(Done item) {
     //  print(json.encode(item.toJson()));
-    var parm ={"id" :item.id};
+    var parm = {"id": item.id};
     print(json.encode(parm));
-    return http.post(BASE_URL+"done/"+"getById" ,headers: headers,body: json.encode(item.toJson()))
+    return http
+        .post(BASE_URL + "done/" + "getById",
+            headers: headers, body: json.encode(item.toJson()))
         .then((data) {
-      print(data.statusCode.toString() );
+      print(data.statusCode.toString());
       // print(data.body);
-      List<Done>  list = <Done>[];
-      if(data.statusCode == 200){
-
+      List<Done> list = <Done>[];
+      if (data.statusCode == 200) {
         Map<String, dynamic> jsonData = json.decode(data.body);
 
         print(jsonData);
 
-        for(var item in jsonData.values.last ){
-
+        for (var item in jsonData.values.last) {
           print("item");
           print(item);
 
@@ -60,13 +59,10 @@ class DoneService {
               idUser: item["idUser"],
               idToDo: item["idToDo"],
               idExercice: item["idExercice"],
-              exerciceName: item["exerciceName"]
-          );
+              exerciceName: item["exerciceName"]);
 
           list.add(done);
         }
-
-
       }
       return list;
     });
@@ -74,17 +70,16 @@ class DoneService {
 
   //SharedPref pref = SharedPref();
 
-  Future<APIResponse<List<Done>>> getDoneList(){
+  Future<APIResponse<List<Done>>> getDoneList() {
     //  print("jsonData");
-    const uri = API+"list";
-    return http.get(uri)
-        .then((data) {
+    const uri = API + "list";
+    return http.get(uri).then((data) {
       //  print(data);
-      if(data.statusCode == 200){
+      if (data.statusCode == 200) {
         final Map<String, dynamic> jsonData = json.decode(data.body);
         final dones = <Done>[];
         //pref.addUserToken(jsonData["token"]);
-        for(var item in jsonData.values.first ){
+        for (var item in jsonData.values.first) {
           final done = Done(
               id: item["_id"],
               score: item['score'],
@@ -92,34 +87,34 @@ class DoneService {
               idUser: item["idUser"],
               idToDo: item["idToDo"],
               idExercice: item["idExercice"],
-              exerciceName: item["exerciceName"]
-          );
+              exerciceName: item["exerciceName"]);
           dones.add(done);
         }
 
         return APIResponse<List<Done>>(data: dones);
       }
-      return APIResponse<List<Done>>(errer: true,errorMessage: " An errer 1");
-    }).catchError((_) =>  APIResponse<List<Done>>(errer: true,errorMessage: " An errer 2"));
+      return APIResponse<List<Done>>(errer: true, errorMessage: " An errer 1");
+    }).catchError((_) =>
+        APIResponse<List<Done>>(errer: true, errorMessage: " An errer 2"));
   }
 
-  Future<List<ToDoParam>> getToDoListByIdP(Done item){
+  Future<List<ToDoParam>> getToDoListByIdP(Done item) {
     //  print(json.encode(item.toJson()));
-    var parm ={"idUser" :item.idUser};
+    var parm = {"idUser": item.idUser};
     print(json.encode(parm));
-    return http.post(BASE_URL+"done/"+"getByIdP" ,headers: headers,body: json.encode(item.toJson()))
+    return http
+        .post(BASE_URL + "todo/" + "getByIdUser",
+            headers: headers, body: json.encode(item.toJson()))
         .then((data) {
-      print(data.statusCode.toString() );
-      // print(data.body);
-      List<ToDoParam>  list = <ToDoParam>[];
-      if(data.statusCode == 200){
-
+      print(data.statusCode.toString());
+      print(data.body);
+      List<ToDoParam> list = <ToDoParam>[];
+      if (data.statusCode == 200) {
         Map<String, dynamic> jsonData = json.decode(data.body);
 
         print(jsonData);
 
-        for(var item in jsonData.values.last ){
-
+        for (var item in jsonData.values.last) {
           print("item");
           print(item);
 
@@ -127,17 +122,12 @@ class DoneService {
               id: item["_id"],
               idUser: item["idUser"],
               idExercice: item["idExercice"],
-              AvgScore: item["AvgScore"]
-          );
+              AvgScore: item["AvgScore"]);
 
           list.add(done);
         }
-
-
       }
       return list;
     });
   }
-
-
 }
