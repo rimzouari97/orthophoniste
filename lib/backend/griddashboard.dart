@@ -1,24 +1,24 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:orthophoniste/Screens/Profile/profile_screen.dart';
 import 'package:orthophoniste/Screens/ProfileOrtho/profile_screen.dart';
 import 'package:orthophoniste/backend/affect_exerecice.dart';
 import 'package:orthophoniste/backend/done_list.dart';
 import 'package:orthophoniste/backend/patient_list.dart';
+import 'package:orthophoniste/backend/to_do_list.dart';
 
 class GridDashboard extends StatelessWidget {
   Items item1 = new Items(
       title: "Affect Exercices",
       subtitle: "March, Wednesday",
-      event: "3 Events",
+      event: "",
       Navigator: AffectExercice(),
       img: "assets/images/calendar.png",);
 
   Items item2 = new Items(
     title: "Patients",
     subtitle: "FROM 1 TO 10",
-    event: "4 Items",
+    event: "",
     img: "assets/images/score1.png",
     Navigator: PatientList()
   );
@@ -39,8 +39,9 @@ class GridDashboard extends StatelessWidget {
   Items item5 = new Items(
     title: "To do",
     subtitle: "Homework, Design",
-    event: "4 Items",
+    event: "",
     img: "assets/images/todo.png",
+   Navigator: ToDoList(),
   );
   Items item6 = new Items(
     title: "Settings",

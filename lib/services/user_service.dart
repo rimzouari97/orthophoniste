@@ -420,6 +420,32 @@ class UserService {
     }).catchError((_) =>  APIResponse<ToDoParam>(errer: true,errorMessage: " Opps server Errer"));
   }
 
+  Future<APIResponse<List<User>>> getToDoByIdOrtho(){
+    //  print("jsonData");
+    const uri = API+"list";
+    return http.get(uri)
+        .then((data) {
+      //  print(data);
+      if(data.statusCode == 200){
+        final Map<String, dynamic> jsonData = json.decode(data.body);
+        final users = <User>[];
+        pref.addUserToken(jsonData["token"]);
+        for(var item in jsonData.values.first ){
+          final user = User(
+              item['_id'],
+              item['name'],
+              item['email'],
+              item['type'],
+              item['password']);
+          users.add(user);
+        }
+
+        return APIResponse<List<User>>(data: users);
+      }
+      return APIResponse<List<User>>(errer: true,errorMessage: " An errer 1");
+    }).catchError((_) =>  APIResponse<List<User>>(errer: true,errorMessage: " An errer 2"));
+  }
+
 
 
 

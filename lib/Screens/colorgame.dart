@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:orthophoniste/models/done.dart';
 import 'package:orthophoniste/services/done_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:giffy_dialog/giffy_dialog.dart';
 
 class ColorGame extends StatefulWidget {
   ColorGame({Key key}) : super(key: key);
@@ -52,7 +53,7 @@ class ColorGameState extends State<ColorGame> {
           appBar: AppBar(
               title: Text('les couleurs    Score ${scoore} '),
               //Text('les couleurs    Score ${score.length} /6'),
-              backgroundColor: Colors.pink),
+              backgroundColor: Colors.deepPurpleAccent.shade100),
           floatingActionButton: FloatingActionButton(
             child: Icon(Icons.refresh),
             onPressed: () {
@@ -64,29 +65,37 @@ class ColorGameState extends State<ColorGame> {
               });
             },
           ),
-          body: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Column(
+          body: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/bgcolor.jpg"),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: choices.keys.map((emoji) {
+                      return Draggable<String>(
+                        data: emoji,
+                        child: Emoji(emoji: score[emoji] == true ? '✅' : emoji),
+                        feedback: Emoji(emoji: emoji),
+                        childWhenDragging: Emoji(emoji: '🌱'),
+                      );
+                    }).toList()),
+                Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: choices.keys.map((emoji) {
-                    return Draggable<String>(
-                      data: emoji,
-                      child: Emoji(emoji: score[emoji] == true ? '✅' : emoji),
-                      feedback: Emoji(emoji: emoji),
-                      childWhenDragging: Emoji(emoji: '🌱'),
-                    );
-                  }).toList()),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: choices.keys
-                    .map((emoji) => _buildDragTarget(emoji))
-                    .toList()
-                      ..shuffle(Random(seed)),
-              )
-            ],
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: choices.keys
+                      .map((emoji) => _buildDragTarget(emoji))
+                      .toList()
+                        ..shuffle(Random(seed)),
+                )
+              ],
+            ),
           ),
         );
       });
@@ -101,7 +110,7 @@ class ColorGameState extends State<ColorGame> {
             //child: Text('Correct!'),
             alignment: Alignment.center,
             height: 80,
-            width: 200,
+            width: 180,
           );
         } else {
           return Container(color: choices[emoji], height: 80, width: 200);
@@ -109,6 +118,16 @@ class ColorGameState extends State<ColorGame> {
       },
       onWillAccept: (data) => data == emoji,
       onAccept: (data) {
+        String networkimg =
+            'https://c.tenor.com/MOLq4Zd9tqcAAAAj/clap-around-of-applause.gif';
+        const List<Key> keys = [
+          Key('Network'),
+          Key('Network Dialog'),
+          Key('Flare'),
+          Key('Flare Dialog'),
+          Key('Asset'),
+          Key('Asset dialog'),
+        ];
         setState(() {
           score[emoji] = true;
           plyr.play('success.mp3');
@@ -116,18 +135,43 @@ class ColorGameState extends State<ColorGame> {
           print(scoore);
           endgame++;
           if (endgame == 6) {
+            showDialog(
+                context: context,
+                builder: (_) => NetworkGiffyDialog(
+                      key: keys[1],
+                      image: Image.network(
+                        networkimg,
+                        fit: BoxFit.cover,
+                      ),
+                      title: Text(
+                        "Bravo",
+                        style: TextStyle(
+                          fontSize: 22.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      description: Text(
+                        'Bravo votre score est ${scoore}',
+                        textAlign: TextAlign.center,
+                      ),
+                      entryAnimation: EntryAnimation.RIGHT,
+                      onOkButtonPressed: () {},
+                    ));
+
             print('end of the game');
-            print("scoore.toString()");
+            print(scoore.toString());
             print(String.fromCharCode(scoore));
+            print(_idUser);
             Done done = Done(
-                idExercice: "55555",
+                idExercice: "6074ab5b82c71b0015918da2",
                 exerciceName: "color game",
                 idToDo: "fff",
                 score: scoore.toString(),
                 idUser: _idUser);
 
             service.addEx(done).then((result) => {
-                  if (!result.errer) {print(result.errorMessage)}
+                  print(result.data)
+                  //  if (!result.errer) {print(result.errorMessage)}
                 });
           }
         });

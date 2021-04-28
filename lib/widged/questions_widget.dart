@@ -5,7 +5,7 @@ import 'package:orthophoniste/models/question.dart';
 import 'package:orthophoniste/page/options_widget.dart';
 import 'package:audioplayers/audio_cache.dart';
 
-class QuestionsWidget extends StatelessWidget {
+class QuestionsWidget extends StatefulWidget {
   final Category category;
   final PageController controller;
   final ValueChanged<int> onChangedPage;
@@ -20,12 +20,17 @@ class QuestionsWidget extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  _QuestionsWidgetState createState() => _QuestionsWidgetState();
+}
+
+class _QuestionsWidgetState extends State<QuestionsWidget> {
+  @override
   Widget build(BuildContext context) => PageView.builder(
-        onPageChanged: onChangedPage,
-        controller: controller,
-        itemCount: category.questions.length,
+        onPageChanged: widget.onChangedPage,
+        controller: widget.controller,
+        itemCount: widget.category.questions.length,
         itemBuilder: (context, index) {
-          final question = category.questions[index];
+          final question = widget.category.questions[index];
 
           return buildQuestion(question: question);
         },
@@ -68,7 +73,7 @@ class QuestionsWidget extends StatelessWidget {
             Expanded(
               child: OptionsWidget(
                 question: question,
-                onClickedOption: onClickedOption,
+                onClickedOption: widget.onClickedOption,
               ),
             ),
           ],
