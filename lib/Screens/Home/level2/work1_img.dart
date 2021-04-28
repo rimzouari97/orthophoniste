@@ -210,7 +210,7 @@ class _HomeState extends State<Home2> {
                     print(_idUser);
                     Done done = Done(
 
-                        exerciceName: "Memory game ",
+                        exerciceName: "Memory game orale",
                         idToDo: "mm",
                         score: points.toString(),
                         idUser: _idUser);

@@ -180,9 +180,9 @@ class _TextToSpeechState extends State<Exercice> {
             print(_idUser);
             Done done = Done(
 
-                exerciceName: "Dyslexie orale ",
+                exerciceName: "Dyslexie orale game",
                 idToDo: "mm",
-                score: _confidence.toString(),
+                score: _confidence.toString()+" %",
                 idUser: _idUser);
             service.addEx(done).then((result) => {
               print(result.data),

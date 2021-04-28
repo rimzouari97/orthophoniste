@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:get_it/get_it.dart';
 import 'package:orthophoniste/Screens/Home/level3/components/alert.dart';
 import 'package:orthophoniste/Screens/Home/level3/services/score.dart';
+import 'package:orthophoniste/models/done.dart';
+import 'package:orthophoniste/services/done_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class GameScreen extends StatefulWidget {
@@ -74,6 +78,7 @@ class _GameScreenState extends State<GameScreen> {
   getGameScoreList() {
     if(widget.gameScoreList.contains(widget.question)) {
       isSolved = true;
+
     }
   }
 

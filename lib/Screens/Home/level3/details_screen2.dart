@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get_it/get_it.dart';
 import 'package:orthophoniste/Screens/Home/constants.dart';
 import 'package:orthophoniste/Screens/Home/level1/work1.dart';
 import 'package:orthophoniste/Screens/Home/level2/work1_img.dart';
@@ -12,10 +13,29 @@ import 'package:orthophoniste/Screens/Home/level5/views/level.dart';
 
 import 'package:orthophoniste/Screens/Home/widgets/bottom_nav_bar.dart';
 import 'package:orthophoniste/Screens/Home/widgets/search_bar.dart';
+import 'package:orthophoniste/models/done.dart';
+import 'package:orthophoniste/models/todo_param.dart';
+import 'package:orthophoniste/services/done_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DetailsScreen2 extends StatelessWidget {
+
+  DoneService get service => GetIt.I<DoneService>();
+  String _idUser;
+  List<ToDoParam> listtodo;
+  Future<List<ToDoParam>> fetchData() =>
+      Future.delayed(Duration(microseconds: 3000), () async {
+        debugPrint('Step 2, fetch data');
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        _idUser = preferences.getString('UserId');
+
+        return await service.getToDoListByIdP(Done(idUser: _idUser));
+      });
+
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => FutureBuilder(
+  future: fetchData(), builder: (BuildContext context, AsyncSnapshot<List<ToDoParam>> snapshot){
     var size = MediaQuery.of(context).size;
     return Scaffold(
       bottomNavigationBar: BottomNavBar(),
@@ -70,46 +90,56 @@ class DetailsScreen2 extends StatelessWidget {
                       children: <Widget>[
                         SeassionCard(
                           sessionName: "Dyslexie L",
-                          isDone: true,
-                          press: () {Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) {
-                              return HomeSpell();
-                            }),
-                          );},
+                          press: () {
+                            var idDyslexieL = "6088d433079cb400154a37df";
+                            for (var item in snapshot.data ){
+                              if (item.idExercice == idDyslexieL){
+                                Navigator.push(
+                                 context,
+                                MaterialPageRoute(builder: (context) {
+                                return HomeSpell();
+                                  }),
+                                  );
+                                }
+                              }
+                            print ('no access');
+                            },
                         ),
                         SeassionCard(
                           sessionName: "Dyslexie O",
                           press: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) {
-                                return Exercice();
-                              }),
-                            );
+                            var idDyslexieO ="6088d443079cb400154a37e0";
+                            for (var item in snapshot.data){
+                              if (item.idExercice == idDyslexieO){
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) {
+                                  return Exercice();
+                                      }),
+                                    );
+                                 }
+                             }
+                            print('no access');
                           },
                         ),
                         SeassionCard(
                           sessionName: "Dysortho",
-                          press: () {Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) {
-                              return Levels();
-                            }),
-                          );},
+                          press: () {
+                            var idDysortho= "6088d462079cb400154a37e1";
+                            for (var item in snapshot.data){
+                              if (item.idExercice == idDysortho) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) {
+                                    return Levels();
+                                  }),
+                                );
+                              }
+                            }
+                            print('no access');
+                          },
                         ),
-                        SeassionCard(
-                          sessionName: "Empty",
-                          press: () {},
-                        ),
-                        SeassionCard(
-                          sessionName: "Empty",
-                          press: () {},
-                        ),
-                        SeassionCard(
-                          sessionName: "Empty",
-                          press: () {},
-                        ),
+
                       ],
                     ),
                     SizedBox(height: 20),
@@ -170,7 +200,7 @@ class DetailsScreen2 extends StatelessWidget {
         ],
       ),
     );
-  }
+  });
 }
 
 class SeassionCard extends StatelessWidget {

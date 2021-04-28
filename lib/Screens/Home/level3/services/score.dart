@@ -31,25 +31,24 @@ class Score {
     if(!scoreList.contains(value)) {
       scoreList.add(value);
       score += 100;
-
     }
-
-    String updatedScoreString = json.encode(scoreList);
-
-    prefs.setString(this.level, updatedScoreString);
     print('end of the game');
-    print(String.fromCharCode(score));
+    print(score);
     print(_idUser);
     Done done = Done(
 
-        exerciceName: "dyslexie game",
+        exerciceName: "dyslexie lexicale game",
         idToDo: "mm",
-        score: scoreList.toString(),
+        score: score.toString()+" "+level,
         idUser: _idUser);
     service.addEx(done).then((result) => {
       print(result.data),
       if (!result.errer) {print(result.errorMessage)}
     });
+    String updatedScoreString = json.encode(scoreList);
+
+    prefs.setString(this.level, updatedScoreString);
+
   }
   String _idUser;
 
