@@ -41,7 +41,7 @@ class Score {
     print(String.fromCharCode(score));
     print(_idUser);
     Done done = Done(
-        idExercice: "2",
+
         exerciceName: "dyslexie game",
         idToDo: "mm",
         score: scoreList.toString(),

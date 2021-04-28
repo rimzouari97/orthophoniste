@@ -72,8 +72,10 @@ class DetailsScreen extends StatelessWidget {
                       children: <Widget>[
                         SeassionCard(
                           sessionName: "visuelle",
-                          isDone: true,
-                          press: () {Navigator.push(
+                          press: () {
+
+                            var idvisuelle = "6088a6b1079cb400154a37cd";
+                            Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) {
                               return Home();
@@ -89,22 +91,7 @@ class DetailsScreen extends StatelessWidget {
                             }),
                           );},
                         ),
-                        SeassionCard(
-                          sessionName: "Empty",
-                          press: () {},
-                        ),
-                        SeassionCard(
-                          sessionName: "Empty",
-                          press: () {},
-                        ),
-                        SeassionCard(
-                          sessionName: "Empty",
-                          press: () {},
-                        ),
-                        SeassionCard(
-                          sessionName: "Empty",
-                          press: () {},
-                        ),
+
                       ],
                     ),
                     SizedBox(height: 20),

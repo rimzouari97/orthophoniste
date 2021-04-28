@@ -55,7 +55,6 @@ class _GameState extends State<Game> {
                         print(String.fromCharCode(scoore));
                         print(_idUser);
                         Done done = Done(
-                            idExercice: "3",
                             exerciceName: "Dysorthographie "+ nextLevel.id.toString(),
                             idToDo: "mm",
                             score: scoore.toString(),

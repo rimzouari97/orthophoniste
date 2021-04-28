@@ -34,7 +34,7 @@ class DoneService {
     //  print(json.encode(item.toJson()));
     var parm ={"id" :item.id};
     print(json.encode(parm));
-    return http.post(BASE_URL+"done/"+"getById" ,headers: headers,body: json.encode(item.toJson()))
+    return http.post(BASE_URL+"done/"+"getByIdP" ,headers: headers,body: json.encode(item.toJson()))
         .then((data) {
       print(data.statusCode.toString() );
       // print(data.body);
@@ -69,36 +69,9 @@ class DoneService {
     });
   }
 
-  //SharedPref pref = SharedPref();
 
-  Future<APIResponse<List<Done>>> getDoneList(){
-    //  print("jsonData");
-    const uri = API+"list";
-    return http.get(uri)
-        .then((data) {
-      //  print(data);
-      if(data.statusCode == 200){
-        final Map<String, dynamic> jsonData = json.decode(data.body);
-        final dones = <Done>[];
-        //pref.addUserToken(jsonData["token"]);
-        for(var item in jsonData.values.first ){
-          final done = Done(
-              id: item["_id"],
-              score: item['score'],
-              iteration: item["iteration"],
-              idUser: item["idUser"],
-              idToDo: item["idToDo"],
-              idExercice: item["idExercice"],
-              exerciceName: item["exerciceName"]
-          );
-          dones.add(done);
-        }
 
-        return APIResponse<List<Done>>(data: dones);
-      }
-      return APIResponse<List<Done>>(errer: true,errorMessage: " An errer 1");
-    }).catchError((_) =>  APIResponse<List<Done>>(errer: true,errorMessage: " An errer 2"));
-  }
+
 
 
 }
