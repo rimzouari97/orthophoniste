@@ -53,7 +53,7 @@ class ColorGameState extends State<ColorGame> {
           appBar: AppBar(
               title: Text('les couleurs    Score ${scoore} '),
               //Text('les couleurs    Score ${score.length} /6'),
-              backgroundColor: Colors.pink),
+              backgroundColor: Colors.deepPurpleAccent.shade100),
           floatingActionButton: FloatingActionButton(
             child: Icon(Icons.refresh),
             onPressed: () {
@@ -65,29 +65,37 @@ class ColorGameState extends State<ColorGame> {
               });
             },
           ),
-          body: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Column(
+          body: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/bgcolor.jpg"),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: choices.keys.map((emoji) {
+                      return Draggable<String>(
+                        data: emoji,
+                        child: Emoji(emoji: score[emoji] == true ? '✅' : emoji),
+                        feedback: Emoji(emoji: emoji),
+                        childWhenDragging: Emoji(emoji: '🌱'),
+                      );
+                    }).toList()),
+                Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: choices.keys.map((emoji) {
-                    return Draggable<String>(
-                      data: emoji,
-                      child: Emoji(emoji: score[emoji] == true ? '✅' : emoji),
-                      feedback: Emoji(emoji: emoji),
-                      childWhenDragging: Emoji(emoji: '🌱'),
-                    );
-                  }).toList()),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: choices.keys
-                    .map((emoji) => _buildDragTarget(emoji))
-                    .toList()
-                      ..shuffle(Random(seed)),
-              )
-            ],
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: choices.keys
+                      .map((emoji) => _buildDragTarget(emoji))
+                      .toList()
+                        ..shuffle(Random(seed)),
+                )
+              ],
+            ),
           ),
         );
       });
@@ -102,7 +110,7 @@ class ColorGameState extends State<ColorGame> {
             //child: Text('Correct!'),
             alignment: Alignment.center,
             height: 80,
-            width: 200,
+            width: 180,
           );
         } else {
           return Container(color: choices[emoji], height: 80, width: 200);

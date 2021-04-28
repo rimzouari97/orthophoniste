@@ -73,7 +73,7 @@ class _Quiz extends State<ExerciceConcentration> {
                       spacing: 20,
                       runSpacing: 20,
                       children: <Widget>[
-                        SeassionCard(
+                        /* SeassionCard(
                           seassionNum: 1,
                           isDone: true,
                           seassionName: "Quiz",
@@ -89,18 +89,18 @@ class _Quiz extends State<ExerciceConcentration> {
                               }),
                             );
                           },
-                        ),
-                        SeassionCard(
+                        ),*/
+                        /*SeassionCard(
                           seassionNum: 2,
                           press: () {
-                            /*Navigator.push(
+                            */ /*Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) {
                                 return HomePage();
                               }),
-                            );*/
+                            );*/ /*
                           },
-                        ),
+                        ),*/
                         SeassionCard(
                           seassionNum: 3,
                           seassionName: "Couleurs",
@@ -139,10 +139,10 @@ class _Quiz extends State<ExerciceConcentration> {
                             );
                           },
                         ),
-                        SeassionCard(
+                        /* SeassionCard(
                           seassionNum: 6,
                           press: () {},
-                        ),
+                        ),*/
                       ],
                     ),
                     SizedBox(height: 20),

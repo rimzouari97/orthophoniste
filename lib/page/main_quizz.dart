@@ -39,7 +39,7 @@ class _MyquizzState extends State<Myquizz> {
         {'text': 'assets/ours.png', 'score': -2},
         {'text': 'assets/chien.png', 'score': 10},
         {'text': 'assets/cheval.png', 'score': -2},
-      ],
+      ]
     },
     {
       'questionText': 'elephant.wav',
@@ -48,7 +48,7 @@ class _MyquizzState extends State<Myquizz> {
         {'text': 'assets/loup.png', 'score': -2},
         {'text': 'assets/girafe.png', 'score': -2},
         {'text': 'assets/elephant.png', 'score': 10},
-      ],
+      ]
     },
     {
       'questionText': 'lion.wav',
@@ -57,7 +57,7 @@ class _MyquizzState extends State<Myquizz> {
         {'text': 'assets/lion.png', 'score': 10},
         {'text': 'assets/loup.png', 'score': -2},
         {'text': 'assets/lapin.png', 'score': -2},
-      ],
+      ]
     },
     {
       'questionText': 'wolf.wav',
@@ -66,7 +66,7 @@ class _MyquizzState extends State<Myquizz> {
         {'text': 'assets/zebre.png', 'score': -2},
         {'text': 'assets/girafe.png', 'score': -2},
         {'text': 'assets/poisson.png', 'score': -2},
-      ],
+      ]
     },
     {
       'questionText': 'cat.mp3',
@@ -75,7 +75,7 @@ class _MyquizzState extends State<Myquizz> {
         {'text': 'assets/elephant.png', 'score': -2},
         {'text': 'assets/cheval.png', 'score': -2},
         {'text': 'assets/poisson.png', 'score': -2},
-      ],
+      ]
     },
   ];
 
@@ -122,14 +122,14 @@ class _MyquizzState extends State<Myquizz> {
                   fit: BoxFit.cover,
                 ),
                 title: Text(
-                  "Bravo",
+                  "Score",
                   style: TextStyle(
                     fontSize: 22.0,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 description: Text(
-                  'Bravo votre score est ${_totalScore}',
+                  ' votre score est ${_totalScore}',
                   textAlign: TextAlign.center,
                 ),
                 entryAnimation: EntryAnimation.RIGHT,
@@ -158,8 +158,8 @@ class _MyquizzState extends State<Myquizz> {
         return MaterialApp(
           home: Scaffold(
             appBar: AppBar(
-              title: Text('Quizz'),
-              backgroundColor: Color(0xFF00E676),
+              title: Text('Quizz                     ${_questionIndex + 1}/5'),
+              backgroundColor: Colors.deepPurpleAccent.shade100,
             ),
             body: Padding(
               padding: const EdgeInsets.all(30.0),
