@@ -1,7 +1,11 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_text_to_speech/flutter_text_to_speech.dart';
+import 'package:get_it/get_it.dart';
 import 'package:highlight_text/highlight_text.dart';
+import 'package:orthophoniste/models/done.dart';
+import 'package:orthophoniste/services/done_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 
 class Exercice extends StatefulWidget {
@@ -21,8 +25,8 @@ class _TextToSpeechState extends State<Exercice> {
 
   }
   final Map<String, HighlightedWord> _highlights = {
-    'Rouge': HighlightedWord(
-      onTap: () => print('flutter'),
+    'Red': HighlightedWord(
+      onTap: () => print('red'),
       textStyle: const TextStyle(
         color: Colors.red,
         fontWeight: FontWeight.bold,
@@ -59,13 +63,27 @@ class _TextToSpeechState extends State<Exercice> {
   };
 
 
+
   stt.SpeechToText _speech;
   bool _isListening = false;
   String _text = 'Tap the button and start speaking';
-  String _text1 = 'Rouge';
+  String _text1 = 'red';
+  String _text2 = 'Black';
   double _confidence = 1.0;
 
 
+  String _idUser;
+
+  DoneService get service => GetIt.I<DoneService>();
+
+  Future<bool> fetchData() =>
+      Future.delayed(Duration(microseconds: 3000), () async {
+        debugPrint('Step 2, fetch data');
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        _idUser = preferences.getString('UserId');
+
+        return true;
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -110,9 +128,10 @@ class _TextToSpeechState extends State<Exercice> {
                       repeat: true,
                       child: FloatingActionButton(
                         onPressed: () {
-                          //  controller.speak("${textController.text}");
+                           // controller.speak("${textController.text}");
                           controller.setLanguage("fr-FR");
                           controller.speak(_text1);
+                          //controller.speak(_text2);
                         },
                         child: Icon(Icons.volume_up),
                       ),
@@ -156,6 +175,19 @@ class _TextToSpeechState extends State<Exercice> {
             if (val.hasConfidenceRating && val.confidence > 0) {
               _confidence = val.confidence;
             }
+
+            print('end of the game');
+            print(_idUser);
+            Done done = Done(
+                idExercice: "4",
+                exerciceName: "Dyslexie orale ",
+                idToDo: "mm",
+                score: _confidence.toString(),
+                idUser: _idUser);
+            service.addEx(done).then((result) => {
+              print(result.data),
+              if (!result.errer) {print(result.errorMessage)}
+            });
           }),
         );
       }

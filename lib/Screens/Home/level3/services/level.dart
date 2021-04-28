@@ -5,5 +5,6 @@ class Level {
   String name;
   Color color;
 
+
   Level({ this.name, this.number, this.color });
 }

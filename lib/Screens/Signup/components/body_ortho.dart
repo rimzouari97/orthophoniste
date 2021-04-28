@@ -184,7 +184,7 @@ class _BodyState extends State<BodyOrtho> {
                       password: widget._pwd,
                       type: "ortho",
                       codeV: widget._code);
-                      userP.code = userP.hashCode;
+                      userP.code = userP.hashCode.toString();
                       print(userP.code);
                   final result = await service.SignUpOrtho(userP);
 

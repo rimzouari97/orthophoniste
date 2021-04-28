@@ -131,6 +131,9 @@ class _GameScreenState extends State<GameScreen> {
                     isSolved = true;
                   });
                   return Alert().showAlert(context, "Correct!", "You got it right!");
+
+
+
                 } else {
                   return Alert().showAlert(context, "Wrong!", "Try again!");
                 }

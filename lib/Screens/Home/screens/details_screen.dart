@@ -36,6 +36,14 @@ class DetailsScreen extends StatelessWidget {
                       height: size.height * 0.05,
                     ),
                     Text(
+                      "Memory Games",
+                      style: Theme.of(context)
+                          .textTheme
+                          .display1
+                          .copyWith(fontWeight: FontWeight.w900),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
                       "Let's remember!",
                       style: Theme.of(context)
                           .textTheme
@@ -63,7 +71,7 @@ class DetailsScreen extends StatelessWidget {
                       runSpacing: 20,
                       children: <Widget>[
                         SeassionCard(
-                          seassionNum: 1,
+                          sessionName: "visuelle",
                           isDone: true,
                           press: () {Navigator.push(
                             context,
@@ -73,7 +81,7 @@ class DetailsScreen extends StatelessWidget {
                           );},
                         ),
                         SeassionCard(
-                          seassionNum: 2,
+                          sessionName: "auditive",
                           press: () {Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) {
@@ -82,19 +90,19 @@ class DetailsScreen extends StatelessWidget {
                           );},
                         ),
                         SeassionCard(
-                          seassionNum: 3,
+                          sessionName: "Empty",
                           press: () {},
                         ),
                         SeassionCard(
-                          seassionNum: 4,
+                          sessionName: "Empty",
                           press: () {},
                         ),
                         SeassionCard(
-                          seassionNum: 5,
+                          sessionName: "Empty",
                           press: () {},
                         ),
                         SeassionCard(
-                          seassionNum: 6,
+                          sessionName: "Empty",
                           press: () {},
                         ),
                       ],
@@ -162,10 +170,12 @@ class DetailsScreen extends StatelessWidget {
 
 class SeassionCard extends StatelessWidget {
   final int seassionNum;
+  final String sessionName;
   final bool isDone;
   final Function press;
   const SeassionCard({
     Key key,
+    this.sessionName,
     this.seassionNum,
     this.isDone = false,
     this.press,
@@ -216,7 +226,7 @@ class SeassionCard extends StatelessWidget {
 
                     SizedBox(width: 10),
                     Text(
-                      "Session $seassionNum",
+                      " $sessionName",
                       style: Theme.of(context).textTheme.subtitle,
                     )
                   ],

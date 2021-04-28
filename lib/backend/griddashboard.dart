@@ -1,45 +1,54 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:orthophoniste/Screens/Profile/profile_screen.dart';
+import 'package:orthophoniste/Screens/ProfileOrtho/profile_screen.dart';
+import 'package:orthophoniste/backend/affect_exerecice.dart';
+import 'package:orthophoniste/backend/done_list.dart';
+import 'package:orthophoniste/backend/patient_list.dart';
+import 'package:orthophoniste/backend/to_do_list.dart';
 
 class GridDashboard extends StatelessWidget {
   Items item1 = new Items(
-      title: "Calendar",
+      title: "Affect Exercices",
       subtitle: "March, Wednesday",
-      event: "3 Events",
+      event: "",
+      Navigator: AffectExercice(),
       img: "assets/images/calendar.png",);
 
   Items item2 = new Items(
     title: "Patients",
     subtitle: "FROM 1 TO 10",
-    event: "4 Items",
+    event: "",
     img: "assets/images/score1.png",
+    Navigator: PatientList()
   );
   Items item3 = new Items(
-    title: "Contacts",
+    title: "Affect Exercices",
     subtitle: "Lucy Mao going to Office",
     event: "",
     img: "assets/images/map.png",
+
   );
   Items item4 = new Items(
     title: "Activities",
     subtitle: "Rose favirited your Post",
     event: "",
     img: "assets/images/festival.png",
+    Navigator: DoneList()
   );
   Items item5 = new Items(
     title: "To do",
     subtitle: "Homework, Design",
-    event: "4 Items",
+    event: "",
     img: "assets/images/todo.png",
+   Navigator: ToDoList(),
   );
   Items item6 = new Items(
     title: "Settings",
     subtitle: "",
     event: "2 Items",
     img: "assets/images/setting.png",
-    Navigator: ProfileScreen(),
+    Navigator: ProfileScreenOrtho(),
   );
 
   @override
@@ -98,14 +107,7 @@ class GridDashboard extends StatelessWidget {
                     SizedBox(
                       height: 14,
                     ),
-                    Text(
-                      data.event,
-                      style: GoogleFonts.openSans(
-                          textStyle: TextStyle(
-                              color: Colors.white70,
-                              fontSize: 11,
-                              fontWeight: FontWeight.w600)),
-                    ),
+
 
                   ],
                 ),

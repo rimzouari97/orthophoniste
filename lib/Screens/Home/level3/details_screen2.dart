@@ -4,7 +4,10 @@ import 'package:orthophoniste/Screens/Home/constants.dart';
 import 'package:orthophoniste/Screens/Home/level1/work1.dart';
 import 'package:orthophoniste/Screens/Home/level2/work1_img.dart';
 import 'package:orthophoniste/Screens/Home/level3/pages/home.dart';
+import 'package:orthophoniste/Screens/Home/level3/services/level.dart';
 import 'package:orthophoniste/Screens/Home/level4/screens/bottom_navigation_screen.dart';
+import 'package:orthophoniste/Screens/Home/level4/widget/exercice.dart';
+import 'package:orthophoniste/Screens/Home/level5/views/level.dart';
 
 
 import 'package:orthophoniste/Screens/Home/widgets/bottom_nav_bar.dart';
@@ -66,7 +69,7 @@ class DetailsScreen2 extends StatelessWidget {
                       runSpacing: 20,
                       children: <Widget>[
                         SeassionCard(
-                          seassionNum: 1,
+                          sessionName: "Dyslexie L",
                           isDone: true,
                           press: () {Navigator.push(
                             context,
@@ -76,30 +79,35 @@ class DetailsScreen2 extends StatelessWidget {
                           );},
                         ),
                         SeassionCard(
-                          seassionNum: 2,
+                          sessionName: "Dyslexie O",
                           press: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) {
-                                return BottomNavigationScreen();
+                                return Exercice();
                               }),
                             );
                           },
                         ),
                         SeassionCard(
-                          seassionNum: 3,
+                          sessionName: "Dysortho",
+                          press: () {Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) {
+                              return Levels();
+                            }),
+                          );},
+                        ),
+                        SeassionCard(
+                          sessionName: "Empty",
                           press: () {},
                         ),
                         SeassionCard(
-                          seassionNum: 4,
+                          sessionName: "Empty",
                           press: () {},
                         ),
                         SeassionCard(
-                          seassionNum: 5,
-                          press: () {},
-                        ),
-                        SeassionCard(
-                          seassionNum: 6,
+                          sessionName: "Empty",
                           press: () {},
                         ),
                       ],
@@ -167,11 +175,13 @@ class DetailsScreen2 extends StatelessWidget {
 
 class SeassionCard extends StatelessWidget {
   final int seassionNum;
+  final String sessionName;
   final bool isDone;
   final Function press;
   const SeassionCard({
     Key key,
     this.seassionNum,
+    this.sessionName,
     this.isDone = false,
     this.press,
   }) : super(key: key);
@@ -221,7 +231,7 @@ class SeassionCard extends StatelessWidget {
 
                     SizedBox(width: 10),
                     Text(
-                      "Session $seassionNum",
+                      "$sessionName",
                       style: Theme.of(context).textTheme.subtitle,
                     )
                   ],
