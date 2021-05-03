@@ -12,7 +12,12 @@ import 'package:orthophoniste/models/todo_param.dart';
 import 'package:orthophoniste/services/done_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class DetailsScreen extends StatelessWidget {
+class DetailsScreen extends StatefulWidget {
+  @override
+  _Memoire createState() => new  _Memoire();
+}
+
+class _Memoire extends State<DetailsScreen> {
 
   DoneService get service => GetIt.I<DoneService>();
   String _idUser;
@@ -78,7 +83,7 @@ class DetailsScreen extends StatelessWidget {
                     SizedBox(
                       width: size.width * .6, // it just take 60% of total width
                       child: Text(
-                        "Live happier and healthier by learning the fundamentals of meditation and mindfulness",
+                        "Live happier and healthier by learning the fundamentals of these game",
                       ),
                     ),
                     SizedBox(
@@ -90,34 +95,42 @@ class DetailsScreen extends StatelessWidget {
                       runSpacing: 20,
                       children: <Widget>[
                         SeassionCard(
+                          seassionNum: 1,
                           sessionName: "visuelle",
                           press: () {
                             var idvisuelle = "6088d3d7079cb400154a37dd";
                             for (var item in snapshot.data){
                               if (item.idExercice == idvisuelle){
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) {
-                                    return Home();
-                                  }),
-                                );
+                                setState(() {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) {
+                                      return Home();
+                                    }),
+                                  );
+                                });
+
                               }
                             }
                             print('no access');
                            },
                         ),
                         SeassionCard(
+                          seassionNum: 2,
                           sessionName: "auditive",
                           press: () {
                             var idauditive = "6088d3e2079cb400154a37de";
                             for (var item in snapshot.data){
                               if (item.idExercice == idauditive) {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) {
-                                    return Home2();
-                                  }),
-                                );
+                                setState(() {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) {
+                                      return Home2();
+                                    }),
+                                  );
+                                });
+
                               }
                             }
                             print('no access');
@@ -128,7 +141,7 @@ class DetailsScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 20),
                     Text(
-                      "Meditation",
+                      "Memory",
                       style: Theme.of(context)
                           .textTheme
                           .title

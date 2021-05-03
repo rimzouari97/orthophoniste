@@ -37,7 +37,7 @@ class _HomeState extends State<Home> {
     gridViewTiles = myPairs;
     Future.delayed(const Duration(seconds: 5), () {
 // Here you can write your code
-      if (mounted ) setState(() {
+     setState(() {
         print("2 seconds done");
         // Here you can write your code for open new view
         questionPairs = getQuestionPairs();
@@ -204,7 +204,6 @@ class _HomeState extends State<Home> {
                                 print(String.fromCharCode(points));
                                 print(_idUser);
                                 Done done = Done(
-                                    
                                     exerciceName: "Memory game ",
                                     idToDo: "mm",
                                     score: points.toString(),
