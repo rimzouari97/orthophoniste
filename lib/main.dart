@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:orthophoniste/Screens/Home/level3/pages/game.dart';
+import 'package:orthophoniste/Screens/Home/level3/pages/home.dart';
 import 'package:orthophoniste/Screens/Home/level4/screens/bottom_navigation_screen.dart';
 import 'package:orthophoniste/Screens/Login/components/background.dart';
 import 'package:orthophoniste/Screens/Login/components/bodyHas.dart';
 import 'package:orthophoniste/Screens/Login/hasOrth.dart';
 import 'package:orthophoniste/Screens/Profile/profile_screen.dart';
 import 'package:orthophoniste/Screens/Welcome/welcome_screen.dart';
+import 'package:orthophoniste/Screens/homepage.dart';
 import 'package:orthophoniste/backend/backHome.dart';
+import 'package:orthophoniste/beg_pack/Beg.dart';
 import 'package:orthophoniste/constants.dart';
 import 'package:orthophoniste/models/score.dart';
 import 'package:orthophoniste/models/user_info.dart';
@@ -45,21 +48,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-       debugShowCheckedModeBanner: false,
-       title: 'Flutter Auth',
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Auth',
       theme: ThemeData(
-      primaryColor: kPrimaryColor,
-      scaffoldBackgroundColor: Colors.white,
+        primaryColor: kPrimaryColor,
+        scaffoldBackgroundColor: Colors.white,
         visualDensity: VisualDensity.adaptivePlatformDensity,
-     ),
+      ),
       initialRoute: '/',
-      routes: {
-        '/game': (context) => Game()
-      },
-       // home :ProfileScreen(),
-      home: MyHomePage(),
-     );
-
+      routes: {'/game': (context) => Game()},
+      // home :ProfileScreen(),
+      home: HomeScreen(),
+    );
   }
 }
 
@@ -69,56 +69,55 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   //User data;
   String ortho;
 
   @override
   Widget build(BuildContext context) => FutureBuilder(
-    future: fetchData(),
-    builder: (context, snapshot) {
-      //print("test 500");
-      print(snapshot.hasData);
-      if(snapshot.hasData) {
-           if (snapshot.data == "patient") {
-             if(ortho == "false"){
-               return HasOrth();
-             }
+        future: fetchData(),
+        builder: (context, snapshot) {
+          //print("test 500");
+          print(snapshot.hasData);
+          if (snapshot.hasData) {
+            if (snapshot.data == "patient") {
+              if (ortho == "false") {
+                return HasOrth();
+              }
               return HomeScreen();
-           } else {
+            } else {
               return backHome();
-          }
-       }else if (snapshot.data == null) {
-        return WelcomeScreen();
-
-      }else {
-         // We can show the loading view until the data comes back.
-          debugPrint('Step 1, build loading widget');
-          return Center( child:
-
-            SizedBox(
-              child: CircularProgressIndicator(backgroundColor: Colors.white,),
-              width: 60,
-              height: 60,
-            ),
-           // Padding(
-           //   padding: EdgeInsets.all(50 ),
+            }
+          } else if (snapshot.data == null) {
+            return WelcomeScreen();
+          } else {
+            // We can show the loading view until the data comes back.
+            debugPrint('Step 1, build loading widget');
+            return Center(
+              child: SizedBox(
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.white,
+                ),
+                width: 60,
+                height: 60,
+              ),
+              // Padding(
+              //   padding: EdgeInsets.all(50 ),
               //  child: Text('Awaiting result...'),
-         //   )
+              //   )
+            );
+          }
+        },
+      );
 
-          );
-        }
-      },
-  );
-
-  Future<String> fetchData() => Future.delayed(Duration(microseconds: 3000), () async{
-    debugPrint('Step 2, fetch data');
-    SharedPref pref = SharedPref();
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    ortho  = prefs.getString('HasOrtho');
-    print("ortho");
-    print(ortho);
-    return pref.getUserType();
-    //return false;
-  });
+  Future<String> fetchData() =>
+      Future.delayed(Duration(microseconds: 3000), () async {
+        debugPrint('Step 2, fetch data');
+        SharedPref pref = SharedPref();
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        ortho = prefs.getString('HasOrtho');
+        print("ortho");
+        print(ortho);
+        return pref.getUserType();
+        //return false;
+      });
 }
