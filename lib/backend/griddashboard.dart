@@ -1,7 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'package:orthophoniste/Screens/ProfileOrtho/profile_screen.dart';
+import 'package:orthophoniste/Screens/charts/pie_chart.dart';
 import 'package:orthophoniste/backend/affect_exerecice.dart';
 import 'package:orthophoniste/backend/done_list.dart';
 import 'package:orthophoniste/backend/patient_list.dart';
@@ -23,11 +25,11 @@ class GridDashboard extends StatelessWidget {
     Navigator: PatientList()
   );
   Items item3 = new Items(
-    title: "Affect Exercices",
+    title: "Charts",
     subtitle: "Lucy Mao going to Office",
     event: "",
-    img: "assets/images/map.png",
-
+    img: "assets/images/chart.png",
+    Navigator: PieChart()
   );
   Items item4 = new Items(
     title: "Activities",
