@@ -31,6 +31,34 @@ class _Memoire extends State<DetailsScreen> {
         return await service.getToDoListByIdP(Done(idUser: _idUser));
       });
 
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Access Alert'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text("No access ! please wait for your ortho!"),
+                //Text('Would you like to approve of this message?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Ok'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) => FutureBuilder(
       future: fetchData(), builder: (BuildContext context, AsyncSnapshot<List<ToDoParam>> snapshot) {
@@ -99,8 +127,11 @@ class _Memoire extends State<DetailsScreen> {
                           sessionName: "visuelle",
                           press: () {
                             var idvisuelle = "6088d3d7079cb400154a37dd";
+                            var i=1;
+                            bool b = false;
                             for (var item in snapshot.data){
                               if (item.idExercice == idvisuelle){
+                                b=true;
                                 setState(() {
                                   Navigator.push(
                                     context,
@@ -110,9 +141,14 @@ class _Memoire extends State<DetailsScreen> {
                                   );
                                 });
 
+                              } else if (snapshot.data.length == i && !b){
+                                print('no access');
+                                _showMyDialog();
                               }
+                              print(i);
+                              i++;
                             }
-                            print('no access');
+
                            },
                         ),
                         SeassionCard(
@@ -120,9 +156,12 @@ class _Memoire extends State<DetailsScreen> {
                           sessionName: "auditive",
                           press: () {
                             var idauditive = "6088d3e2079cb400154a37de";
+                            var i=1;
+                            bool b = false;
                             for (var item in snapshot.data){
                               if (item.idExercice == idauditive) {
                                 setState(() {
+                                  b=true;
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(builder: (context) {
@@ -131,9 +170,14 @@ class _Memoire extends State<DetailsScreen> {
                                   );
                                 });
 
+                              } else if (snapshot.data.length == i && !b){
+                                print('no access');
+                                _showMyDialog();
                               }
+                              print(i);
+                              i++;
                             }
-                            print('no access');
+
                            },
                         ),
 

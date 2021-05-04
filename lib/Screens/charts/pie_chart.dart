@@ -7,12 +7,14 @@ class PieChart extends StatelessWidget {
 
 
   final data = [
+
     GradesData('A', 190),
     GradesData('B', 230),
     GradesData('C', 150),
     GradesData('D', 73),
     GradesData('E', 31),
     GradesData('Fail', 13),
+
   ];
 
   _getSeriesData() {
