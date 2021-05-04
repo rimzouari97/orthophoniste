@@ -161,15 +161,23 @@ class _MyquizzState extends State<Myquizz> {
               title: Text('Quizz                     ${_questionIndex + 1}/5'),
               backgroundColor: Colors.deepPurpleAccent.shade100,
             ),
-            body: Padding(
-              padding: const EdgeInsets.all(30.0),
-              child: _questionIndex < _questions.length
-                  ? Quiz(
-                      answerQuestion: _answerQuestion,
-                      questionIndex: _questionIndex,
-                      questions: _questions,
-                    ) //Quiz
-                  : Result(_totalScore, _resetQuiz),
+            body: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/bgcolor.jpg"),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: _questionIndex < _questions.length
+                    ? Quiz(
+                        answerQuestion: _answerQuestion,
+                        questionIndex: _questionIndex,
+                        questions: _questions,
+                      ) //Quiz
+                    : Result(_totalScore, _resetQuiz),
+              ),
             ), //Padding
           ), //Scaffold
           debugShowCheckedModeBanner: false,
