@@ -35,6 +35,34 @@ class _Quiz extends State<ExerciceConcentration> {
         return await service.getToDoListByIdP(Done(idUser: _idUser));
       });
 
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Alert d acces'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text("vous n'avez pas acces"),
+                //Text('Would you like to approve of this message?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Ok'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) => FutureBuilder(
       future: fetchData(),
@@ -125,8 +153,11 @@ class _Quiz extends State<ExerciceConcentration> {
                               seassionName: "Couleurs",
                               press: () {
                                 var idcolor = "6074ab5b82c71b0015918da2";
+                                var i = 1;
+                                bool b = false;
                                 for (var item in snapshot.data) {
                                   if (item.idExercice == idcolor) {
+                                    b = true;
                                     setState(() {
                                       Navigator.push(
                                         context,
@@ -135,33 +166,73 @@ class _Quiz extends State<ExerciceConcentration> {
                                         }),
                                       );
                                     });
+                                    // i++;
+                                  } else if (snapshot.data.length == i && !b) {
+                                    print('no acces');
+                                    _showMyDialog();
                                   }
+                                  print(i);
+                                  i++;
                                 }
-                                print('no acces');
                               },
                             ),
                             SeassionCard(
                               seassionNum: 4,
                               seassionName: "Forme",
                               press: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) {
-                                    return DragPicture();
-                                  }),
-                                );
+                                var idcolor = "6074abf282c71b0015918da3";
+                                var i = 1;
+                                print(snapshot.data.length);
+                                bool b = false;
+                                for (var item in snapshot.data) {
+                                  if (item.idExercice == idcolor) {
+                                    b = true;
+                                    setState(() {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) {
+                                          return DragPicture();
+                                        }),
+                                      );
+                                    });
+                                    //i++;
+                                  } else if (snapshot.data.length == i && !b) {
+                                    print('no acces');
+                                    _showMyDialog();
+                                  }
+                                  print(i);
+                                  i++;
+                                }
+                                //_showMyDialog();
+                                //  print('no acces');
                               },
                             ),
                             SeassionCard(
                               seassionNum: 5,
                               seassionName: "Quizz 2",
                               press: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) {
-                                    return Myquizz();
-                                  }),
-                                );
+                                var idcolor = "6074b1a582c71b0015918da5";
+                                var i = 1;
+                                bool b = false;
+                                for (var item in snapshot.data) {
+                                  if (item.idExercice == idcolor) {
+                                    b = true;
+                                    setState(() {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) {
+                                          return Myquizz();
+                                        }),
+                                      );
+                                    });
+                                    //i++;
+                                  } else if (snapshot.data.length == i && !b) {
+                                    print('no acces');
+                                    _showMyDialog();
+                                  }
+                                  print(i);
+                                  i++;
+                                }
                               },
                             ),
                             /* SeassionCard(
