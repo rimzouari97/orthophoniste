@@ -105,12 +105,19 @@ class ColorGameState extends State<ColorGame> {
       builder: (BuildContext context, List<String> incoming, List rejected) {
         if (score[emoji] == true) {
           return Container(
-            color: Colors.white,
+            // color: Colors.white,
             child: Emoji(emoji: emoji),
             //child: Text('Correct!'),
             alignment: Alignment.center,
             height: 80,
             width: 180,
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.blueAccent,
+                width: 3,
+              ),
+              color: Colors.white,
+            ),
           );
         } else {
           return Container(color: choices[emoji], height: 80, width: 200);
@@ -154,6 +161,7 @@ class ColorGameState extends State<ColorGame> {
                         'Bravo votre score est ${scoore}',
                         textAlign: TextAlign.center,
                       ),
+                      buttonOkText: Text("ok"),
                       entryAnimation: EntryAnimation.RIGHT,
                       onOkButtonPressed: () {},
                     ));
