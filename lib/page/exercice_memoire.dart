@@ -197,7 +197,8 @@ class _Quiz extends State<ExerciceConcentration> {
                                     });
                                     //i++;
                                   } else if (snapshot.data.length == i && !b) {
-                                    print('no acces');
+                                    print(
+                                        "vous n'avez pas le droit d'acceder a cet exercice car il n est pas encore affecter a vous");
                                     _showMyDialog();
                                   }
                                   print(i);
@@ -235,10 +236,17 @@ class _Quiz extends State<ExerciceConcentration> {
                                 }
                               },
                             ),
-                            /* SeassionCard(
-                          seassionNum: 6,
-                          press: () {},
-                        ),*/
+                            /*SeassionCard(
+                              seassionNum: 6,
+                              press: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) {
+                                    return DragPicture();
+                                  }),
+                                );
+                              },
+                            ),*/
                           ],
                         ),
                         SizedBox(height: 20),
