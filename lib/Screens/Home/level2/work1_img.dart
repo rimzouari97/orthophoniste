@@ -56,7 +56,7 @@ class _HomeState extends State<Home2> {
   }
 
   String _idUser;
-
+  String lastscore = "0";
   DoneService get service => GetIt.I<DoneService>();
 
   Future<bool> fetchData() =>
@@ -64,7 +64,11 @@ class _HomeState extends State<Home2> {
         debugPrint('Step 2, fetch data');
         SharedPreferences preferences = await SharedPreferences.getInstance();
         _idUser = preferences.getString('UserId');
-
+        Done done = await service.getLastScore(
+            Done(idUser: _idUser, idExercice: "6088d3e2079cb400154a37de"));
+        if (!done.score.isEmpty) {
+          lastscore = done.score;
+        }
         return true;
       });
 
@@ -103,6 +107,7 @@ class _HomeState extends State<Home2> {
                 points != 800 ? Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
+                    Text("last score here  " + lastscore),
                     Text(
                       "$points/800",
                       style: TextStyle(
@@ -209,14 +214,14 @@ class _HomeState extends State<Home2> {
                     print(String.fromCharCode(points));
                     print(_idUser);
                     Done done = Done(
-
+                        idExercice: "6088d3e2079cb400154a37de",
                         exerciceName: "Memory game orale",
                         idToDo: "mm",
                         score: points.toString(),
                         idUser: _idUser);
                     service.addEx(done).then((result) => {
                       print(result.data),
-                      if (!result.errer) {print(result.errorMessage)}
+                      //if (!result.errer) {print(result.errorMessage)}
                     });
 
                   },

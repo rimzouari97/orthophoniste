@@ -10,6 +10,7 @@ import 'package:orthophoniste/Screens/Home/level2/custom_dialog.dart';
 import 'package:orthophoniste/Screens/Home/screens/details_screen.dart';
 import 'package:orthophoniste/models/done.dart';
 import 'package:orthophoniste/services/done_service.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants.dart';
@@ -50,7 +51,7 @@ class _HomeState extends State<Home> {
   }
 
   String _idUser;
-
+  String lastscore = "0";
   DoneService get service => GetIt.I<DoneService>();
 
   Future<bool> fetchData() =>
@@ -58,12 +59,19 @@ class _HomeState extends State<Home> {
         debugPrint('Step 2, fetch data');
         SharedPreferences preferences = await SharedPreferences.getInstance();
         _idUser = preferences.getString('UserId');
-
+        Done done = await service.getLastScore(
+            Done(idUser: _idUser, idExercice: "6088d3d7079cb400154a37dd"));
+        if (!done.score.isEmpty) {
+          lastscore = done.score;
+        }
         return true;
       });
 
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => FutureBuilder(
+  future: fetchData(),
+  builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -98,6 +106,7 @@ class _HomeState extends State<Home> {
                 points != 800 ? Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
+                    Text("last score here  " + lastscore),
                     Text(
                       "$points/800",
                       style: TextStyle(
@@ -144,7 +153,6 @@ class _HomeState extends State<Home> {
                               if (mounted) setState(() {
                                 points = 0;
                                 reStart();
-
                               });
                             },
                             child: Container(
@@ -201,16 +209,15 @@ class _HomeState extends State<Home> {
                                         description: points.toString(),
                                         buttonText: "OK"));
                                 print('end of the game');
-                                print(String.fromCharCode(points));
-                                print(_idUser);
                                 Done done = Done(
+                                    idExercice: "6088d3d7079cb400154a37dd",
                                     exerciceName: "Memory game ",
                                     idToDo: "mm",
                                     score: points.toString(),
                                     idUser: _idUser);
                                 service.addEx(done).then((result) => {
                                   print(result.data),
-                                  if (!result.errer) {print(result.errorMessage)}
+                                 // if (!result.errer) {print(result.errorMessage)}
                                 });
 
                               },
@@ -235,7 +242,7 @@ class _HomeState extends State<Home> {
 
         ),
       ),);
-  }
+  });
 }
 
 
@@ -292,6 +299,8 @@ class _TileState extends State<Tile> {
                   " this " +
                   myPairs[widget.tileIndex].getImageAssetPath());
               print("wrong choice");
+              points = points - 20;
+              print(points);
               //print(widget.tileIndex);
               //print(selectedIndex);
               selected = true;
@@ -313,6 +322,7 @@ class _TileState extends State<Tile> {
             if (mounted) setState(() {
               selectedTile = myPairs[widget.tileIndex].getImageAssetPath();
               selectedIndex = widget.tileIndex;
+
             });
 
            

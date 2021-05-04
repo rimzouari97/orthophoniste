@@ -130,4 +130,44 @@ class DoneService {
       return list;
     });
   }
+
+  /////////////get last score/////////////
+
+  Future <Done> getLastScore(Done item) {
+    //  print(json.encode(item.toJson()));
+    //var parm = {"id": item.id};
+    //print(json.encode(parm));
+    return http
+        .post(BASE_URL + "done/" + "getscore",
+            headers: headers, body: json.encode(item.toJson()))
+        .then((data) {
+      print(data.statusCode.toString());
+      // print(data.body);
+      List<Done> list = <Done>[];
+      if (data.statusCode == 200) {
+        Map<String, dynamic> jsonData = json.decode(data.body);
+
+        print(jsonData);
+
+        for (var item in jsonData.values.last) {
+          print("item");
+          print(item);
+
+          Done done = Done(
+              id: item["_id"],
+              score: item['score'],
+              iteration: item["iteration"],
+              idUser: item["idUser"],
+              idToDo: item["idToDo"],
+              idExercice: item["idExercice"],
+              exerciceName: item["exerciceName"]);
+
+          list.add(done);
+        }
+      }
+      return list.last;
+    });
+  }
+//////////////////////////
+
 }
