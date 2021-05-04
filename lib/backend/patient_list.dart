@@ -36,7 +36,14 @@ class MyPatientList extends StatefulWidget {
 class _MyPatientListState extends State<MyPatientList> {
   UserService get service => GetIt.I<UserService>();
   APIResponse rep;
-  Future<APIResponse<OrthoParam>> fetchData() =>
+
+  void initState() {
+    super.initState();
+
+  }
+
+
+  Future<List<OrthoParam>> fetchData() =>
       Future.delayed(Duration(microseconds: 3000), () async {
         SharedPreferences preferences = await SharedPreferences.getInstance();
         widget._name = await preferences.getString('UserName');
@@ -53,6 +60,17 @@ class _MyPatientListState extends State<MyPatientList> {
     future: fetchData(), //fetchData(),
     builder: (context, snapshot) {
       if(snapshot.hasData) {
+        print('eeeeeeeeeeee');
+       // print(snapshot.data.length );
+        if(snapshot.data.length == 0){
+           return Scaffold(
+             appBar: AppBar(
+               title: Text("List Patient"),
+             ),
+             body:Container(child: Center(child: Text(" pas de patient"),)),
+           );
+        }
+
         return Scaffold(
           appBar: AppBar(
             title: Text("List Patient"),
@@ -83,17 +101,16 @@ class _MyPatientListState extends State<MyPatientList> {
           //print('project snapshot data is: ${projectSnap.data}');
           return Container();
         }
+        int len = 0;
+        try {
+           len = Snap.data.length;
+        }catch(e){
+          print(e.toString());
+        }
         return ListView.builder(
-          itemCount: Snap.data.data1.length,
+          itemCount: len,
           itemBuilder: (context, index) {
 
-              rep = Snap.data as APIResponse;
-
-            /*
-                    Text(rep.data1[index].nameP),
-                    Text(rep.data1[index].valid),
-
-                     */
             return Column(
               children: <Widget>[
                 Card(
@@ -103,52 +120,64 @@ class _MyPatientListState extends State<MyPatientList> {
                         Image.network("https://scontent.ftun12-1.fna.fbcdn.net/v/t1.6435-9/48405342_1823459577765035_1096277873884397568_n.jpg?_nc_cat=111&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=24WMN-QgMioAX-NzwGI&_nc_ht=scontent.ftun12-1.fna&oh=10f7bf58608579869ca8b83704157ea3&oe=609BD258",
                         height: 60,
                         width: 60,),
-                        Text(Snap.data.data1),
-                        Text(rep.data1[index].nameP),
+                        Text(" "),
+                        Text(Snap.data[index].nameP),
                         Text(" "),
                         Text(" "),
                      // Text("Approuve",style: TextStyle(color: Colors.green),),
                         Text(" "),Text(" "),Text(" "),
 
-                         MaterialButton(
-                            padding: EdgeInsets.only(right: 0.0),
-                            onPressed:  rep.data1[index].valid == "false"
-                                ? () => Approuve(rep, index)
-                                : null,
+                         Column(
+                           children: [
+                             MaterialButton(
+                               padding: EdgeInsets.only(right: 0.0),
+                               onPressed:  Snap.data[index].valid == "false"
+                                   ? () => {
+                                 Approuve(Snap.data, index),
+                                 setState(() {})
+                               }
+                                   : null,
 
-                            child: Text( rep.data1[index].valid == "false"
-                                    ? "Approuve"
-                                    : "patient", style: TextStyle(
-                              color: Colors.green
-                          )
-                          ),
-                          textColor: Colors.white,
-                          shape: RoundedRectangleBorder(side: BorderSide(
-                              color: Colors.blue,
-                              width: 1,
-                              style: BorderStyle.solid
-                          ), borderRadius: BorderRadius.circular(50)),
-                        ),
-                        Text(" "),
-                        MaterialButton(
+                               child: Text( Snap.data[index].valid == "false"
+                                   ? "Approuve"
+                                   : "patient", style: TextStyle(
+                                   color: Colors.green
+                               )
+                               ),
+                               textColor: Colors.white,
+                               shape: RoundedRectangleBorder(side: BorderSide(
+                                   color: Colors.blue,
+                                   width: 1,
+                                   style: BorderStyle.solid
+                               ), borderRadius: BorderRadius.circular(50)),
+                             ),
+                             Text(" "),
+                             MaterialButton(
 
-                          padding: EdgeInsets.only(right: 0.0),
-                          onPressed: (){
-                            print("Supprime");
-                            print(rep.data1[index].nameP);
-                            Delete(rep, index);
-                          },
-                          child: Text('supprime', style: TextStyle(
-                              color: Colors.green
-                          )
-                          ),
-                          textColor: Colors.white,
-                          shape: RoundedRectangleBorder(side: BorderSide(
-                              color: Colors.blue,
-                              width: 1,
-                              style: BorderStyle.solid
-                          ), borderRadius: BorderRadius.circular(50)),
-                        ),
+                               padding: EdgeInsets.only(right: 0.0),
+                               onPressed: (){
+                                 print("Supprime");
+                                 print(Snap.data[index].nameP);
+                                 Delete(Snap.data, index);
+                                 setState(() {});
+                               },
+                               child: Text('supprime', style: TextStyle(
+                                   color: Colors.green
+                               )
+                               ),
+                               textColor: Colors.white,
+                               shape: RoundedRectangleBorder(side: BorderSide(
+                                   color: Colors.blue,
+                                   width: 1,
+                                   style: BorderStyle.solid
+                               ), borderRadius: BorderRadius.circular(50)),
+                             ),
+
+                           ],
+                         ),
+
+
+
 
 
                       ],
@@ -167,10 +196,10 @@ class _MyPatientListState extends State<MyPatientList> {
     );
   }
 
-  dynamic Approuve(APIResponse<OrthoParam> rep,int index) async {
-     print(rep.data1[index].id);
+  dynamic Approuve(List<OrthoParam> rep,int index) async {
+     print(rep[index].id);
 
-      await service.Approuve(OrthoParam(id:rep.data1[index].id,idP:rep.data1[index].idP, )).then((res) => {
+      await service.Approuve(OrthoParam(id:rep[index].id,idP:rep[index].idP, )).then((res) => {
         if(!res.errer){
           Navigator.pushReplacement(
               context,
@@ -184,10 +213,10 @@ class _MyPatientListState extends State<MyPatientList> {
       });
 
   }
-  dynamic Delete(APIResponse<OrthoParam> rep,int index) async {
-    print(rep.data1[index].id);
+  dynamic Delete(List<OrthoParam> rep,int index) async {
+    print(rep[index].id);
 
-    await service.deleteHasOrth(OrthoParam(id:rep.data1[index].id ,idP: rep.data1[index].idP)).then((res) => {
+    await service.deleteHasOrth(OrthoParam(id:rep[index].id ,idP: rep[index].idP)).then((res) => {
       if(!res.errer){
         Navigator.pushReplacement(
             context,

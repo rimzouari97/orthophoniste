@@ -1,23 +1,23 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
-import 'package:orthophoniste/Screens/Home/home.dart';
 import 'package:orthophoniste/Screens/Login/login_screen.dart';
 import 'package:orthophoniste/Screens/Signup/components/background.dart';
 import 'package:orthophoniste/Screens/Signup/components/or_divider.dart';
 import 'package:orthophoniste/Screens/Signup/components/social_icon.dart';
 import 'package:orthophoniste/Screens/Signup/signup_ortho_screen.dart';
-import 'package:orthophoniste/backend/backHome.dart';
 import 'package:orthophoniste/components/already_have_an_account_acheck.dart';
 import 'package:orthophoniste/components/rounded_button.dart';
-import 'package:orthophoniste/components/rounded_input_field.dart';
-import 'package:orthophoniste/components/rounded_password_field.dart';
 import 'package:orthophoniste/constants.dart';
 import 'package:orthophoniste/models/API_response.dart';
 import 'package:orthophoniste/models/user_info.dart';
 import 'package:orthophoniste/models/user_parm.dart';
 import 'package:orthophoniste/services/user_service.dart';
 import 'package:orthophoniste/shared_preferences.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
+import 'package:http/http.dart'as http;
 
 
 class Body extends StatefulWidget {
@@ -144,34 +144,7 @@ class _BodyState extends State<Body> {
                     obscureText: _obscureText,
                   ),
                   Text(""),
-                   /*
-                   TextFormField(
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      icon:  IconButton(
-                         icon: new Icon(Icons.merge_type_rounded),
 
-                  ),
-                      labelText: 'Type',
-                      border:  OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50),
-                        borderSide: BorderSide(
-                          width: 2,
-                        ),
-                      ),
-                    ),
-                    validator: (String value) {
-                      if(value.isEmpty){
-                        return "must not be empty";
-                      }else{
-                        return null;
-                      }
-                    },
-                    onSaved: (String value) {
-                      widget._type = value;
-                    },
-                  ),
-                  */
 
                   SizedBox(child: Text(""),height: 25,),
                   RoundedButton(
@@ -262,7 +235,86 @@ class _BodyState extends State<Body> {
                      children: <Widget>[
                      SocalIcon(
                        iconSrc: "assets/icons/facebook.svg",
-                       press: () {
+                       press: ()  async {
+                         print("test Fb");
+                         FacebookLogin facebookLogin = FacebookLogin();
+                             final result = await facebookLogin.logIn(['email']);
+                               final token = result.accessToken.token;
+                                final graphResponse = await http.get(
+                               'https://graph.facebook.com/v2.12/me?fields=name,first_name,last_name,email&access_token=${token}');
+                                    print(graphResponse.body);
+                                    if(result.status == FacebookLoginStatus.loggedIn){
+                                      final profile = json.decode(graphResponse.body);
+                                     // print(profile["email"]);
+                                      UserParam user = UserParam(
+                                          type: "patient",
+                                          email:profile["email"],
+                                          name : profile["name"],
+                                          password: profile["first_name"]
+                                      );
+                                      final result = await service.SignUp(user);
+
+                                      if (result.data != null) {
+
+
+                                        showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                title: Row(
+                                                    children:[
+                                                      Icon(Icons.info,color: Colors.blueAccent),
+                                                      Text('  Info. ')
+                                                    ]
+                                                ),
+                                                content:Container (
+                                                  child: Column(
+                                                    children: [
+                                                      Text("You must login with your account"),
+                                                      Text("You password is your name plase change "),
+                                                    ],
+                                                  ),
+                                                ),
+                                                actions: <Widget>[
+                                                  FlatButton(
+                                                    child: Text("YES"),
+                                                    onPressed: () {
+                                                      //Put your code here which you want to execute on Yes button click.
+                                                      Navigator.of(context).pop();
+                                                      print('ok');
+                                                      Navigator.pushAndRemoveUntil(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (BuildContext context) => LoginScreen(),
+                                                        ),
+                                                            (route) => false,
+                                                      );
+                                                    },
+                                                  ),
+
+
+                                                ],
+                                              );
+                                            }
+                                        );
+
+                                      } else {
+                                        final text = result.errorMessage;
+
+
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                                title: Text("Error"),
+                                                content: Text(text)
+                                            );
+                                          },
+                                        );
+                                      }
+                         }
+
+
 
                       },
                   ),

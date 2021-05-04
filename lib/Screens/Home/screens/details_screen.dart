@@ -1,15 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get_it/get_it.dart';
 import 'package:orthophoniste/Screens/Home/constants.dart';
 import 'package:orthophoniste/Screens/Home/level1/work1.dart';
 import 'package:orthophoniste/Screens/Home/level2/work1_img.dart';
 
 import 'package:orthophoniste/Screens/Home/widgets/bottom_nav_bar.dart';
 import 'package:orthophoniste/Screens/Home/widgets/search_bar.dart';
+import 'package:orthophoniste/models/done.dart';
+import 'package:orthophoniste/models/todo_param.dart';
+import 'package:orthophoniste/services/done_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class DetailsScreen extends StatelessWidget {
+class DetailsScreen extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
+  _Memoire createState() => new  _Memoire();
+}
+
+class _Memoire extends State<DetailsScreen> {
+
+  DoneService get service => GetIt.I<DoneService>();
+  String _idUser;
+  List<ToDoParam> listtodo;
+  Future<List<ToDoParam>> fetchData() =>
+      Future.delayed(Duration(microseconds: 3000), () async {
+        debugPrint('Step 2, fetch data');
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        _idUser = preferences.getString('UserId');
+
+        return await service.getToDoListByIdP(Done(idUser: _idUser));
+      });
+
+  @override
+  Widget build(BuildContext context) => FutureBuilder(
+      future: fetchData(), builder: (BuildContext context, AsyncSnapshot<List<ToDoParam>> snapshot) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
       bottomNavigationBar: BottomNavBar(),
@@ -36,6 +60,14 @@ class DetailsScreen extends StatelessWidget {
                       height: size.height * 0.05,
                     ),
                     Text(
+                      "Memory Games",
+                      style: Theme.of(context)
+                          .textTheme
+                          .display1
+                          .copyWith(fontWeight: FontWeight.w900),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
                       "Let's remember!",
                       style: Theme.of(context)
                           .textTheme
@@ -51,7 +83,7 @@ class DetailsScreen extends StatelessWidget {
                     SizedBox(
                       width: size.width * .6, // it just take 60% of total width
                       child: Text(
-                        "Live happier and healthier by learning the fundamentals of meditation and mindfulness",
+                        "Live happier and healthier by learning the fundamentals of these game",
                       ),
                     ),
                     SizedBox(
@@ -64,44 +96,52 @@ class DetailsScreen extends StatelessWidget {
                       children: <Widget>[
                         SeassionCard(
                           seassionNum: 1,
-                          isDone: true,
-                          press: () {Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) {
-                              return Home();
-                            }),
-                          );},
+                          sessionName: "visuelle",
+                          press: () {
+                            var idvisuelle = "6088d3d7079cb400154a37dd";
+                            for (var item in snapshot.data){
+                              if (item.idExercice == idvisuelle){
+                                setState(() {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) {
+                                      return Home();
+                                    }),
+                                  );
+                                });
+
+                              }
+                            }
+                            print('no access');
+                           },
                         ),
                         SeassionCard(
                           seassionNum: 2,
-                          press: () {Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) {
-                              return Home2();
-                            }),
-                          );},
+                          sessionName: "auditive",
+                          press: () {
+                            var idauditive = "6088d3e2079cb400154a37de";
+                            for (var item in snapshot.data){
+                              if (item.idExercice == idauditive) {
+                                setState(() {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) {
+                                      return Home2();
+                                    }),
+                                  );
+                                });
+
+                              }
+                            }
+                            print('no access');
+                           },
                         ),
-                        SeassionCard(
-                          seassionNum: 3,
-                          press: () {},
-                        ),
-                        SeassionCard(
-                          seassionNum: 4,
-                          press: () {},
-                        ),
-                        SeassionCard(
-                          seassionNum: 5,
-                          press: () {},
-                        ),
-                        SeassionCard(
-                          seassionNum: 6,
-                          press: () {},
-                        ),
+
                       ],
                     ),
                     SizedBox(height: 20),
                     Text(
-                      "Meditation",
+                      "Memory",
                       style: Theme.of(context)
                           .textTheme
                           .title
@@ -157,15 +197,17 @@ class DetailsScreen extends StatelessWidget {
         ],
       ),
     );
-  }
+  });
 }
 
 class SeassionCard extends StatelessWidget {
   final int seassionNum;
+  final String sessionName;
   final bool isDone;
   final Function press;
   const SeassionCard({
     Key key,
+    this.sessionName,
     this.seassionNum,
     this.isDone = false,
     this.press,
@@ -216,7 +258,7 @@ class SeassionCard extends StatelessWidget {
 
                     SizedBox(width: 10),
                     Text(
-                      "Session $seassionNum",
+                      " $sessionName",
                       style: Theme.of(context).textTheme.subtitle,
                     )
                   ],

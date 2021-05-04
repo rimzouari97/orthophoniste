@@ -1,9 +1,11 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:orthophoniste/backend/dropdowe_mune_exercice.dart';
 import 'package:orthophoniste/constants.dart';
 import 'package:orthophoniste/models/API_response.dart';
+import 'package:orthophoniste/models/exercice.dart';
 import 'package:orthophoniste/models/ortho_parm.dart';
+import 'package:orthophoniste/models/todo_param.dart';
 import 'package:orthophoniste/models/user_info.dart';
 import 'package:http/http.dart'as http;
 import 'package:orthophoniste/models/user_parm.dart';
@@ -229,7 +231,7 @@ class UserService {
 
 
 
-  Future<APIResponse<OrthoParam>> gatAllByIdOrtho(UserParam item){
+  Future<List<OrthoParam>> gatAllByIdOrtho(UserParam item){
   //  print(json.encode(item.toJson()));
     var parm ={"id" :item.id};
     print(json.encode(parm));
@@ -263,7 +265,7 @@ class UserService {
 
 
       }
-      return APIResponse(errer: false,data1: list);
+      return list;
     });
   }
 
@@ -291,7 +293,7 @@ class UserService {
 
   Future<APIResponse<User>> deleteHasOrth(OrthoParam item){
     print(json.encode(item.toJson()));
-    return http.post("http://192.168.1.11:3000/"+"hasOrth/"+"delete" ,headers: headers,body: json.encode(item.toJson()))
+    return http.post(BASE_URL+"hasOrth/"+"delete" ,headers: headers,body: json.encode(item.toJson()))
         .then((data) {
       print(data.statusCode.toString() );
       if(data.statusCode == 200){
@@ -308,6 +310,152 @@ class UserService {
       }
       return APIResponse<User>(errer: true,errorMessage: " An errer 1");
     }).catchError((_) =>  APIResponse<User>(errer: true,errorMessage: " Opps server Errer"));
+  }
+
+
+  Future<APIResponse<OrthoParam>> getPatient(OrthoParam item){
+   // print(json.encode(item.toJson()));
+    return http.post(BASE_URL+"hasOrth/"+"getPatient" ,headers: headers,body: json.encode(item.toJson()))
+        .then((data) {
+     // print(data.statusCode.toString() );
+      List<OrthoParam>  list = <OrthoParam>[];
+      if(data.statusCode == 200){
+
+        Map<String, dynamic> jsonData = json.decode(data.body);
+
+       // print(jsonData);
+
+        for(var item in jsonData.values.last ){
+
+        //  print("item");
+        //  print(item);
+
+
+          OrthoParam orthoParam = OrthoParam(
+              valid: item["valid"],
+              id: item["_id"],
+              idOrtho: item['idOrtho'],
+              idP: item["idP"],
+              nameP: item["nameP"]
+          );
+
+          list.add(orthoParam);
+
+        }
+        return APIResponse<OrthoParam>(data1: list,errer: false);
+        }else {
+
+          return APIResponse<OrthoParam>(errer: true);
+        }
+
+      return APIResponse<OrthoParam>(errer: true,errorMessage: " An errer 1");
+    }).catchError((_) =>  APIResponse<OrthoParam>(errer: true,errorMessage: " Opps server Errer"));
+  }
+
+  Future<bool> getAllExercice(){
+    return  http.get(BASE_URL+"exercices/list",headers: headers)
+        .then((data) {
+      print(data.statusCode.toString() );
+      if(data.statusCode == 200){
+        Map<String, dynamic> jsonData = json.decode(data.body);
+        print(jsonData);
+        List<Exercice>  list = <Exercice>[];
+
+        for(var item in jsonData.values.last ){
+          print("item");
+          Exercice exercice = Exercice(
+              category: item["category"],
+              id: item["_id"],
+              type: item['type'],
+              score: item["score"],
+              name: item["name"],
+              niveau :item["niveau"]
+          );
+          print(exercice.id);
+          print(exercice.name);
+          print(exercice.type);
+          print(exercice.category);
+          print(exercice.niveau);
+          print(exercice.score);
+
+          list.add(exercice);
+        }
+        print(list.length);
+        return list ;
+        print("");
+      }else {
+
+        return APIResponse<Exercice>(errer: true);
+      }
+
+      return APIResponse<OrthoParam>(errer: true,errorMessage: " An errer 1");
+    }).catchError((_) =>  APIResponse<Exercice>(errer: true,errorMessage: " Opps server Errer"));
+  }
+
+
+
+
+  Future<APIResponse<ToDoParam>> addToDo(ToDoParam item){
+   item.AvgScore ="0";
+    print(json.encode(item.toJson()));
+    return http.post(BASE_URL+"todo/"+"add" ,headers: headers,body: json.encode(item.toJson()))
+        .then((data) {
+      print(data.statusCode.toString() );
+      print(data.body);
+      if(data.statusCode == 200){
+
+        final Map<String, dynamic> jsonData = json.decode(data.body);
+
+          var item = jsonData["todo"];
+          print(item);
+          final todo = ToDoParam(
+              id : item['_id'],
+              AvgScore:  item['AvgScore'],
+              idExercice: item['idExercice'],
+              idUser: item['idUser']
+          );
+          return APIResponse<ToDoParam>(data: todo,errer: false);
+      }
+      return APIResponse<ToDoParam>(errer: true,errorMessage: " An errer 1");
+    }).catchError((_) =>  APIResponse<ToDoParam>(errer: true,errorMessage: " Opps server Errer"));
+  }
+
+  Future<List<ToDoParam>> getToDoByIdUser(ToDoParam user){
+
+    //  print(json.encode(item.toJson()));
+    var parm ={"idUser" :user.idUser};
+    print(json.encode(parm));
+    return http.post(BASE_URL+"todo/getByIdUser" ,headers: headers,body: json.encode(user.toJson()))
+        .then((data) {
+      print(data.statusCode.toString() );
+      // print(data.body);
+      List<ToDoParam>  list = <ToDoParam>[];
+      if(data.statusCode == 200){
+
+        Map<String, dynamic> jsonData = json.decode(data.body);
+
+        print(jsonData);
+
+        for(var item in jsonData.values.last ){
+
+          print("item");
+          print(item);
+
+          ToDoParam done = ToDoParam(
+              id: item["_id"],
+              idUser: item["idUser"],
+              idExercice: item["idExercice"],
+              AvgScore: item["AvgScore"]
+          );
+
+          list.add(done);
+        }
+
+
+      }
+      return list;
+    });
+
   }
 
 

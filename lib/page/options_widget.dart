@@ -1,9 +1,10 @@
+import 'package:audioplayers/audio_cache.dart';
 import 'package:flutter/material.dart';
 import 'package:orthophoniste/models/option.dart';
 import 'package:orthophoniste/models/question.dart';
 import 'package:orthophoniste/widged/utils.dart';
 
-class OptionsWidget extends StatelessWidget {
+class OptionsWidget extends StatefulWidget {
   final Question question;
   final ValueChanged<Option> onClickedOption;
 
@@ -14,10 +15,15 @@ class OptionsWidget extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  _OptionsWidgetState createState() => _OptionsWidgetState();
+}
+
+class _OptionsWidgetState extends State<OptionsWidget> {
+  @override
   Widget build(BuildContext context) => ListView(
         physics: BouncingScrollPhysics(),
         children: Utils.heightBetween(
-          question.options
+          widget.question.options
               .map((option) => buildOption(context, option))
               .toList(),
           height: 8,
@@ -25,10 +31,10 @@ class OptionsWidget extends StatelessWidget {
       );
 
   Widget buildOption(BuildContext context, Option option) {
-    final color = getColorForOption(option, question);
+    final color = getColorForOption(option, widget.question);
 
     return GestureDetector(
-      onTap: () => onClickedOption(option),
+      onTap: () => widget.onClickedOption(option),
       child: Container(
         padding: EdgeInsets.all(12),
         decoration: BoxDecoration(
@@ -38,7 +44,7 @@ class OptionsWidget extends StatelessWidget {
         child: Column(
           children: [
             buildAnswer(option),
-            buildSolution(question.selectedOption, option),
+            buildSolution(widget.question.selectedOption, option),
           ],
         ),
       ),
@@ -75,7 +81,19 @@ class OptionsWidget extends StatelessWidget {
     if (!isSelected) {
       return Colors.grey.shade200;
     } else {
-      return option.isCorrect ? Colors.green : Colors.red;
+      if (option.isCorrect) {
+        print('correct');
+        player.play(question.sound);
+        //player.play('success.mp3');
+        return Colors.green;
+      } else {
+        player.play('wrong.mp3');
+        print('false!!!!');
+        return Colors.red;
+      }
+      //return option.isCorrect ? Colors.green : Colors.red;
     }
   }
 }
+
+final player = AudioCache();
