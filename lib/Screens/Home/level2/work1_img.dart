@@ -19,7 +19,7 @@ class Home2 extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
 }
-
+int i =0;
 class _HomeState extends State<Home2> {
   List<TileModelImage> gridViewTiles = new List<TileModelImage>();
   List<TileModelImage> questionPairs = new List<TileModelImage>();
@@ -104,12 +104,12 @@ class _HomeState extends State<Home2> {
                 SizedBox(
                   height: 20,
                 ),
-                points != 800 ? Column(
+                points != 80 ? Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Text("last score here  " + lastscore),
                     Text(
-                      "$points/800",
+                      "$points/80",
                       style: TextStyle(
                           fontSize: 20, fontWeight: FontWeight.w500),
                     ),
@@ -131,7 +131,8 @@ class _HomeState extends State<Home2> {
             color: Colors.grey[300],
             boxShape:
             NeumorphicBoxShape.roundRect(BorderRadius.circular(12))),
-        child: points != 800 ? GridView(
+        child:
+        i!=8 ? GridView(
           shrinkWrap: true,
           //physics: ClampingScrollPhysics(),
           scrollDirection: Axis.vertical,
@@ -155,6 +156,7 @@ class _HomeState extends State<Home2> {
                 GestureDetector(
                   onTap: (){
                     setState(() {
+                      i=0;
                       points = 0;
                       reStart();
                     });
@@ -281,7 +283,8 @@ class _TileState extends State<Tile> {
             /// testing if the selected tiles are same
             if (selectedTile == myPairs[widget.tileIndex].getSound()) {
               print("add point");
-              points = points + 100;
+              points = points + 10;
+              i++;
               print(selectedTile + " thishis" + widget.imagePathUrl);
               TileModelImage tileModel = new TileModelImage();
               print(widget.tileIndex);
@@ -302,6 +305,7 @@ class _TileState extends State<Tile> {
                   " thishis " +
                   myPairs[widget.tileIndex].getImageAssetPath());
               print("wrong choice");
+              points = points - 5;
               print(widget.tileIndex);
               print(selectedIndex);
               selected = true;

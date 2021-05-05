@@ -179,7 +179,7 @@ class _TextToSpeechState extends State<Exercice> {
             print('end of the game');
             print(_idUser);
             Done done = Done(
-
+                idExercice: "6088d443079cb400154a37e0",
                 exerciceName: "Dyslexie orale game",
                 idToDo: "mm",
                 score: _confidence.toString()+" %",

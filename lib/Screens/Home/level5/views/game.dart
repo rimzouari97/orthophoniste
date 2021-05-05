@@ -20,7 +20,7 @@ class Game extends StatefulWidget {
   @override
   _GameState createState() => _GameState();
 }
-
+int i=0;
 class _GameState extends State<Game> {
   List<String> letters;
   List<String> addedLetters;
@@ -48,21 +48,27 @@ class _GameState extends State<Game> {
                     RaisedButton(
                       child: Text('Next'),
                       onPressed: () {
-                        Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => Levels()));
-                        scoore += 100;
-                        print('end of the game');
-                        print(String.fromCharCode(scoore));
-                        print(_idUser);
-                        Done done = Done(
-                            exerciceName: "Dysorthographie "+ nextLevel.id.toString()+" :"+scoore.toString(),
-                            idToDo: "mm",
-                            score: scoore.toString(),
-                            idUser: _idUser);
-                        service.addEx(done).then((result) => {
-                          print(result.data),
-                          if (!result.errer) {print(result.errorMessage)}
-                        });
+                        if (i!=8){
+                          Navigator.of(context).push(
+                              MaterialPageRoute(builder: (context) => Levels()));
+                        scoore += 10;
+                        i++;
+                        }
+                        else {
+                          print('end of the game');
+                          Done done = Done(
+                              idExercice: "6088d462079cb400154a37e1",
+                              exerciceName: "Dysorthographie " + nextLevel.id
+                                  .toString(),
+                              idToDo: "mm",
+                              score: scoore.toString(),
+                              idUser: _idUser);
+                          service.addEx(done).then((result) =>
+                          {
+                            print(result.data),
+                            if (!result.errer) {print(result.errorMessage)}
+                          });
+                        }
                       },
                     )
                   ],
