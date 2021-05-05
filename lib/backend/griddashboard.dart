@@ -5,6 +5,7 @@ import 'package:orthophoniste/Screens/ProfileOrtho/profile_screen.dart';
 import 'package:orthophoniste/Screens/charts/page/home_page.dart';
 import 'package:orthophoniste/backend/affect_exerecice.dart';
 import 'package:orthophoniste/backend/done_list.dart';
+import 'package:orthophoniste/backend/feedback.dart';
 import 'package:orthophoniste/backend/patient_list.dart';
 import 'package:orthophoniste/backend/to_do_list.dart';
 
@@ -28,7 +29,7 @@ class GridDashboard extends StatelessWidget {
     subtitle: "Lucy Mao going to Office",
     event: "",
     img: "assets/images/chart.png",
-    Navigator: Chart()
+    Navigator: FeedbackWidget()
   );
   Items item4 = new Items(
     title: "Activities",
