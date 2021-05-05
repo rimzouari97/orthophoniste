@@ -424,7 +424,7 @@ class UserService {
 
     //  print(json.encode(item.toJson()));
     var parm ={"idUser" :user.idUser};
-    print(json.encode(parm));
+  //  print(json.encode(parm));
     return http.post(BASE_URL+"todo/getByIdUser" ,headers: headers,body: json.encode(user.toJson()))
         .then((data) {
       print(data.statusCode.toString() );
@@ -434,12 +434,12 @@ class UserService {
 
         Map<String, dynamic> jsonData = json.decode(data.body);
 
-        print(jsonData);
+       // print(jsonData);
 
         for(var item in jsonData.values.last ){
 
-          print("item");
-          print(item);
+        //  print("item");
+        //  print(item);
 
           ToDoParam done = ToDoParam(
               id: item["_id"],
@@ -456,6 +456,29 @@ class UserService {
       return list;
     });
 
+  }
+
+
+
+  Future<bool> deleteToDo(ToDoParam item){
+    print(json.encode(item.toJson()));
+    return http.post(BASE_URL+"todo/"+"delete" ,headers: headers,body: json.encode(item.toJson()))
+        .then((data) {
+      print(data.statusCode.toString() );
+      if(data.statusCode == 200){
+
+        final Map<String, dynamic> jsonData = json.decode(data.body);
+
+        if(jsonData["success"] != null){
+          print(jsonData["message"]);
+          return true;
+        }else {
+
+          return  false;
+        }
+      }
+      return false;
+    });
   }
 
 
