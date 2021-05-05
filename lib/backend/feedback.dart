@@ -167,7 +167,7 @@ class _FeedbackState extends State<Feedback> {
                           setState(() {
                             print("_selectedItem.nameP");
                             print(_selectedItem.nameP);
-                        ToDoParam   toDoParam = ToDoParam(idExercice: _selectedItem1.id,idUser: _selectedItem.idP);
+                            ToDoParam   toDoParam = ToDoParam(idExercice: _selectedItem1.id,idUser: _selectedItem.idP);
                             print(toDoParam.idUser);
                             Navigator.push(
                               context,
@@ -176,7 +176,7 @@ class _FeedbackState extends State<Feedback> {
                               ),
 
                             );
-                           // LineChartWidget(toDoParam),
+                            // LineChartWidget(toDoParam),
                           });
 
                         },
@@ -186,7 +186,7 @@ class _FeedbackState extends State<Feedback> {
                           child:  MaterialButton(child: Text("Save"),color: Colors.deepPurple,),
                         )
                     ),
-                   // Text(toDoParam.idUser),
+                    // Text(toDoParam.idUser),
 
 
                   ],

@@ -1,4 +1,3 @@
-
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
@@ -48,8 +47,8 @@ class _MyLineChartState extends State<MyLineChart> {
 
   Future<List<Done>> fetchData() =>
       Future.delayed(Duration(microseconds: 3000), () async {
-       // SharedPreferences preferences = await SharedPreferences.getInstance();
-   //     widget._id = await preferences.getString('idUser');
+        // SharedPreferences preferences = await SharedPreferences.getInstance();
+        //     widget._id = await preferences.getString('idUser');
         return  await service.getState(widget._toDoParam);
 
         // return list;

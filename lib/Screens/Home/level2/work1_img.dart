@@ -75,8 +75,9 @@ class _HomeState extends State<Home2> {
 
 
   @override
-  Widget build(BuildContext context) {
-
+  Widget build(BuildContext context) => FutureBuilder(
+  future: fetchData(),
+  builder: (BuildContext context, AsyncSnapshot<bool> snapshot){
     return Scaffold(
       backgroundColor: Colors.teal,
       body: SingleChildScrollView(
@@ -198,7 +199,7 @@ class _HomeState extends State<Home2> {
                         fontWeight: FontWeight.w500
                     ),),
                   ),
-                ),
+                ), SizedBox(height: 20,),
                 NeumorphicButton(
                   style: NeumorphicStyle(
                     color: Colors.amber[400],
@@ -249,7 +250,7 @@ class _HomeState extends State<Home2> {
 
       ),
     );
-  }
+  });
 }
 
 

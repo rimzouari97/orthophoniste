@@ -20,11 +20,24 @@ class Game extends StatefulWidget {
   @override
   _GameState createState() => _GameState();
 }
-int i=0;
+
+
 class _GameState extends State<Game> {
   List<String> letters;
   List<String> addedLetters;
+  int scoore = 0;
+  String _idUser;
 
+  DoneService get service => GetIt.I<DoneService>();
+
+  Future<bool> fetchData() =>
+      Future.delayed(Duration(microseconds: 3000), () async {
+        debugPrint('Step 2, fetch data');
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        _idUser = preferences.getString('UserId');
+
+        return true;
+      });
   @override
   void initState() {
     super.initState();
@@ -48,27 +61,21 @@ class _GameState extends State<Game> {
                     RaisedButton(
                       child: Text('Next'),
                       onPressed: () {
-                        if (i!=8){
-                          Navigator.of(context).push(
-                              MaterialPageRoute(builder: (context) => Levels()));
-                        scoore += 10;
-                        i++;
-                        }
-                        else {
-                          print('end of the game');
-                          Done done = Done(
-                              idExercice: "6088d462079cb400154a37e1",
-                              exerciceName: "Dysorthographie " + nextLevel.id
-                                  .toString(),
-                              idToDo: "mm",
-                              score: scoore.toString(),
-                              idUser: _idUser);
-                          service.addEx(done).then((result) =>
-                          {
-                            print(result.data),
-                            if (!result.errer) {print(result.errorMessage)}
-                          });
-                        }
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) => Levels()));
+                        //scoore += 10;
+                        print('end of the game');
+                        print(_idUser);
+                        Done done = Done(
+                            idExercice: "6088d462079cb400154a37e1",
+                            exerciceName: "Dysorthographie ",
+                            idToDo: "mm",
+                            score: scoore.toString(),
+                            idUser: _idUser);
+                        service.addEx(done).then((result) => {
+                          print(result.data),
+                          if (!result.errer) {print(result.errorMessage)}
+                        });
                       },
                     )
                   ],
@@ -78,19 +85,6 @@ class _GameState extends State<Game> {
 
     }
   }
-  int scoore = 0;
-  String _idUser;
-
-  DoneService get service => GetIt.I<DoneService>();
-
-  Future<bool> fetchData() =>
-      Future.delayed(Duration(microseconds: 3000), () async {
-        debugPrint('Step 2, fetch data');
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        _idUser = preferences.getString('UserId');
-
-        return true;
-      });
 
   @override
   Widget build(BuildContext context) {
@@ -125,7 +119,7 @@ class _GameState extends State<Game> {
                               setState(() {
                                 addedLetters[index] = data;
                                 compareWord();
-
+                                scoore +=10;
                               });
                             }, builder: (context, _, __) {
                               return GestureDetector(

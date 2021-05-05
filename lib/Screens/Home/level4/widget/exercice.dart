@@ -131,6 +131,7 @@ class _TextToSpeechState extends State<Exercice> {
                            // controller.speak("${textController.text}");
                           controller.setLanguage("fr-FR");
                           controller.speak(_text1);
+                          print("user"+_idUser);
                           //controller.speak(_text2);
                         },
                         child: Icon(Icons.volume_up),

@@ -157,6 +157,7 @@ class _Apprend extends State<DetailsScreen2> {
                             bool b = false;
                             for (var item in snapshot.data){
                               if (item.idExercice == idDyslexieO){
+                                b=true;
                                 setState(() {
                                   Navigator.push(
                                     context,
@@ -186,6 +187,7 @@ class _Apprend extends State<DetailsScreen2> {
                             bool b = false;
                             for (var item in snapshot.data){
                               if (item.idExercice == idDysortho) {
+                                b=true;
                                 setState(() {
                                   Navigator.push(
                                     context,

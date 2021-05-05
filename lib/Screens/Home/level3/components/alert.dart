@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Alert {
+
   Future<void> showAlert(
     BuildContext context,
     String title,
@@ -26,10 +27,10 @@ class Alert {
             )
           ),
           actions: <Widget>[
-            FlatButton(
+             FlatButton(
               child: Text("NEXT"),
               onPressed: () {
-                Navigator.of(context).pop();
+                  Navigator.of(context).pop();
               },
             ),
             ],
