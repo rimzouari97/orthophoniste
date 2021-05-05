@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:orthophoniste/Screens/charts/widget/line_titles.dart';
+
 class LineChartWidget extends StatelessWidget {
   final List<Color> gradientColors = [
     const Color(0xff23b6e6),
@@ -14,7 +15,7 @@ class LineChartWidget extends StatelessWidget {
           minX: 0,
           maxX: 11,
           minY: 0,
-          maxY: 6,
+          maxY: 11,
           titlesData: LineTitles.getTitleData(),
           gridData: FlGridData(
             show: true,

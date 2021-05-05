@@ -7,11 +7,11 @@ class LineChartPage extends StatelessWidget {
   Widget build(BuildContext context) => Card(
         elevation: 4,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(32),
+          borderRadius: BorderRadius.circular(25),
         ),
         color: const Color(0xff020227),
         child: Padding(
-          padding: const EdgeInsets.only(top: 16),
+          padding: const EdgeInsets.fromLTRB(0, 30, 20, 0),
           child: LineChartWidget(),
         ),
       );
