@@ -143,7 +143,7 @@ class _DragPictureState extends State<DragPicture> {
                                                             ),
                                                           ),
                                                           description: Text(
-                                                            'Bravo votre score est ${scoore}',
+                                                            'votre derniere est  ${lastscore} , votre score actuel est ${scoore}',
                                                             textAlign: TextAlign
                                                                 .center,
                                                           ),
@@ -151,7 +151,12 @@ class _DragPictureState extends State<DragPicture> {
                                                               EntryAnimation
                                                                   .RIGHT,
                                                           onOkButtonPressed:
-                                                              () {},
+                                                              () {
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+                                                          },
+                                                          onlyOkButton: true,
                                                         ));
 
                                                 print('end of the game');
@@ -263,7 +268,7 @@ class _DragPictureState extends State<DragPicture> {
                         ),
                       ),
                     ),
-                    Text("last score here  " + lastscore),
+                    //Text("last score here  " + lastscore),
                   ],
                 ),
               ),
