@@ -7,6 +7,7 @@ import 'package:orthophoniste/constants.dart';
 import 'package:orthophoniste/models/exercice.dart';
 import 'package:orthophoniste/models/ortho_parm.dart';
 import 'package:orthophoniste/models/todo_param.dart';
+import 'package:orthophoniste/services/done_service.dart';
 import 'package:orthophoniste/services/user_service.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -50,6 +51,7 @@ class _FeedbackState extends State<Feedback> {
   List<DropdownMenuItem<Exercice>> _dropdownMenuItems1;
   Exercice _selectedItem1 ;
   UserService get service => GetIt.I<UserService>();
+  DoneService get service1 => GetIt.I<DoneService>();
 
 
   Future<List<OrthoParam>> fetchData() => Future.delayed(Duration(microseconds: 5000), () async{
@@ -104,17 +106,15 @@ class _FeedbackState extends State<Feedback> {
       future: fetchData(), //fetchData(),
       builder: (context, snapshot) {
 
-        if(snapshot.hasData){
 
+        if(snapshot.hasData){
 
 
           try {
             _dropdownItems = snapshot.data;
             _dropdownMenuItems = buildDropDownMenuItems(_dropdownItems);
-
-
             _dropdownMenuItems1 = buildDropDownMenuItems1(dropdownItems1);
-            //  _selectedItem1 = f
+
           }catch(e){
             print(e);
           }
@@ -153,8 +153,6 @@ class _FeedbackState extends State<Feedback> {
                             items: _dropdownMenuItems1,
 
                             onChanged: (value) {
-                              //   print("value.name");
-                              //   print(value.name);
                               _selectedItem1 = value;
 
                             }),
@@ -166,24 +164,19 @@ class _FeedbackState extends State<Feedback> {
                           print("text");
                           print(_selectedItem.nameP);
                           print(_selectedItem1.name);
-                          await service.addToDo(ToDoParam(idUser:_selectedItem.idP ,idExercice: _selectedItem1.id)).then((res)  {
-                            // print(res.data.id);
-                            if(!res.errer){
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                      title: Row(
-                                          children:[
-                                            Icon(Icons.info,color: Colors.blueAccent),
-                                            Text('  Info . ')
-                                          ]
-                                      ),
-                                      content: Text("Exercice affecter")
-                                  );
-                                },
-                              );
-                            }
+                          setState(() {
+                            print("_selectedItem.nameP");
+                            print(_selectedItem.nameP);
+                        ToDoParam   toDoParam = ToDoParam(idExercice: _selectedItem1.id,idUser: _selectedItem.idP);
+                            print(toDoParam.idUser);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (BuildContext context) => LineChartWidget(toDoParam),
+                              ),
+
+                            );
+                           // LineChartWidget(toDoParam),
                           });
 
                         },
@@ -193,12 +186,8 @@ class _FeedbackState extends State<Feedback> {
                           child:  MaterialButton(child: Text("Save"),color: Colors.deepPurple,),
                         )
                     ),
-                    Text(""),
-                    Container(
-                      width: 600,
-                      height: 500,
-                      child:  LineChartWidget(),
-                    )
+                   // Text(toDoParam.idUser),
+
 
                   ],
                 )

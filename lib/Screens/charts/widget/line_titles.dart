@@ -6,6 +6,7 @@ class LineTitles {
         show: true,
         bottomTitles: SideTitles(
           showTitles: true,
+          rotateAngle: 20,
           reservedSize: 35,
           getTextStyles: (value) => const TextStyle(
             color: Color(0xff68737d),
@@ -14,12 +15,17 @@ class LineTitles {
           ),
           getTitles: (value) {
             switch (value.toInt()) {
-              case 2:
-                return 'MAR';
+              case 1:
+                return '1 fois';
               case 5:
-                return 'JUN';
-              case 8:
-                return 'SEP';
+                return '5 fois';
+              case 10:
+                return '10 fois';
+              case 15:
+                return '15 fois';
+              case 20:
+              return '20 fois';
+
             }
             return '';
           },
@@ -35,11 +41,15 @@ class LineTitles {
           getTitles: (value) {
             switch (value.toInt()) {
               case 1:
-                return '10k';
+                return '10pts';
               case 3:
-                return '30k';
+                return '30pts';
               case 5:
-                return '50k';
+                return '50pts';
+              case 7:
+                return '70pts';
+              case 9:
+                return '90pts';
             }
             return '';
           },
