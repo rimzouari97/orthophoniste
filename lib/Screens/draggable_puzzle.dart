@@ -19,6 +19,7 @@ class DragPicture extends StatefulWidget {
 class _DragPictureState extends State<DragPicture> {
   int scoore = 0;
   int endgame = 0;
+  String lastscore = "0";
   String _idUser;
   DoneService get service => GetIt.I<DoneService>();
 
@@ -27,6 +28,12 @@ class _DragPictureState extends State<DragPicture> {
         debugPrint('Step 2, fetch data');
         SharedPreferences preferences = await SharedPreferences.getInstance();
         _idUser = preferences.getString('UserId');
+        Done done = await service.getLastScore(
+            Done(idUser: _idUser, idExercice: "6074abf282c71b0015918da3"));
+
+        if (!done.score.isEmpty) {
+          lastscore = done.score;
+        }
         return true;
       });
 
@@ -34,6 +41,7 @@ class _DragPictureState extends State<DragPicture> {
   List<bool> elementState = [false, false, false];
   double itemsize = 70;
   double newsize = 70;
+  Done last;
   @override
   Widget build(BuildContext context) => FutureBuilder(
       future: fetchData(),
@@ -41,13 +49,13 @@ class _DragPictureState extends State<DragPicture> {
         return Scaffold(
           appBar: AppBar(
             title: Text('jeux des formes '),
-            // backgroundColor: Colors.deepPurpleAccent.shade100,
-            backgroundColor: Colors.orangeAccent.shade100,
+            backgroundColor: Colors.deepPurpleAccent.shade100,
+            //backgroundColor: Colors.orangeAccent.shade100,
           ),
           body: Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/bgshape.jpg"),
+                image: AssetImage("assets/bgcolor.jpg"),
                 fit: BoxFit.cover,
               ),
             ),
@@ -254,7 +262,8 @@ class _DragPictureState extends State<DragPicture> {
                           ),
                         ),
                       ),
-                    )
+                    ),
+                    Text("last score here  " + lastscore),
                   ],
                 ),
               ),

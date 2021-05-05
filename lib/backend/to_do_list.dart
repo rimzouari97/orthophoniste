@@ -47,10 +47,10 @@ class _MyToDoListState extends State<MyToDoList> {
       Future.delayed(Duration(microseconds: 3000), () async {
         SharedPreferences preferences = await SharedPreferences.getInstance();
         widget._id = await preferences.getString('UserId');
-        print(widget._id);
+      //  print(widget._id);
 
         var res =  await service.getToDoByIdUser(ToDoParam(idUser:"60726eb547828200150a7571"));
-        print(res.length);
+      //  print(res.length);
          return res;
 
       });
@@ -60,7 +60,7 @@ class _MyToDoListState extends State<MyToDoList> {
     future: fetchData(), //fetchData(),
     builder: (context, snapshot) {
       if(snapshot.hasData) {
-        print('eeeeeeeeeeee');
+     //   print('eeeeeeeeeeee');
         // print(snapshot.data.length );
         if(snapshot.data.length == 0){
           return Scaffold(
@@ -95,52 +95,80 @@ class _MyToDoListState extends State<MyToDoList> {
 
   Widget ListWidget() {
     return FutureBuilder(
-      builder: (context, Snap) {
-        if (Snap.connectionState == ConnectionState.none &&
-            Snap.hasData == null) {
-          //print('project snapshot data is: ${projectSnap.data}');
-          return Container();
-        }
-        int len = 0;
-        try {
-          len = Snap.data.length;
-        }catch(e){
-          print(e.toString());
-        }
-        return ListView.builder(
-          itemCount: len,
-          itemBuilder: (context, index) {
+        future: fetchData(),
+        builder: (context, Snap) {
+          if (Snap.connectionState == ConnectionState.none &&
+              Snap.hasData == null) {
+            //print('project snapshot data is: ${projectSnap.data}');
+            return Container();
+          }
+          int len = 0;
+          try {
+            len = Snap.data.length;
+          } catch (e) {
+            print(e.toString());
+          }
+          return ListView.builder(
+            itemCount: len,
+            itemBuilder: (context, index) {
+              ToDoParam item = Snap.data[index];
 
-            return Column(
-              children: <Widget>[
-                Card(
-                  child: Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Row(children: [
-                      Image.network("https://scontent.ftun12-1.fna.fbcdn.net/v/t1.6435-9/48405342_1823459577765035_1096277873884397568_n.jpg?_nc_cat=111&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=24WMN-QgMioAX-NzwGI&_nc_ht=scontent.ftun12-1.fna&oh=10f7bf58608579869ca8b83704157ea3&oe=609BD258",
-                        height: 60,
-                        width: 60,),
-                      Text(" "),
-                      Text(Snap.data[index].id),
-                      Text(" "),
-                      Text(" "),
-                      // Text("Approuve",style: TextStyle(color: Colors.green),),
-                      Text(" "),Text(" "),Text(" "),
+              return Dismissible(
+                // Each Dismissible must contain a Key. Keys allow Flutter to
+                // uniquely identify widgets.
+                key: Key(item.idUser),
+                child: Column(
+                  children: <Widget>[
+                    Card(
+                      child: Padding(
+                        padding: EdgeInsets.all(16.0),
+                        child: Row(children: [
+                          Image.network(
+                            "https://scontent.ftun12-1.fna.fbcdn.net/v/t1.6435-9/48405342_1823459577765035_1096277873884397568_n.jpg?_nc_cat=111&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=24WMN-QgMioAX-NzwGI&_nc_ht=scontent.ftun12-1.fna&oh=10f7bf58608579869ca8b83704157ea3&oe=609BD258",
+                            height: 60,
+                            width: 60,),
+                          Text(" "),
+                          Text(Snap.data[index].id),
+                          Text(" "),
+                          Text(" "),
+                          // Text("Approuve",style: TextStyle(color: Colors.green),),
+                          Text(" "),
+                          Text(" "),
+                          Text(" "),
 
 
-                    ],
+                        ],
 
+                        ),
+                      ),
                     ),
-                  ),
-                ),
 
-                // Widget to display the list of project
-              ],
-            );
-          },
-        );
-      },
-      future: fetchData(),
+                    // Widget to display the list of project
+                  ],
+                ),
+                  background: Container(color: Colors.red),
+
+                onDismissed: (direction) {
+                  if(direction == DismissDirection.startToEnd){
+                    print("start");
+                 //   service.deleteToDo(item)
+                 //   background: Container(color: Colors.green);
+                  }else  if(direction == DismissDirection.endToStart){
+                    print("end");
+                  }
+                  // Remove the item from the data source.
+
+
+                  // Then show a snackbar.
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(SnackBar(content: Text("$item dismissed")));
+                },
+
+
+              );
+            },
+          );
+        }
     );
   }
 

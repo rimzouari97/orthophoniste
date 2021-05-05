@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 class Done {
+
   String id;
   String exerciceName;
   String iteration;
@@ -9,14 +11,16 @@ class Done {
   String idExercice;
   String idToDo;
 
-  Done(
-      {this.id,
+  Done({
+      this.id,
       this.exerciceName,
       this.idExercice,
       this.idToDo,
       this.idUser,
       this.iteration,
       this.score});
+
+
 
   Map<String, dynamic> toJson() {
     return {
@@ -29,4 +33,6 @@ class Done {
       "exerciceName": exerciceName
     };
   }
+
+
 }
