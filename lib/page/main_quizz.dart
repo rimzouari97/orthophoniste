@@ -140,7 +140,10 @@ class _MyquizzState extends State<Myquizz> {
                   textAlign: TextAlign.center,
                 ),
                 entryAnimation: EntryAnimation.RIGHT,
-                onOkButtonPressed: () {},
+                onOkButtonPressed: () {
+                  Navigator.of(context).pop();
+                },
+                onlyOkButton: true,
               ));
 
       Done done = Done(
