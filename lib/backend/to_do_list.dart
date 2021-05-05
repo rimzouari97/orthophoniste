@@ -111,7 +111,7 @@ class _MyToDoListState extends State<MyToDoList> {
           return ListView.builder(
             itemCount: len,
             itemBuilder: (context, index) {
-              ToDoParam item = Snap.data[index].id;
+              ToDoParam item = Snap.data[index];
 
               return Dismissible(
                 // Each Dismissible must contain a Key. Keys allow Flutter to
