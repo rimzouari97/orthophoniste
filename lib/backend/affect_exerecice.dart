@@ -167,7 +167,7 @@ class _HomeState extends State<AffectExercice> {
                                    Text('  Info . ')
                                  ]
                              ),
-                             content: Text("Exercice affecter")
+                             content: Text("Exercice "+ _selectedItem1.name  +" affecter a "+_selectedItem.nameP )
                          );
                        },
                      );

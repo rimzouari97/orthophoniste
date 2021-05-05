@@ -169,13 +169,36 @@ class _FeedbackState extends State<Feedback> {
                             print(_selectedItem.nameP);
                         ToDoParam   toDoParam = ToDoParam(idExercice: _selectedItem1.id,idUser: _selectedItem.idP);
                             print(toDoParam.idUser);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (BuildContext context) => LineChartWidget(toDoParam),
-                              ),
 
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                    title: Row(
+                                        children:[
+                                          Icon(Icons.info,color: Colors.blueAccent),
+                                          Text('  Info . '),
+
+                                        ]
+
+                                    ),
+                                    content: Text(" statistique de l'exercice "+ _selectedItem1.name  +" affecter a "+_selectedItem.nameP ),
+                                  actions: [
+                                    FlatButton(onPressed: (){
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (BuildContext context) => LineChartWidget(toDoParam),
+                                        ),
+
+                                      );
+                                    }, child: Text('ok'))
+                                  ],
+                                );
+                              },
                             );
+
+
                            // LineChartWidget(toDoParam),
                           });
 
