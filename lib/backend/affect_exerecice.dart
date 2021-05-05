@@ -124,7 +124,9 @@ class _HomeState extends State<AffectExercice> {
                       //    print("_selectedItem");
                       //    print(value);
                           _selectedItem = value;
+                          setState(() {
 
+                          });
 
 
                         }),
