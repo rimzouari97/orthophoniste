@@ -127,49 +127,57 @@ class _MyPatientListState extends State<MyPatientList> {
                      // Text("Approuve",style: TextStyle(color: Colors.green),),
                         Text(" "),Text(" "),Text(" "),
 
-                         MaterialButton(
-                            padding: EdgeInsets.only(right: 0.0),
-                            onPressed:  Snap.data[index].valid == "false"
-                                ? () => {
-                              Approuve(Snap.data, index),
-                             setState(() {})
-                            }
-                              : null,
+                         Column(
+                           children: [
+                             MaterialButton(
+                               padding: EdgeInsets.only(right: 0.0),
+                               onPressed:  Snap.data[index].valid == "false"
+                                   ? () => {
+                                 Approuve(Snap.data, index),
+                                 setState(() {})
+                               }
+                                   : null,
 
-                            child: Text( Snap.data[index].valid == "false"
-                                    ? "Approuve"
-                                    : "patient", style: TextStyle(
-                              color: Colors.green
-                          )
-                          ),
-                          textColor: Colors.white,
-                          shape: RoundedRectangleBorder(side: BorderSide(
-                              color: Colors.blue,
-                              width: 1,
-                              style: BorderStyle.solid
-                          ), borderRadius: BorderRadius.circular(50)),
-                        ),
-                        Text(" "),
-                        MaterialButton(
+                               child: Text( Snap.data[index].valid == "false"
+                                   ? "Approuve"
+                                   : "patient", style: TextStyle(
+                                   color: Colors.green
+                               )
+                               ),
+                               textColor: Colors.white,
+                               shape: RoundedRectangleBorder(side: BorderSide(
+                                   color: Colors.blue,
+                                   width: 1,
+                                   style: BorderStyle.solid
+                               ), borderRadius: BorderRadius.circular(50)),
+                             ),
+                             Text(" "),
+                             MaterialButton(
 
-                          padding: EdgeInsets.only(right: 0.0),
-                          onPressed: (){
-                            print("Supprime");
-                            print(Snap.data[index].nameP);
-                            Delete(Snap.data, index);
-                            setState(() {});
-                          },
-                          child: Text('supprime', style: TextStyle(
-                              color: Colors.green
-                          )
-                          ),
-                          textColor: Colors.white,
-                          shape: RoundedRectangleBorder(side: BorderSide(
-                              color: Colors.blue,
-                              width: 1,
-                              style: BorderStyle.solid
-                          ), borderRadius: BorderRadius.circular(50)),
-                        ),
+                               padding: EdgeInsets.only(right: 0.0),
+                               onPressed: (){
+                                 print("Supprime");
+                                 print(Snap.data[index].nameP);
+                                 Delete(Snap.data, index);
+                                 setState(() {});
+                               },
+                               child: Text('supprime', style: TextStyle(
+                                   color: Colors.green
+                               )
+                               ),
+                               textColor: Colors.white,
+                               shape: RoundedRectangleBorder(side: BorderSide(
+                                   color: Colors.blue,
+                                   width: 1,
+                                   style: BorderStyle.solid
+                               ), borderRadius: BorderRadius.circular(50)),
+                             ),
+
+                           ],
+                         ),
+
+
+
 
 
                       ],

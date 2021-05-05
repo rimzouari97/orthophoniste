@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:orthophoniste/Screens/Home/home.dart';
 import 'package:orthophoniste/Screens/Login/login_screen.dart';
+import 'package:orthophoniste/Screens/Profile/components/update_pwd.dart';
 import 'package:orthophoniste/Screens/Signup/components/background.dart';
 import 'package:orthophoniste/Screens/Signup/components/or_divider.dart';
 import 'package:orthophoniste/Screens/Signup/components/social_icon.dart';
@@ -183,6 +184,21 @@ class _BodyState extends State<BodyHas> {
                                 }
                               }
                           ),
+
+                          RoundedButton(
+                            text: "Change Password",
+                            press: () async {
+                              UpdatePwd();
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => UpdatePwd()
+                                  ),
+
+                              );
+                              print("oooooooooookkkkkkkkkkkkkkkkk");
+                            },
+                          ),
+
                           RoundedButton(
                             text: "logout",
                             press: () async {
@@ -216,6 +232,19 @@ class _BodyState extends State<BodyHas> {
                   Padding(
                     padding: EdgeInsets.all(50 ),
                     child: Text("Wiating  for approve"),
+                  ),
+                  RoundedButton(
+                    text: "Change Password",
+                    press: () async {
+                      UpdatePwd();
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => UpdatePwd()
+                          ),
+
+                      );
+                      print("oooooooooookkkkkkkkkkkkkkkkk");
+                    },
                   ),
                   RoundedButton(
                     text: "logout",

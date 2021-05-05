@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orthophoniste/models/API_response.dart';
@@ -35,14 +36,13 @@ class MyDoneList extends StatefulWidget {
 }
 
 class _MyDoneListState extends State<MyDoneList> {
+
   DoneService get service => GetIt.I<DoneService> ();
   APIResponse rep;
   Future<List<Done>> fetchData() =>
       Future.delayed(Duration(microseconds: 3000), () async {
         SharedPreferences preferences = await SharedPreferences.getInstance();
-        widget._name = await preferences.getString('exerciceName');
-        widget._id = await preferences.getString('idExercice');
-
+        widget._id = await preferences.getString('idUser');
         return  await service.getAllByIdDone(Done(id: widget._id));
 
         // return list;
@@ -59,15 +59,14 @@ class _MyDoneListState extends State<MyDoneList> {
         if(snapshot.data.length == 0){
           return Scaffold(
             appBar: AppBar(
-              title: Text("List Patient"),
+              title: Text("Done lessons"),
             ),
-            body:Container(child: Center(child: Text(" pas de patient"),)),
+            body:Container(child: Center(child: Text(" No lessons "),)),
           );
         }
-
         return Scaffold(
           appBar: AppBar(
-            title: Text("List Patient"),
+            title: Text("Done lessons"),
           ),
           body: ListWidget(),
         );
@@ -109,22 +108,11 @@ class _MyDoneListState extends State<MyDoneList> {
               children: <Widget>[
                 Card(
                   child: Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Row(children: [
-                      Image.network("https://scontent.ftun12-1.fna.fbcdn.net/v/t1.6435-9/48405342_1823459577765035_1096277873884397568_n.jpg?_nc_cat=111&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=24WMN-QgMioAX-NzwGI&_nc_ht=scontent.ftun12-1.fna&oh=10f7bf58608579869ca8b83704157ea3&oe=609BD258",
-                        height: 60,
-                        width: 60,),
+                    padding: EdgeInsets.all(10.0),
+                    child: Column(children: [
                       Text(" "),
-                      Text(Snap.data[index].nameP),
-                      Text(" "),
-                      Text(" "),
-                      // Text("Approuve",style: TextStyle(color: Colors.green),),
-                      Text(" "),Text(" "),Text(" "),
-
-
-                      Text(" "),
-
-
+                      Text(Snap.data[index].exerciceName),
+                      Text(Snap.data[index].score),
 
                     ],
 

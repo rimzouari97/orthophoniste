@@ -6,6 +6,7 @@ import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orthophoniste/models/API_response.dart';
 import 'package:orthophoniste/models/ortho_parm.dart';
+import 'package:orthophoniste/models/todo_param.dart';
 import 'package:orthophoniste/models/user_parm.dart';
 import 'package:orthophoniste/services/user_service.dart';
 import 'package:orthophoniste/shared_preferences.dart';
@@ -42,14 +43,15 @@ class _MyToDoListState extends State<MyToDoList> {
   }
 
 
-  Future<List<OrthoParam>> fetchData() =>
+  Future<List<ToDoParam>> fetchData() =>
       Future.delayed(Duration(microseconds: 3000), () async {
         SharedPreferences preferences = await SharedPreferences.getInstance();
         widget._id = await preferences.getString('UserId');
+        print(widget._id);
 
-        return  await service.gatAllByIdOrtho(UserParam(id: widget._id));
-
-        // return list;
+        var res =  await service.getToDoByIdUser(ToDoParam(idUser:"60726eb547828200150a7571"));
+        print(res.length);
+         return res;
 
       });
 
@@ -73,7 +75,7 @@ class _MyToDoListState extends State<MyToDoList> {
           appBar: AppBar(
             title: Text("List Patient"),
           ),
-          body: ListWidget(),
+         body: ListWidget(),
         );
       }else {
         debugPrint('Step 3, build loading widget');
@@ -119,55 +121,11 @@ class _MyToDoListState extends State<MyToDoList> {
                         height: 60,
                         width: 60,),
                       Text(" "),
-                      Text(Snap.data[index].nameP),
+                      Text(Snap.data[index].id),
                       Text(" "),
                       Text(" "),
                       // Text("Approuve",style: TextStyle(color: Colors.green),),
                       Text(" "),Text(" "),Text(" "),
-
-                      MaterialButton(
-                        padding: EdgeInsets.only(right: 0.0),
-                        onPressed:  Snap.data[index].valid == "false"
-                            ? () => {
-                          Approuve(Snap.data, index),
-                          setState(() {})
-                        }
-                            : null,
-
-                        child: Text( Snap.data[index].valid == "false"
-                            ? "Approuve"
-                            : "patient", style: TextStyle(
-                            color: Colors.green
-                        )
-                        ),
-                        textColor: Colors.white,
-                        shape: RoundedRectangleBorder(side: BorderSide(
-                            color: Colors.blue,
-                            width: 1,
-                            style: BorderStyle.solid
-                        ), borderRadius: BorderRadius.circular(50)),
-                      ),
-                      Text(" "),
-                      MaterialButton(
-
-                        padding: EdgeInsets.only(right: 0.0),
-                        onPressed: (){
-                          print("Supprime");
-                          print(Snap.data[index].nameP);
-                          Delete(Snap.data, index);
-                          setState(() {});
-                        },
-                        child: Text('supprime', style: TextStyle(
-                            color: Colors.green
-                        )
-                        ),
-                        textColor: Colors.white,
-                        shape: RoundedRectangleBorder(side: BorderSide(
-                            color: Colors.blue,
-                            width: 1,
-                            style: BorderStyle.solid
-                        ), borderRadius: BorderRadius.circular(50)),
-                      ),
 
 
                     ],
@@ -186,23 +144,7 @@ class _MyToDoListState extends State<MyToDoList> {
     );
   }
 
-  dynamic Approuve(List<OrthoParam> rep,int index) async {
-    print(rep[index].id);
 
-    await service.Approuve(OrthoParam(id:rep[index].id,idP:rep[index].idP, )).then((res) => {
-      if(!res.errer){
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (BuildContext context) => super.widget))
-
-      }else{
-
-
-      }
-    });
-
-  }
   dynamic Delete(List<OrthoParam> rep,int index) async {
     print(rep[index].id);
 

@@ -37,7 +37,7 @@ class DoneService {
     var parm = {"id": item.id};
     print(json.encode(parm));
     return http
-        .post(BASE_URL + "done/" + "getById",
+        .post(BASE_URL + "done/" + "getByIdP",
             headers: headers, body: json.encode(item.toJson()))
         .then((data) {
       print(data.statusCode.toString());
@@ -133,7 +133,7 @@ class DoneService {
 
   /////////////get last score/////////////
 
-  Future<Done> getLastScore(Done item) {
+  Future <Done> getLastScore(Done item) {
     //  print(json.encode(item.toJson()));
     //var parm = {"id": item.id};
     //print(json.encode(parm));

@@ -4,11 +4,15 @@ import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:get_it/get_it.dart';
 import 'package:orthophoniste/Screens/Home/level2/TileModel_img.dart';
 import 'package:orthophoniste/Screens/Home/level2/custom_dialog.dart';
 import 'package:orthophoniste/Screens/Home/level2/data_img.dart';
 import 'package:orthophoniste/Screens/Home/level3/details_screen2.dart';
 import 'package:orthophoniste/Screens/Home/screens/details_screen.dart';
+import 'package:orthophoniste/models/done.dart';
+import 'package:orthophoniste/services/done_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants.dart';
 class Home2 extends StatefulWidget {
@@ -51,6 +55,22 @@ class _HomeState extends State<Home2> {
     });
   }
 
+  String _idUser;
+  String lastscore = "0";
+  DoneService get service => GetIt.I<DoneService>();
+
+  Future<bool> fetchData() =>
+      Future.delayed(Duration(microseconds: 3000), () async {
+        debugPrint('Step 2, fetch data');
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        _idUser = preferences.getString('UserId');
+        Done done = await service.getLastScore(
+            Done(idUser: _idUser, idExercice: "6088d3e2079cb400154a37de"));
+        if (!done.score.isEmpty) {
+          lastscore = done.score;
+        }
+        return true;
+      });
 
 
 
@@ -87,6 +107,7 @@ class _HomeState extends State<Home2> {
                 points != 800 ? Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
+                    Text("last score here  " + lastscore),
                     Text(
                       "$points/800",
                       style: TextStyle(
@@ -189,6 +210,19 @@ class _HomeState extends State<Home2> {
                             title: "GOOD JOB!",
                             description: points.toString(),
                             buttonText: "OK"));
+                    print('end of the game');
+                    print(String.fromCharCode(points));
+                    print(_idUser);
+                    Done done = Done(
+                        idExercice: "6088d3e2079cb400154a37de",
+                        exerciceName: "Memory game orale",
+                        idToDo: "mm",
+                        score: points.toString(),
+                        idUser: _idUser);
+                    service.addEx(done).then((result) => {
+                      print(result.data),
+                      //if (!result.errer) {print(result.errorMessage)}
+                    });
 
                   },
                   padding: const EdgeInsets.fromLTRB(72, 13, 72, 13),
