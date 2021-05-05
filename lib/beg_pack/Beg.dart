@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 import 'package:orthophoniste/beg_pack/final_level.dart';
 import 'package:orthophoniste/beg_pack/level2.dart';
 import 'package:orthophoniste/beg_pack/level1.dart';
@@ -20,6 +21,8 @@ class Beg extends StatelessWidget {
 }
 
 class FullSampleHomePage extends StatelessWidget {
+  static int stutterProgress = 0;
+
   Widget _buildButton({String text, VoidCallback onClick}) {
     return NeumorphicButton(
       margin: EdgeInsets.only(bottom: 12),
@@ -45,6 +48,19 @@ class FullSampleHomePage extends StatelessWidget {
       )),
       onPressed: onClick,
     );
+  }
+
+  String getLevelName(String _level) {
+    String lname = "Level " + _level;
+    if (int.parse(_level) > stutterProgress) {
+      lname = "🔒 " + lname;
+    }
+    return lname;
+  }
+
+  bool levelLocked(int lvl) {
+    if (lvl <= stutterProgress) return false;
+    return true;
   }
 
   @override
@@ -80,8 +96,9 @@ class FullSampleHomePage extends StatelessWidget {
                     height: 50,
                   ),
                   _buildButton(
-                    text: "LEVEL 1",
+                    text: getLevelName('1'),
                     onClick: () {
+                      if (levelLocked(1)) return;
                       Navigator.of(context)
                           .push(MaterialPageRoute(builder: (context) {
                         return Level1();
@@ -90,8 +107,9 @@ class FullSampleHomePage extends StatelessWidget {
                   ),
                   SizedBox(height: 20),
                   _buildButton(
-                    text: "LEVEL 2",
+                    text: getLevelName('2'),
                     onClick: () {
+                      if (levelLocked(2)) return;
                       Navigator.of(context)
                           .push(MaterialPageRoute(builder: (context) {
                         return Level2();
@@ -100,8 +118,9 @@ class FullSampleHomePage extends StatelessWidget {
                   ),
                   SizedBox(height: 20),
                   _buildButton(
-                      text: "LEVEL 3",
+                      text: getLevelName('3'),
                       onClick: () {
+                        if (levelLocked(3)) return;
                         Navigator.of(context)
                             .push(MaterialPageRoute(builder: (context) {
                           return Level3();
@@ -109,8 +128,9 @@ class FullSampleHomePage extends StatelessWidget {
                       }),
                   SizedBox(height: 20),
                   _buildButton(
-                      text: "LEVEL 4",
+                      text: getLevelName('4'),
                       onClick: () {
+                        if (levelLocked(4)) return;
                         Navigator.of(context)
                             .push(MaterialPageRoute(builder: (context) {
                           return Level4();
@@ -118,8 +138,9 @@ class FullSampleHomePage extends StatelessWidget {
                       }),
                   SizedBox(height: 20),
                   _buildButton(
-                      text: "LEVEL 5",
+                      text: getLevelName('5'),
                       onClick: () {
+                        if (levelLocked(5)) return;
                         Navigator.of(context)
                             .push(MaterialPageRoute(builder: (context) {
                           return Level5();
@@ -127,8 +148,9 @@ class FullSampleHomePage extends StatelessWidget {
                       }),
                   SizedBox(height: 20),
                   _buildButton(
-                      text: "FINAL LEVEL",
+                      text: getLevelName('6'),
                       onClick: () {
+                        if (levelLocked(3)) return;
                         Navigator.of(context)
                             .push(MaterialPageRoute(builder: (context) {
                           return FinalLevel();

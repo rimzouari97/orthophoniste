@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:get_it/get_it.dart';
 import 'package:lottie/lottie.dart';
+import 'package:orthophoniste/services/stutter_service.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:orthophoniste/beg_pack/custom_dialog.dart';
@@ -67,6 +69,8 @@ class __Page1State extends State<_Page1> {
     super.initState();
     _speech = stt.SpeechToText();
   }
+
+  StutterService get stutterservice => GetIt.I<StutterService>();
 
   List<String> words = [
     'Must',
@@ -267,6 +271,7 @@ class __Page1State extends State<_Page1> {
                   onPressed: () async {
                     await onListen();
                     if (_correct.compareTo(_textSpeech.toLowerCase()) == 0) {
+                      await StutterService.saveStutterProgress(2);
                       await showDialog(
                         context: context,
                         builder: (BuildContext context) => CustomDialog(

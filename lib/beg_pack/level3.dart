@@ -37,8 +37,8 @@ class __Page3State extends State<_Page3> {
   stt.SpeechToText _speech;
   bool _isListening = false;
   String _textSpeech = 'press the button to start speaking';
-  String _correct = 'pause clause draw flaw claw paw cause applause';
-
+  String _correct = 'press the button to start speaking';
+//'pause clause draw flaw claw paw cause applause'
   void onListen() async {
     if (!_isListening) {
       bool available = await _speech.initialize(

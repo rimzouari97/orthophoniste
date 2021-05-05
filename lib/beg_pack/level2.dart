@@ -38,7 +38,7 @@ class __Page2State extends State<_Page2> {
   stt.SpeechToText _speech;
   bool _isListening = false;
   String _textSpeech = 'press the button to start speaking';
-  String _correct = 'limit civic clinic spirit mimic skillet wicked vivid';
+  String _correct = 'press the button to start speaking';
 //limit civic clinic spirit mimic skillet wicked vivid
   void onListen() async {
     if (!_isListening) {

@@ -15,6 +15,7 @@ import 'package:orthophoniste/constants.dart';
 import 'package:orthophoniste/models/score.dart';
 import 'package:orthophoniste/models/user_info.dart';
 import 'package:orthophoniste/services/done_service.dart';
+import 'package:orthophoniste/services/stutter_service.dart';
 import 'package:orthophoniste/services/user_service.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:orthophoniste/shared_preferences.dart';
@@ -25,6 +26,7 @@ import 'Screens/Home/level1/work1.dart';
 
 void setupLocator() {
   GetIt.I.registerLazySingleton(() => UserService());
+  GetIt.I.registerLazySingleton(() => StutterService());
   GetIt.I.registerLazySingleton(() => DoneService());
 }
 
@@ -43,9 +45,10 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-
-
   // This widget is the root of your application.
+
+  StutterService get stutterservice => GetIt.I<StutterService>();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -58,7 +61,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {'/game': (context) => Game()},
-       //home :ProfileScreen(),
+      //home :ProfileScreen(),
       home: MyHomePage(),
     );
   }
@@ -72,18 +75,22 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   String hasOr;
 
+  StutterService get stutterservice => GetIt.I<StutterService>();
+
+  String currentUserId = "";
+
   Future<String> fetchData() =>
-      Future.delayed(Duration(microseconds: 3000), () async{
+      Future.delayed(Duration(microseconds: 3000), () async {
         debugPrint('Step 2, fetch data');
-        SharedPreferences   _prefs = await SharedPreferences.getInstance();
+        SharedPreferences _prefs = await SharedPreferences.getInstance();
         SharedPref pref = SharedPref();
+        currentUserId = _prefs.getString("UserId");
         hasOr = _prefs.getString('HasOrtho');
         print('hasOr');
         print(hasOr);
         return pref.getUserType();
         //return false;
       });
-
 
   @override
   Widget build(BuildContext context) => FutureBuilder(
@@ -92,8 +99,10 @@ class _MyHomePageState extends State<MyHomePage> {
           print("test 500");
           print(snapshot.hasData);
           if (snapshot.hasData) {
+            String userId = currentUserId;
+            stutterservice.getStutterProgress(userId);
             if (snapshot.data == "patient") {
-              if(hasOr == "false"){
+              if (hasOr == "false") {
                 return HasOrth();
               }
               return HomeScreen();
@@ -109,7 +118,6 @@ class _MyHomePageState extends State<MyHomePage> {
             return Center(
               child: SizedBox(
                 child: CircularProgressIndicator(
-
                   backgroundColor: Colors.white,
                 ),
                 width: 60,
@@ -123,6 +131,4 @@ class _MyHomePageState extends State<MyHomePage> {
           }
         },
       );
-
-
 }

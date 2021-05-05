@@ -18,6 +18,8 @@ import 'package:orthophoniste/models/API_response.dart';
 import 'package:orthophoniste/models/user_info.dart';
 import 'package:orthophoniste/models/user_parm.dart';
 import 'package:orthophoniste/services/user_service.dart';
+import 'package:orthophoniste/services/stutter_service.dart';
+
 import 'package:orthophoniste/shared_preferences.dart';
 
 import 'background.dart';
@@ -36,6 +38,7 @@ class _BodyState extends State<Body> {
   GlobalKey<FormState> _keyForm = new GlobalKey<FormState>();
   SharedPref pref = SharedPref();
   UserService get service => GetIt.I<UserService>();
+  StutterService get stutterservice => GetIt.I<StutterService>();
   APIResponse<User> _apiResponse;
   bool _obscureText = true;
   void _toggle() {
@@ -132,7 +135,8 @@ class _BodyState extends State<Body> {
                   UserParam userP =
                       UserParam(email: widget._email, password: widget._pwd);
 
-                  final result1 = await service.Login(userP).then((result) {
+                  final result1 =
+                      await service.Login(userP).then((result) async {
                     if (result.data != null) {
                       pref.addUserEmail(result.data.email);
                       pref.addUserName(result.data.name);
@@ -180,6 +184,8 @@ class _BodyState extends State<Body> {
                     if (result.errer == true) {
                       text = "Address or password incorrect";
                     } else {
+                      print("hi getting stutter progress");
+                      await stutterservice.getStutterProgress(result.data.id);
                       text = 'you are connected';
                     }
 
