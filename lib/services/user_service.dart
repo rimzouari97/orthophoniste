@@ -352,7 +352,7 @@ class UserService {
     }).catchError((_) =>  APIResponse<OrthoParam>(errer: true,errorMessage: " Opps server Errer"));
   }
 
-  Future<bool> getAllExercice(){
+  Future<List<Exercice>> getAllExercice(){
     return  http.get(BASE_URL+"exercices/list",headers: headers)
         .then((data) {
       print(data.statusCode.toString() );
@@ -481,7 +481,40 @@ class UserService {
     });
   }
 
+  Future<List<ToDoParam>> getAllToDo(){
 
+    return http.get(BASE_URL+"todo/list" ,headers: headers)
+        .then((data) {
+      print(data.statusCode.toString() );
+      // print(data.body);
+      List<ToDoParam>  list = <ToDoParam>[];
+      if(data.statusCode == 200){
+
+        Map<String, dynamic> jsonData = json.decode(data.body);
+
+        // print(jsonData);
+
+        for(var item in jsonData.values.last ){
+
+          //  print("item");
+          //  print(item);
+
+          ToDoParam done = ToDoParam(
+              id: item["_id"],
+              idUser: item["idUser"],
+              idExercice: item["idExercice"],
+              AvgScore: item["AvgScore"]
+          );
+
+          list.add(done);
+        }
+
+
+      }
+      return list;
+    });
+
+  }
 
 
 

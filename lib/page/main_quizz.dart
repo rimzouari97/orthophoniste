@@ -19,7 +19,7 @@ class Myquizz extends StatefulWidget {
 
 class _MyquizzState extends State<Myquizz> {
   String _idUser;
-
+  String lastscore = "0";
   DoneService get service => GetIt.I<DoneService>();
 
   Future<bool> fetchData() =>
@@ -27,6 +27,13 @@ class _MyquizzState extends State<Myquizz> {
         debugPrint('Step 2, fetch data');
         SharedPreferences preferences = await SharedPreferences.getInstance();
         _idUser = preferences.getString('UserId');
+
+        Done done = await service.getLastScore(
+            Done(idUser: _idUser, idExercice: "6074b1a582c71b0015918da5"));
+
+        if (!done.score.isEmpty) {
+          lastscore = done.score;
+        }
 
         return true;
       });
@@ -129,11 +136,14 @@ class _MyquizzState extends State<Myquizz> {
                   ),
                 ),
                 description: Text(
-                  ' votre score est ${_totalScore}',
+                  ' votre derniere est  ${lastscore} , votre score actuel est ${_totalScore}',
                   textAlign: TextAlign.center,
                 ),
                 entryAnimation: EntryAnimation.RIGHT,
-                onOkButtonPressed: () {},
+                onOkButtonPressed: () {
+                  Navigator.of(context).pop();
+                },
+                onlyOkButton: true,
               ));
 
       Done done = Done(

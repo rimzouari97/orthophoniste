@@ -1,17 +1,22 @@
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:orthophoniste/constants.dart';
 import 'package:orthophoniste/models/API_response.dart';
+import 'package:orthophoniste/models/exercice.dart';
 import 'package:orthophoniste/models/ortho_parm.dart';
 import 'package:orthophoniste/models/todo_param.dart';
+import 'package:orthophoniste/models/user_info.dart';
 import 'package:orthophoniste/models/user_parm.dart';
 import 'package:orthophoniste/services/user_service.dart';
 import 'package:orthophoniste/shared_preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:http/http.dart'as http;
 import 'griddashboard.dart';
 
 
@@ -36,6 +41,8 @@ class MyToDoList extends StatefulWidget {
 class _MyToDoListState extends State<MyToDoList> {
   UserService get service => GetIt.I<UserService>();
   APIResponse rep;
+  List<User> listUser =[];
+  List<Exercice> listExe =[];
 
   void initState() {
     super.initState();
@@ -47,9 +54,42 @@ class _MyToDoListState extends State<MyToDoList> {
       Future.delayed(Duration(microseconds: 3000), () async {
         SharedPreferences preferences = await SharedPreferences.getInstance();
         widget._id = await preferences.getString('UserId');
+        var res1 = await service.getUsersList();
+        var res2 = await http.get(BASE_URL+"exercices/list",headers: headers)
+      .then((data) {
+  print(data.statusCode.toString() );
+  if(data.statusCode == 200){
+  Map<String, dynamic> jsonData = json.decode(data.body);
+  print(jsonData);
+  List<Exercice>  list = <Exercice>[];
+
+  for(var item in jsonData.values.last ){
+  print("item");
+  Exercice exercice = Exercice(
+  category: item["category"],
+  id: item["_id"],
+  type: item['type'],
+  score: item["score"],
+  name: item["name"],
+  niveau :item["niveau"]
+  );
+
+  list.add(exercice);
+  }
+  print(list.length);
+  return list ;
+  print("");
+  }else {
+
+  return null;
+  }
+
+        });
+        listExe = res2;
+        listUser = res1.data;
       //  print(widget._id);
 
-        var res =  await service.getToDoByIdUser(ToDoParam(idUser:"60726eb547828200150a7571"));
+        var res =  await service.getToDoByIdUser(ToDoParam(idUser:widget._id));
       //  print(res.length);
          return res;
 
@@ -65,7 +105,7 @@ class _MyToDoListState extends State<MyToDoList> {
         if(snapshot.data.length == 0){
           return Scaffold(
             appBar: AppBar(
-              title: Text("List Patient"),
+              title: Text("List To Do patient"),
             ),
             body:Container(child: Center(child: Text(" pas de patient"),)),
           );
@@ -73,7 +113,7 @@ class _MyToDoListState extends State<MyToDoList> {
 
         return Scaffold(
           appBar: AppBar(
-            title: Text("List Patient"),
+            title: Text("List To Do patient"),
           ),
          body: ListWidget(),
         );
@@ -128,7 +168,9 @@ class _MyToDoListState extends State<MyToDoList> {
                             height: 60,
                             width: 60,),
                           Text(" "),
-                          Text(Snap.data[index].id),
+                       //   Text(Snap.data[index].idUser),
+                          NameUser(Snap.data[index].idUser),
+                     //     NameEx(Snap.data[index].idExercice),
                           Text(" "),
                           Text(" "),
                           // Text("Approuve",style: TextStyle(color: Colors.green),),
@@ -149,17 +191,8 @@ class _MyToDoListState extends State<MyToDoList> {
                   background: Container(color: Colors.red),
 
                 onDismissed: (direction) {
-                  if(direction == DismissDirection.startToEnd){
-                    print("start");
-                 //   service.deleteToDo(item)
-                 //   background: Container(color: Colors.green);
-                  }else  if(direction == DismissDirection.endToStart){
-                    print("end");
-                  }
-                  // Remove the item from the data source.
 
 
-                  // Then show a snackbar.
                   ScaffoldMessenger.of(context)
                       .showSnackBar(SnackBar(content: Text("$item dismissed")));
                 },
@@ -170,6 +203,26 @@ class _MyToDoListState extends State<MyToDoList> {
           );
         }
     );
+  }
+
+  Widget NameUser(String idUser ){
+    for(User user in listUser){
+      print(user.name);
+      if(user.id == idUser){
+        return  Text(user.name);
+      }
+    }
+
+  }
+
+  Widget NameEx (String idEx ){
+    for(Exercice ex in listExe){
+    //  print(ex.name);
+      if(ex.id == idEx){
+        return  Text(ex.name);
+      }
+    }
+
   }
 
 
