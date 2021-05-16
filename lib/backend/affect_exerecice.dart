@@ -36,12 +36,12 @@ class _HomeState extends State<AffectExercice> {
   List<DropdownMenuItem<Exercice>> _dropdownMenuItems1;
   Exercice _selectedItem1 ;
   UserService get service => GetIt.I<UserService>();
-
+  String id;
 
   Future<List<OrthoParam>> fetchData() => Future.delayed(Duration(microseconds: 5000), () async{
     debugPrint('Step 2, fetch data');
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String id  = prefs.getString('UserId');
+     id = prefs.getString('UserId');
     //print(id);
 
     http.get(BASE_URL+"exercices/list",headers: headers)
@@ -154,7 +154,7 @@ class _HomeState extends State<AffectExercice> {
                       print("text");
                       print(_selectedItem.nameP);
                       print(_selectedItem1.name);
-                     await service.addToDo(ToDoParam(idUser:_selectedItem.idP ,idExercice: _selectedItem1.id)).then((res)  {
+                     await service.addToDo(ToDoParam(idUser:_selectedItem.idP ,idExercice: _selectedItem1.id,idOrtho:id )).then((res)  {
                       // print(res.data.id);
                      if(!res.errer){
                        showDialog(
@@ -171,7 +171,22 @@ class _HomeState extends State<AffectExercice> {
                          );
                        },
                      );
-                    }
+                    }else{
+                       showDialog(
+                         context: context,
+                         builder: (BuildContext context) {
+                           return AlertDialog(
+                               title: Row(
+                                   children:[
+                                     Icon(Icons.error,color: Colors.red),
+                                     Text('  error . ')
+                                   ]
+                               ),
+                               content: Text(res.errorMessage)
+                           );
+                         },
+                       );
+                     }
                      });
 
                     },

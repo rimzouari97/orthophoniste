@@ -404,17 +404,23 @@ class UserService {
       print(data.body);
       if(data.statusCode == 200){
 
-        final Map<String, dynamic> jsonData = json.decode(data.body);
 
+        final Map<String, dynamic> jsonData = json.decode(data.body);
+        print(jsonData["success"]);
+        if(jsonData["success"] == false){
+          print(jsonData["success"]);
+          return APIResponse<ToDoParam>(errorMessage : jsonData["message"], errer: true);
+        }else {
           var item = jsonData["todo"];
           print(item);
           final todo = ToDoParam(
-              id : item['_id'],
-              AvgScore:  item['AvgScore'],
+              id: item['_id'],
+              AvgScore: item['AvgScore'],
               idExercice: item['idExercice'],
               idUser: item['idUser']
           );
-          return APIResponse<ToDoParam>(data: todo,errer: false);
+          return APIResponse<ToDoParam>(data: todo, errer: false);
+        }
       }
       return APIResponse<ToDoParam>(errer: true,errorMessage: " An errer 1");
     }).catchError((_) =>  APIResponse<ToDoParam>(errer: true,errorMessage: " Opps server Errer"));
@@ -438,8 +444,8 @@ class UserService {
 
         for(var item in jsonData.values.last ){
 
-        //  print("item");
-        //  print(item);
+          print("item");
+          print(item);
 
           ToDoParam done = ToDoParam(
               id: item["_id"],
@@ -515,6 +521,53 @@ class UserService {
     });
 
   }
+
+
+
+
+  Future<List<ToDoParam>> getToDoByIdOrtho(ToDoParam user){
+
+    //  print(json.encode(item.toJson()));
+    var parm ={"idOrtho" :user.idOrtho};
+    //  print(json.encode(parm));
+    return http.post(BASE_URL+"todo/getByIdOrtho" ,headers: headers,body: json.encode(user.toJson()))
+        .then((data) {
+      print(data.statusCode.toString() );
+      // print(data.body);
+      List<ToDoParam>  list = <ToDoParam>[];
+      if(data.statusCode == 200){
+
+        Map<String, dynamic> jsonData = json.decode(data.body);
+
+        // print(jsonData);
+
+        for(var item in jsonData.values.last ){
+
+          print("item");
+          print(item);
+
+          ToDoParam todoP = ToDoParam(
+              id: item["_id"],
+              idUser: item["idUser"],
+              idExercice: item["idExercice"],
+              AvgScore: item["AvgScore"],
+            idOrtho:item["idOrtho"],
+          );
+
+          list.add(todoP);
+        }
+
+
+      }
+      return list;
+    });
+
+  }
+
+
+
+
+
 
 
 
