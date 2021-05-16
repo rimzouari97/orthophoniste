@@ -110,9 +110,14 @@ class _MyPatientListState extends State<MyPatientList> {
         return ListView.builder(
           itemCount: len,
           itemBuilder: (context, index) {
+            OrthoParam item = Snap.data[index];
 
-            return Column(
-              children: <Widget>[
+            return Dismissible(
+              // Each Dismissible must contain a Key. Keys allow Flutter to
+              // uniquely identify widgets.
+              key: Key(item.id),
+              child: Column(
+                children: <Widget>[
                 Card(
                     child: Padding(
                       padding: EdgeInsets.all(16.0),
@@ -177,10 +182,6 @@ class _MyPatientListState extends State<MyPatientList> {
                            ],
                          ),
 
-
-
-
-
                       ],
 
                       ),
@@ -189,6 +190,22 @@ class _MyPatientListState extends State<MyPatientList> {
 
                 // Widget to display the list of project
               ],
+            ),
+
+              background: Container(color: Colors.green,
+                child: Icon(Icons.check),
+              ),
+
+              secondaryBackground: Container(color: Colors.red,
+                child: Icon(Icons.cancel),
+              ),
+              onDismissed: (direction){
+
+              },
+
+
+
+
             );
           },
         );
