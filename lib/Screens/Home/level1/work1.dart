@@ -18,7 +18,7 @@ class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
 }
-
+int i = 0;
 class _HomeState extends State<Home> {
   List<TileModel> gridViewTiles = new List<TileModel>();
   List<TileModel> questionPairs = new List<TileModel>();
@@ -103,12 +103,12 @@ class _HomeState extends State<Home> {
                 SizedBox(
                   height: 20,
                 ),
-                points != 800 ? Column(
+                points !=80 ? Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Text("last score here  " + lastscore),
                     Text(
-                      "$points/800",
+                      "$points/80",
                       style: TextStyle(
                           fontSize: 20, fontWeight: FontWeight.w500),
                     ),
@@ -132,7 +132,8 @@ class _HomeState extends State<Home> {
                       color: Colors.grey[300],
                       boxShape:
                       NeumorphicBoxShape.roundRect(BorderRadius.circular(12))),
-                  child: points != 800 ? GridView(
+                  child:
+                  i != 8 ? GridView(
                     shrinkWrap: true,
                     //physics: ClampingScrollPhysics(),
                     scrollDirection: Axis.vertical,
@@ -151,6 +152,7 @@ class _HomeState extends State<Home> {
                           GestureDetector(
                             onTap: (){
                               if (mounted) setState(() {
+                                i=0;
                                 points = 0;
                                 reStart();
                               });
@@ -260,6 +262,7 @@ class Tile extends StatefulWidget {
 }
 
 class _TileState extends State<Tile> {
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -271,7 +274,8 @@ class _TileState extends State<Tile> {
           if (selectedTile != "") {
             /// testing if the selected tiles are same
             if (selectedTile == myPairs[widget.tileIndex].getImageAssetPath()) {
-              points = points + 100;
+              points = points + 10;
+              i++;
               print(points);
               //print(selectedTile + " this " + widget.imagePathUrl);
               TileModel tileModel = new TileModel();
@@ -299,8 +303,8 @@ class _TileState extends State<Tile> {
                   " this " +
                   myPairs[widget.tileIndex].getImageAssetPath());
               print("wrong choice");
-              points = points - 20;
-              print(points);
+              points = points - 5;
+              //print(points);
               //print(widget.tileIndex);
               //print(selectedIndex);
               selected = true;

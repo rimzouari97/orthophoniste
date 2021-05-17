@@ -9,7 +9,7 @@ class Chart extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
 
         body: Padding(
-          padding: const EdgeInsets.fromLTRB(8, 30, 8, 30),
+          padding: const EdgeInsets.fromLTRB(8, 400, 8, 30),
           child: PageView(
             children: [
               LineChartPage(),

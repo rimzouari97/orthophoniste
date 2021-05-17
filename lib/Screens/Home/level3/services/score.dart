@@ -11,6 +11,19 @@ class Score {
   int score = 0;
   Score({ @required this.level });
 
+  String _idUser;
+
+  DoneService get service => GetIt.I<DoneService>();
+
+  Future<bool> fetchData() =>
+      Future.delayed(Duration(microseconds: 3000), () async {
+        debugPrint('Step 2, fetch data');
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        _idUser = preferences.getString('UserId');
+
+        return true;
+      });
+
   Future<List<dynamic>> getScore() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -30,16 +43,16 @@ class Score {
 
     if(!scoreList.contains(value)) {
       scoreList.add(value);
-      score += 100;
+      score += 10;
     }
     print('end of the game');
     print(score);
     print(_idUser);
     Done done = Done(
-
+        idExercice: "6088d433079cb400154a37df",
         exerciceName: "dyslexie lexicale game",
         idToDo: "mm",
-        score: score.toString()+" "+level,
+        score: score.toString(),
         idUser: _idUser);
     service.addEx(done).then((result) => {
       print(result.data),
@@ -50,17 +63,6 @@ class Score {
     prefs.setString(this.level, updatedScoreString);
 
   }
-  String _idUser;
 
-  DoneService get service => GetIt.I<DoneService>();
-
-  Future<bool> fetchData() =>
-      Future.delayed(Duration(microseconds: 3000), () async {
-        debugPrint('Step 2, fetch data');
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        _idUser = preferences.getString('UserId');
-
-        return true;
-      });
 
 }
