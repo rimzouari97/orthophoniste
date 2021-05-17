@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:orthophoniste/Screens/Profile/components/update_pwd.dart';
 import 'package:orthophoniste/backend/dropdowe_mune_exercice.dart';
 import 'package:orthophoniste/constants.dart';
 import 'package:orthophoniste/models/API_response.dart';
@@ -202,20 +203,16 @@ class UserService {
       if(data.statusCode == 200){
 
         final Map<String, dynamic> jsonData = json.decode(data.body);
-        print('jsonData["success"]');
-        print(jsonData["success"]);
+
         if(jsonData["success"] != null){
-          print('jsonData["success"]1');
-          print(jsonData["success"]);
+
 
            if(jsonData["success"].toString() == "true"){
-             print('jsonData["success"]2');
-             print(jsonData["success"]);
+
              return true;
 
            }else{
-             print('jsonData["success"]3');
-             print(jsonData["success"]);
+
              return false;
            }
 
@@ -564,6 +561,26 @@ class UserService {
 
   }
 
+  Future<APIResponse<User>> UpdatePasssword(UserParam item){
+    print(json.encode(item.toJson()));
+    return http.post(API+"updatePwd" ,headers: headers,body: json.encode(item.toJson()))
+        .then((data) {
+      print(data.statusCode.toString() );
+      if(data.statusCode == 200){
+
+        final Map<String, dynamic> jsonData = json.decode(data.body);
+
+        if(jsonData["success"] == false){
+          print(jsonData["message"]);
+          return APIResponse<User>(errer: true,errorMessage: jsonData["message"]);
+        }else {
+
+          return APIResponse<User>(errer: false);
+        }
+      }
+      return APIResponse<User>(errer: true,errorMessage: " An errer 1");
+    }).catchError((_) =>  APIResponse<User>(errer: true,errorMessage: " Opps server Errer"));
+  }
 
 
 
