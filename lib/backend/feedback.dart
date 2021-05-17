@@ -159,7 +159,13 @@ class _FeedbackState extends State<Feedback> {
                       ],
                     ),
 
-                    FlatButton(
+                    MaterialButton(
+                        color: Colors.deepPurple,
+                        child: Text("Save"),
+                        shape:RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                            side: BorderSide(color: Colors.deepPurple)
+                        ),
                         onPressed:() async {
                           print("text");
                           print(_selectedItem.nameP);
@@ -203,11 +209,7 @@ class _FeedbackState extends State<Feedback> {
                           });
 
                         },
-                        child:Container(
-                          decoration: BoxDecoration(
-                              color: Colors.grey, borderRadius: BorderRadius.circular(10)),
-                          child:  MaterialButton(child: Text("Save"),color: Colors.deepPurple,),
-                        )
+
                     ),
                    // Text(toDoParam.idUser),
 

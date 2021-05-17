@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:orthophoniste/backend/to_do_list.dart';
 import 'package:orthophoniste/constants.dart';
 import 'package:orthophoniste/models/exercice.dart';
 import 'package:orthophoniste/models/ortho_parm.dart';
@@ -18,6 +19,8 @@ class AffectExercice extends StatefulWidget {
 }
 
 class _HomeState extends State<AffectExercice> {
+
+
 
   List<OrthoParam> _dropdownItems = [
     OrthoParam(id: "1", nameP: "First Value"),
@@ -81,8 +84,24 @@ class _HomeState extends State<AffectExercice> {
     return res.data1;
     //return false;
   });
+/*
+@override
+  void initState()  {
+    // TODO: implement initState
+    super.initState();
+    /*  fetchData().then((value) {
+        _selectedItem = _dropdownMenuItems.first.value;
+        _selectedItem1 = _dropdownMenuItems1.first.value;
 
+      });
 
+     */
+
+  //  _selectedItem1 =Exercice(name: "select item")  ;
+  }
+*
+
+ */
 
 
   @override
@@ -97,7 +116,7 @@ class _HomeState extends State<AffectExercice> {
       try {
         _dropdownItems = snapshot.data;
         _dropdownMenuItems = buildDropDownMenuItems(_dropdownItems);
-
+      //  _selectedItem = _dropdownMenuItems.first.value;
 
         _dropdownMenuItems1 = buildDropDownMenuItems1(dropdownItems1);
       //  _selectedItem1 = f
@@ -117,16 +136,14 @@ class _HomeState extends State<AffectExercice> {
                   children: [
                     Text("Patient  : "),
                     DropdownButton(
-                    //    value: _selectedItem  ,
+                        value: _selectedItem  ,
                         hint: Text("select Patient"),
                         items: _dropdownMenuItems,
                         onChanged: ( value) {
                       //    print("_selectedItem");
-                      //    print(value);
+                          print(value.nameP);
                           _selectedItem = value;
-                          setState(() {
 
-                          });
 
 
                         }),
@@ -149,7 +166,14 @@ class _HomeState extends State<AffectExercice> {
                   ],
                 ),
 
-                FlatButton(
+                MaterialButton(
+                  color: Colors.deepPurple,
+                    child: Text("Save"),
+                    shape:RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                        side: BorderSide(color: Colors.deepPurple)
+                    ),
+
                     onPressed:() async {
                       print("text");
                       print(_selectedItem.nameP);
@@ -167,7 +191,21 @@ class _HomeState extends State<AffectExercice> {
                                    Text('  Info . ')
                                  ]
                              ),
-                             content: Text("Exercice "+ _selectedItem1.name  +" affecter a "+_selectedItem.nameP )
+                             content: Text("Exercice "+ _selectedItem1.name  +" affecter a "+_selectedItem.nameP ),
+                             actions: [
+                              MaterialButton(
+                                  onPressed: (){
+                                Navigator.pushReplacement(
+                                context,
+                                 MaterialPageRoute(
+                                  builder: (BuildContext context) => ToDoList(),
+                                 ),
+
+                                );
+                               }, child: Text('ok'),
+                                color: Colors.deepPurple,
+                              )
+                         ],
                          );
                        },
                      );
@@ -182,7 +220,15 @@ class _HomeState extends State<AffectExercice> {
                                      Text('  error . ')
                                    ]
                                ),
-                               content: Text(res.errorMessage)
+                               content: Text(res.errorMessage),
+                                actions: [
+                               MaterialButton(
+                                  onPressed: (){
+                                    Navigator.pop(context, false);
+                                  }, child: Text('ok'),
+                           color: Colors.deepPurple,
+                           )
+                           ],
                            );
                          },
                        );
@@ -190,11 +236,14 @@ class _HomeState extends State<AffectExercice> {
                      });
 
                     },
+                    /*
                     child:Container(
                       decoration: BoxDecoration(
                           color: Colors.grey, borderRadius: BorderRadius.circular(10)),
                       child:  MaterialButton(child: Text("Save"),color: Colors.deepPurple,),
                     )
+
+                     */
                 )
               ],
             )

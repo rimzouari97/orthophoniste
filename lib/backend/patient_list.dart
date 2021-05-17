@@ -49,9 +49,9 @@ class _MyPatientListState extends State<MyPatientList> {
         widget._name = await preferences.getString('UserName');
         widget._id = await preferences.getString('UserId');
 
-    return  await service.gatAllByIdOrtho(UserParam(id: widget._id));
+    var list =  await service.gatAllByIdOrtho(UserParam(id: widget._id));
 
-   // return list;
+    return list;
 
   });
 
@@ -65,7 +65,7 @@ class _MyPatientListState extends State<MyPatientList> {
         if(snapshot.data.length == 0){
            return Scaffold(
              appBar: AppBar(
-               title: Text("Patient List "),
+               title: Text("Approuve List "),
              ),
              body:Container(child: Center(child: Text(" Not patient"),)),
            );
@@ -73,7 +73,7 @@ class _MyPatientListState extends State<MyPatientList> {
 
         return Scaffold(
           appBar: AppBar(
-            title: Text(" Patient List "),
+            title: Text(" Approuve List "),
           ),
           body: ListWidget(),
         );
@@ -107,117 +107,85 @@ class _MyPatientListState extends State<MyPatientList> {
         }catch(e){
           print(e.toString());
         }
-        return ListView.builder(
-          itemCount: len,
-          itemBuilder: (context, index) {
-            OrthoParam item = Snap.data[index];
+        return Container(
+          child:
 
-            return Dismissible(
-              // Each Dismissible must contain a Key. Keys allow Flutter to
-              // uniquely identify widgets.
-              key: Key(item.id),
-              child: Column(
-                children: <Widget>[
-                Card(
-                    child: Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Row(children: [
-                        Image.network(
-                          "https://raw.githubusercontent.com/oussamaMaaroufi/orthoBack/master/166395810_233537285126986_5719499729791420255_o.jpg",
-                        height: 60,
-                        width: 60,),
-                        Text(" "),
-                        Text(Snap.data[index].nameP),
-                        Text(" "),
-                        Text(" "),
-                     // Text("Approuve",style: TextStyle(color: Colors.green),),
-                        Text(" "),Text(" "),Text(" "),
 
-                         Column(
-                           children: [
-                             MaterialButton(
-                               padding: EdgeInsets.only(right: 0.0),
-                               onPressed:  Snap.data[index].valid == "false"
-                                   ? () => {
-                                 Approuve(Snap.data, index),
-                                 setState(() {})
-                               }
-                                   : null,
+            ListView.builder(
+            itemCount: len,
+            itemBuilder: (context, index) {
+              OrthoParam item = Snap.data[index];
+              print("item.valid");
+              print(item.valid);
 
-                               child: Text( Snap.data[index].valid == "false"
-                                   ? "Approuve"
-                                   : "patient", style: TextStyle(
-                                   color: Colors.green
-                               )
-                               ),
-                               textColor: Colors.white,
-                               shape: RoundedRectangleBorder(side: BorderSide(
-                                   color: Colors.blue,
-                                   width: 1,
-                                   style: BorderStyle.solid
-                               ), borderRadius: BorderRadius.circular(50)),
-                             ),
-                             Text(" "),
-                             MaterialButton(
+              if(item.valid == "false"){
+                return Dismissible(
+                  key: Key(Snap.data[index].id),
+                  child: Column(
+                    children: <Widget>[
+                      Card(
+                        child: Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: Row(children: [
+                            Image.network(
+                              "https://raw.githubusercontent.com/oussamaMaaroufi/orthoBack/master/166395810_233537285126986_5719499729791420255_o.jpg",
+                              height: 60,
+                              width: 60,),
+                            Text(" "),
+                            Text(Snap.data[index].nameP),
+                            Text(" "),
+                            Text(" "),
+                            // Text("Approuve",style: TextStyle(color: Colors.green),),
+                            Text(" "),Text(" "),Text(" "),
 
-                               padding: EdgeInsets.only(right: 0.0),
-                               onPressed: (){
-                                 print("Supprime");
-                                 print(Snap.data[index].nameP);
-                                 Delete(Snap.data, index);
-                                 setState(() {});
-                               },
-                               child: Text('supprime', style: TextStyle(
-                                   color: Colors.green
-                               )
-                               ),
-                               textColor: Colors.white,
-                               shape: RoundedRectangleBorder(side: BorderSide(
-                                   color: Colors.blue,
-                                   width: 1,
-                                   style: BorderStyle.solid
-                               ), borderRadius: BorderRadius.circular(50)),
-                             ),
 
-                           ],
-                         ),
 
-                      ],
+                          ],
 
+                          ),
+                        ),
                       ),
-                    ),
+
+                      // Widget to display the list of project
+                    ],
                   ),
 
-                // Widget to display the list of project
-              ],
-            ),
+                  background: Container(color: Colors.green,
+                    child: Icon(Icons.check),
+                  ),
 
-              background: Container(color: Colors.green,
-                child: Icon(Icons.check),
-              ),
+                  secondaryBackground: Container(color: Colors.red,
+                    child: Icon(Icons.cancel),
+                  ),
+                  onDismissed: (direction){
+                    if(direction == DismissDirection.startToEnd){
+                      Approuve(item);
 
-              secondaryBackground: Container(color: Colors.red,
-                child: Icon(Icons.cancel),
-              ),
-              onDismissed: (direction){
-
-              },
-
-
+                    }else{
+                      Delete(item);
+                    }
 
 
-            );
-          },
+                  },
+                );
+              }else {
+                return Container();
+              }
+
+
+            }
+        )
+
         );
       },
       future: fetchData(),
     );
   }
 
-  dynamic Approuve(List<OrthoParam> rep,int index) async {
-     print(rep[index].id);
+  dynamic Approuve(OrthoParam item) async {
 
-      await service.Approuve(OrthoParam(id:rep[index].id,idP:rep[index].idP, )).then((res) => {
+
+      await service.Approuve(OrthoParam(id:item.id,idP:item.idP, )).then((res) => {
         if(!res.errer){
           Navigator.pushReplacement(
               context,
@@ -231,10 +199,8 @@ class _MyPatientListState extends State<MyPatientList> {
       });
 
   }
-  dynamic Delete(List<OrthoParam> rep,int index) async {
-    print(rep[index].id);
-
-    await service.deleteHasOrth(OrthoParam(id:rep[index].id ,idP: rep[index].idP)).then((res) => {
+  dynamic Delete(OrthoParam item) async {
+    await service.deleteHasOrth(OrthoParam(id:item.id ,idP: item.idP)).then((res) => {
       if(!res.errer){
         Navigator.pushReplacement(
             context,
