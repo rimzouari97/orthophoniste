@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:orthophoniste/Screens/Profile/ProfilePage.dart';
+import 'package:orthophoniste/Screens/Profile/components/update_pwd.dart';
 import 'package:orthophoniste/main.dart';
 import 'package:orthophoniste/shared_preferences.dart';
 import 'profile_menu.dart';
@@ -30,14 +31,18 @@ class BodyOrtho extends StatelessWidget {
             },
           ),
           ProfileMenu(
-            text: "Notifications",
-            icon: "assets/icons/Bell.svg",
-            press: () {},
-          ),
-          ProfileMenu(
-            text: "Settings",
+            text: "Change Password",
             icon: "assets/icons/Settings1.svg",
-            press: () {},
+            press: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return UpdatePwd();
+                  },
+                ),
+              );
+            },
           ),
           ProfileMenu(
             text: "Help Center",
