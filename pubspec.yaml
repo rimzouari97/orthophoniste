@@ -111,7 +111,6 @@ flutter:
     - assets/icons/
     - assets/
     - sounds/
-    - assets/images_beg/
     - assets/icons/logo.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see

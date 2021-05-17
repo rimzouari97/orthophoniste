@@ -18,12 +18,13 @@ import 'package:orthophoniste/models/API_response.dart';
 import 'package:orthophoniste/models/user_info.dart';
 import 'package:orthophoniste/models/user_parm.dart';
 import 'package:orthophoniste/services/user_service.dart';
+import 'package:orthophoniste/services/stutter_service.dart';
+
 import 'package:orthophoniste/shared_preferences.dart';
 
 import 'background.dart';
 
 class Body extends StatefulWidget {
-
   String _email;
   String _pwd;
 
@@ -31,17 +32,14 @@ class Body extends StatefulWidget {
 
   @override
   _BodyState createState() => _BodyState();
-
 }
-
-
-
 
 class _BodyState extends State<Body> {
   GlobalKey<FormState> _keyForm = new GlobalKey<FormState>();
   SharedPref pref = SharedPref();
   UserService get service => GetIt.I<UserService>();
-  APIResponse <User> _apiResponse;
+  StutterService get stutterservice => GetIt.I<StutterService>();
+  APIResponse<User> _apiResponse;
   bool _obscureText = true;
   void _toggle() {
     setState(() {
@@ -51,76 +49,71 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
     return Form(
       key: _keyForm,
-      child : Background(
+      child: Background(
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-            Text(
-              "LOGIN",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: size.height * 0.03),
-            SvgPicture.asset(
-              "assets/icons/login.svg",
-              height: size.height * 0.35,
-            ),
-            SizedBox(height: size.height * 0.03),
-            TextFormField(
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                labelText: 'Email',
-                  icon:   IconButton(
-                    icon:  Icon(Icons.mail),
-                  ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(50),
-                  borderSide: BorderSide(
-                    width: 2,
-                  ),),
+              Text(
+                "LOGIN",
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              validator: (String value) {
-                if(value.isEmpty){
-                  return "must not be empty";
-                }else{
-                  return null;
-                }
-              },
-              onSaved: (String value) {
-                widget._email = value;
-              },
-            ),
-
-            SizedBox(child: Text("")),
-
+              SizedBox(height: size.height * 0.03),
+              SvgPicture.asset(
+                "assets/icons/login.svg",
+                height: size.height * 0.35,
+              ),
+              SizedBox(height: size.height * 0.03),
+              TextFormField(
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(
+                  labelText: 'Email',
+                  icon: IconButton(
+                    icon: Icon(Icons.mail),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(50),
+                    borderSide: BorderSide(
+                      width: 2,
+                    ),
+                  ),
+                ),
+                validator: (String value) {
+                  if (value.isEmpty) {
+                    return "must not be empty";
+                  } else {
+                    return null;
+                  }
+                },
+                onSaved: (String value) {
+                  widget._email = value;
+                },
+              ),
+              SizedBox(child: Text("")),
               Container(
                 child: new Column(
                   children: <Widget>[
                     new TextFormField(
-                      decoration:  InputDecoration(
-
+                      decoration: InputDecoration(
                         labelText: 'Password',
-                         icon:  IconButton(
-
-                           icon: new Icon(Icons.lock),
-
-                           onPressed: _toggle,
-                         ),
-                          border: OutlineInputBorder(
+                        icon: IconButton(
+                          icon: new Icon(Icons.lock),
+                          onPressed: _toggle,
+                        ),
+                        border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(50),
                           borderSide: BorderSide(
                             width: 2,
-                          ),),
+                          ),
+                        ),
                       ),
                       validator: (String value) {
-                        if(value.isEmpty){
+                        if (value.isEmpty) {
                           return "must not be empty";
-                        }else{
+                        } else {
                           return null;
                         }
                       },
@@ -130,114 +123,105 @@ class _BodyState extends State<Body> {
                   ],
                 ),
               ),
-
-              SizedBox(child: Text(""),height: 50,),
+              SizedBox(
+                child: Text(""),
+                height: 50,
+              ),
               RoundedButton(
-                 text: "LOGIN",
+                text: "LOGIN",
                 press: () async {
-                  if(!_keyForm.currentState.validate())
-                    return;
-                _keyForm.currentState.save();
-                UserParam userP = UserParam( email: widget._email, password: widget._pwd);
+                  if (!_keyForm.currentState.validate()) return;
+                  _keyForm.currentState.save();
+                  UserParam userP =
+                      UserParam(email: widget._email, password: widget._pwd);
 
-                 final result1 = await service.Login(userP).then((result)
-                 {
-
-                 if (result.data != null){
+                  final result1 =
+                      await service.Login(userP).then((result) async {
+                    if (result.data != null) {
                       pref.addUserEmail(result.data.email);
-                   pref.addUserName(result.data.name);
-                   pref.addUserType(result.data.type);
-                   pref.addUserId(result.data.id);
-                   pref.addUserCode(result.data.code);
-                   pref.addUserPhone(result.data.phone);
-                   pref.addUserScore(result.data.score);
-                   pref.addHasOrtho(result.data.hasOrtho);
-                   print("result.data.hasOrtho");
+                      pref.addUserName(result.data.name);
+                      pref.addUserType(result.data.type);
+                      pref.addUserId(result.data.id);
+                      pref.addUserCode(result.data.code);
+                      pref.addUserPhone(result.data.phone);
+                      pref.addUserScore(result.data.score);
+                      pref.addHasOrtho(result.data.hasOrtho);
+                      print("result.data.hasOrtho");
                       print(result.data.hasOrtho);
-                   pref.addUserCon();
-                  if(result.data.type == "patient") {
-
-                      if(result.data.hasOrtho == "true"){
+                      pref.addUserCon();
+                      if (result.data.type == "patient") {
+                        if (result.data.hasOrtho == "true") {
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) => HomeScreen(),
+                            ),
+                            (route) => false,
+                          );
+                        } else {
+                          print('gggggggggggggggggggggg');
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) => HasOrth(),
+                            ),
+                            (route) => false,
+                          );
+                        }
+                      } else {
                         Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                            builder: (BuildContext context) => HomeScreen(),
+                            builder: (BuildContext context) => backHome(),
                           ),
-                              (route) => false,
-                        );
-
-                      }else {
-                        print('gggggggggggggggggggggg');
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (BuildContext context) => HasOrth(),
-                          ),
-                              (route) => false,
+                          (route) => false,
                         );
                       }
-                  }else{
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                        builder: (BuildContext context) => backHome(),
-                      ),
-                          (route) => false,
-                    );
-                  }
+                    }
 
-                }
-
-
-
-                  String text ;//= result.errer ? (result.errorMessage ?? " An errer 1") : 'you are connected';
-                  if(result.errer){
-                     text = "Address or password incorrect";
-                   }else{
+                    String
+                        text; //= result.errer ? (result.errorMessage ?? " An errer 1") : 'you are connected';
+                    if (result.errer == true) {
+                      text = "Address or password incorrect";
+                    } else {
+                      print("hi getting stutter progress");
+                      await stutterservice.getStutterProgress(result.data.id);
                       text = 'you are connected';
-                  }
+                    }
 
-                  showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: Row(
-                    children:[
-                      Icon(Icons.info,color: Colors.blueAccent),
-                      Text('  Erorr. ')
-                       ]
-                   ),
-                      content: Text(text)
-                      );
-                     },
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                            title: Row(children: [
+                              Icon(Icons.info, color: Colors.blueAccent),
+                              Text(result.errer == true
+                                  ? '  Erorr. '
+                                  : '  Welcome.  ')
+                            ]),
+                            content: Text(text));
+                      },
                     );
-
-                 });
-
-
-              },
-            ),
-            SizedBox(height: size.height * 0.03),
-            AlreadyHaveAnAccountCheck(
-              press: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return SignUpScreen();
-                    },
-                  ),
-                );
-              },
-            ),
-          ],
+                  });
+                },
+              ),
+              SizedBox(height: size.height * 0.03),
+              AlreadyHaveAnAccountCheck(
+                press: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return SignUpScreen();
+                      },
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
-    ),
     );
   }
-
 }
-
-
-
