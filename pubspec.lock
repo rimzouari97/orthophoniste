@@ -279,6 +279,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_bcrypt:
+    dependency: "direct dev"
+    description:
+      name: flutter_bcrypt
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.5"
   flutter_facebook_login:
     dependency: "direct main"
     description:

@@ -41,11 +41,13 @@ class MyToDoList extends StatefulWidget {
 class _MyToDoListState extends State<MyToDoList> {
   UserService get service => GetIt.I<UserService>();
   APIResponse rep;
-  List<User> listUser =[];
+  List<OrthoParam> listUser =[];
   List<Exercice> listExe =[];
 
   void initState() {
     super.initState();
+
+ //   background: Container(color: Colors.red);
 
   }
 
@@ -54,42 +56,42 @@ class _MyToDoListState extends State<MyToDoList> {
       Future.delayed(Duration(microseconds: 3000), () async {
         SharedPreferences preferences = await SharedPreferences.getInstance();
         widget._id = await preferences.getString('UserId');
-        var res1 = await service.getUsersList();
-        var res2 = await http.get(BASE_URL+"exercices/list",headers: headers)
-      .then((data) {
-  print(data.statusCode.toString() );
-  if(data.statusCode == 200){
-  Map<String, dynamic> jsonData = json.decode(data.body);
-  print(jsonData);
-  List<Exercice>  list = <Exercice>[];
+        listUser = await service.gatAllByIdOrtho(UserParam(id: widget._id));
+        await http.get(BASE_URL+"exercices/list",headers: headers)
+            .then((data) {
+          //   print(data.statusCode.toString() );
+          if(data.statusCode == 200){
+            Map<String, dynamic> jsonData = json.decode(data.body);
+            //  print(jsonData);
+            // List<Exercice>  list = <Exercice>[];
+            listExe.clear();
 
-  for(var item in jsonData.values.last ){
-  print("item");
-  Exercice exercice = Exercice(
-  category: item["category"],
-  id: item["_id"],
-  type: item['type'],
-  score: item["score"],
-  name: item["name"],
-  niveau :item["niveau"]
-  );
+            for(var item in jsonData.values.last ){
+              //  print("item");
+              Exercice exercice = Exercice(
+                  category: item["category"],
+                  id: item["_id"],
+                  type: item['type'],
+                  score: item["score"],
+                  name: item["name"],
+                  niveau :item["niveau"]
+              );
+              // print(exercice.id);
+              //print(exercice.name);
 
-  list.add(exercice);
-  }
-  print(list.length);
-  return list ;
-  print("");
-  }else {
 
-  return null;
-  }
+              // list.add(exercice);
+              listExe.add(exercice);
+            }
+            //  print(list.length);
+
+          }
 
         });
-        listExe = res2;
-        listUser = res1.data;
+
       //  print(widget._id);
 
-        var res =  await service.getToDoByIdUser(ToDoParam(idUser:widget._id));
+        var res =  await service.getToDoByIdOrtho(ToDoParam(idOrtho:widget._id));
       //  print(res.length);
          return res;
 
@@ -164,13 +166,14 @@ class _MyToDoListState extends State<MyToDoList> {
                         padding: EdgeInsets.all(16.0),
                         child: Row(children: [
                           Image.network(
-                            "https://scontent.ftun12-1.fna.fbcdn.net/v/t1.6435-9/48405342_1823459577765035_1096277873884397568_n.jpg?_nc_cat=111&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=24WMN-QgMioAX-NzwGI&_nc_ht=scontent.ftun12-1.fna&oh=10f7bf58608579869ca8b83704157ea3&oe=609BD258",
+                            "https://raw.githubusercontent.com/oussamaMaaroufi/orthoBack/master/166395810_233537285126986_5719499729791420255_o.jpg",
                             height: 60,
                             width: 60,),
                           Text(" "),
-                       //   Text(Snap.data[index].idUser),
-                          NameUser(Snap.data[index].idUser),
-                     //     NameEx(Snap.data[index].idExercice),
+                        //  Text(Snap.data[index].id),
+                          NameUser(item.idUser),
+                          Text(" "),
+                          NameEx(item.idExercice),
                           Text(" "),
                           Text(" "),
                           // Text("Approuve",style: TextStyle(color: Colors.green),),
@@ -188,13 +191,48 @@ class _MyToDoListState extends State<MyToDoList> {
                     // Widget to display the list of project
                   ],
                 ),
-                  background: Container(color: Colors.red),
+                  background: Container(color: Colors.green,
+                                        child: Icon(Icons.check),
+                  ),
 
-                onDismissed: (direction) {
+                secondaryBackground: Container(color: Colors.red,
+                                     child: Icon(Icons.cancel),
+                ),
+                direction: DismissDirection.endToStart,
+
+                onDismissed: (direction) async {
+
+                    Snap.data.remove(index);
+                     service.deleteToDo(ToDoParam(id: item.id)).then((value) {
+                       if(value == true){
+                         ScaffoldMessenger.of(context)
+                             .showSnackBar(SnackBar(content: Row(
+                           children: [
+                             //      NameUser(item.idUser),
+                             //     Text(" "),
+                             //     NameEx(item.idExercice),
+                             Text(" Delete")
+                           ],
+                         )
+                         ));
+                       }else{
+                         ScaffoldMessenger.of(context)
+                             .showSnackBar(SnackBar(content: Row(
+                           children: [
+                             //      NameUser(item.idUser),
+                             //     Text(" "),
+                             //     NameEx(item.idExercice),
+                             Text(" Ops")
+                           ],
+                         )
+                         ));
+                       }
+
+                     });
 
 
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(SnackBar(content: Text("$item dismissed")));
+
+
                 },
 
 
@@ -206,10 +244,10 @@ class _MyToDoListState extends State<MyToDoList> {
   }
 
   Widget NameUser(String idUser ){
-    for(User user in listUser){
-      print(user.name);
-      if(user.id == idUser){
-        return  Text(user.name);
+    for(OrthoParam user in listUser){
+      print(idUser);
+      if(user.idP == idUser){
+        return  Text(user.nameP);
       }
     }
 
@@ -222,6 +260,7 @@ class _MyToDoListState extends State<MyToDoList> {
         return  Text(ex.name);
       }
     }
+    return  Text("");
 
   }
 

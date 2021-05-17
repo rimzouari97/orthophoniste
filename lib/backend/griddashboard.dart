@@ -18,7 +18,7 @@ class GridDashboard extends StatelessWidget {
       img: "assets/images/calendar.png",);
 
   Items item2 = new Items(
-    title: "Patients",
+    title: "Approuve List",
     subtitle: "FROM 1 TO 10",
     event: "",
     img: "assets/images/score1.png",
@@ -32,7 +32,7 @@ class GridDashboard extends StatelessWidget {
     Navigator: FeedbackWidget()
   );
   Items item4 = new Items(
-    title: "Activities",
+    title: "List Pateent",
     subtitle: "Rose favirited your Post",
     event: "",
     img: "assets/images/festival.png",

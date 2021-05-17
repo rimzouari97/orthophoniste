@@ -159,7 +159,13 @@ class _FeedbackState extends State<Feedback> {
                       ],
                     ),
 
-                    FlatButton(
+                    MaterialButton(
+                        color: Colors.deepPurple,
+                        child: Text("Save"),
+                        shape:RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                            side: BorderSide(color: Colors.deepPurple)
+                        ),
                         onPressed:() async {
                           print("text");
                           print(_selectedItem.nameP);
@@ -167,22 +173,22 @@ class _FeedbackState extends State<Feedback> {
                           setState(() {
                             print("_selectedItem.nameP");
                             print(_selectedItem.nameP);
-                            ToDoParam   toDoParam = ToDoParam(idExercice: _selectedItem1.id,idUser: _selectedItem.idP);
+                        ToDoParam   toDoParam = ToDoParam(idExercice: _selectedItem1.id,idUser: _selectedItem.idP);
                             print(toDoParam.idUser);
 
                             showDialog(
                               context: context,
                               builder: (BuildContext context) {
                                 return AlertDialog(
-                                  title: Row(
-                                      children:[
-                                        Icon(Icons.info,color: Colors.blueAccent),
-                                        Text('  Info . '),
+                                    title: Row(
+                                        children:[
+                                          Icon(Icons.info,color: Colors.blueAccent),
+                                          Text('  Info . '),
 
-                                      ]
+                                        ]
 
-                                  ),
-                                  content: Text(" statistique de l'exercice "+ _selectedItem1.name  +" affecter a "+_selectedItem.nameP ),
+                                    ),
+                                    content: Text(" statistique de l'exercice "+ _selectedItem1.name  +" affecter a "+_selectedItem.nameP ),
                                   actions: [
                                     FlatButton(onPressed: (){
                                       Navigator.pushReplacement(
@@ -199,17 +205,13 @@ class _FeedbackState extends State<Feedback> {
                             );
 
 
-                            // LineChartWidget(toDoParam),
+                           // LineChartWidget(toDoParam),
                           });
 
                         },
-                        child:Container(
-                          decoration: BoxDecoration(
-                              color: Colors.grey, borderRadius: BorderRadius.circular(10)),
-                          child:  MaterialButton(child: Text("Save"),color: Colors.deepPurple,),
-                        )
+
                     ),
-                    // Text(toDoParam.idUser),
+                   // Text(toDoParam.idUser),
 
 
                   ],
