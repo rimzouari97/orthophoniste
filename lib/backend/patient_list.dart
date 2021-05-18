@@ -66,6 +66,19 @@ class _MyPatientListState extends State<MyPatientList> {
            return Scaffold(
              appBar: AppBar(
                title: Text("Approuve List "),
+               actions: <Widget>[
+                 Padding(
+                     padding: EdgeInsets.only(right: 20.0),
+                     child: GestureDetector(
+                       onTap: () {
+                         print("lllllllllllllllllllllllllll");
+                       },
+                       child: Icon(
+                           Icons.info_outline
+                       ),
+                     )
+                 ),
+               ],
              ),
              body:Container(child: Center(child: Text(" Not patient"),)),
            );
@@ -74,6 +87,19 @@ class _MyPatientListState extends State<MyPatientList> {
         return Scaffold(
           appBar: AppBar(
             title: Text(" Approuve List "),
+            actions: <Widget>[
+              Padding(
+                  padding: EdgeInsets.only(right: 20.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      print("test pppppppppppp");
+                    },
+                    child: Icon(
+                        Icons.info_outline
+                    ),
+                  )
+              ),
+            ],
           ),
           body: ListWidget(),
         );

@@ -61,6 +61,19 @@ class _MyDoneListState extends State<MyDoneList> {
           return Scaffold(
             appBar: AppBar(
               title: Text("Patient List "),
+              actions: <Widget>[
+                Padding(
+                    padding: EdgeInsets.only(right: 20.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        print("test pppppppppppp");
+                      },
+                      child: Icon(
+                          Icons.info_outline
+                      ),
+                    )
+                ),
+              ],
             ),
             body:Container(child: Center(child: Text(" No Patient   "),)),
           );
@@ -68,8 +81,32 @@ class _MyDoneListState extends State<MyDoneList> {
         return Scaffold(
           appBar: AppBar(
             title: Text("Patient List "),
+            actions: <Widget>[
+              Tooltip(
+                message: "message",
+
+               child: Padding(
+                  padding: EdgeInsets.only(right: 20.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      print("rrrrrrrrrrrrrrrrrrr");
+                    },
+                    child: Icon(
+                        Icons.info_outline
+
+                    ),
+                  )
+              ),
+               ),
+
+
+            ],
           ),
-          body: ListWidget(),
+         body:   Tooltip(
+           message: 'I am a Tooltip',
+           child: Text('Hover over the text to show a tooltip.'),
+         ),
+         // body: ListWidget(),
         );
       }else {
         debugPrint('Step 3, build loading widget');
