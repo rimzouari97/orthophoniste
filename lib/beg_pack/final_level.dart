@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:get_it/get_it.dart';
 import 'package:lottie/lottie.dart';
+import 'package:orthophoniste/services/stutter_service.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:avatar_glow/avatar_glow.dart';
 
-
+import 'Beg.dart';
+import 'custom_dialog.dart';
 
 class FinalLevel extends StatelessWidget {
   @override
@@ -72,6 +75,8 @@ class __PagefState extends State<_Pagef> {
     _speech = stt.SpeechToText();
   }
 
+  StutterService get stutterservice => GetIt.I<StutterService>();
+
   List<String> words = [
     'Bad',
     'Glad',
@@ -92,7 +97,7 @@ class __PagefState extends State<_Pagef> {
         horizontal: 24,
       ),
       style: NeumorphicStyle(
-        color: Colors.green[300],
+        color: Colors.blue[300],
         boxShape: NeumorphicBoxShape.roundRect(
           BorderRadius.circular(12),
         ),
@@ -103,28 +108,58 @@ class __PagefState extends State<_Pagef> {
     );
   }
 
+  Widget _buildTopBar(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
+          Align(
+            alignment: Alignment.centerLeft,
+            child: NeumorphicButton(
+              onPressed: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (BuildContext context) {
+                  return Beg();
+                }));
+              },
+              style: NeumorphicStyle(
+                shape: NeumorphicShape.flat,
+                boxShape: NeumorphicBoxShape.circle(),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Icon(Icons.navigate_before),
+              ),
+            ),
+          ),
+          Align(
+              alignment: Alignment.center,
+              child: Text(
+                "Final Level",
+                style: TextStyle(
+                  fontSize: 20,
+                ),
+              )),
+        ],
+      ),
+    );
+  }
+
   Widget build(BuildContext context) {
     var item = '';
     return Scaffold(
-      backgroundColor: Colors.green,
+      backgroundColor: Colors.blue,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Neumorphic(
-                child: AppBar(
-                  iconTheme: IconThemeData.fallback(),
-                  backgroundColor: Colors.green[300],
-                  elevation: 0,
-                  title: Text(
-                    "Final Level",
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
+                child: _buildTopBar(context),
                 style: NeumorphicStyle(
+                  color: Colors.blue[300],
                   depth: -8,
                 ),
               ),
@@ -269,7 +304,28 @@ class __PagefState extends State<_Pagef> {
                 repeatPauseDuration: Duration(milliseconds: 100),
                 repeat: true,
                 child: NeumorphicButton(
-                  onPressed: () => onListen(),
+                  onPressed: () async {
+                    await onListen();
+                    if (_correct.compareTo(_textSpeech.toLowerCase()) == 0) {
+                      await StutterService.saveStutterProgress(6);
+                      await showDialog(
+                        context: context,
+                        builder: (BuildContext context) => CustomDialog(
+                          title: "Amazing!",
+                          description:
+                              "we have dealt with \'A\' words and in the next level we will have \'i\' words, are you ready!",
+                          buttonText: "Yes I am",
+                        ),
+                      );
+                      await Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (context) {
+                        print('hurray');
+                        return FinalLevel();
+                      }));
+                    } else {
+                      await print('fail');
+                    }
+                  },
                   style: NeumorphicStyle(
                     shape: NeumorphicShape.flat,
                     boxShape: NeumorphicBoxShape.circle(),

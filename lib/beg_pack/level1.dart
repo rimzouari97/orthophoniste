@@ -8,6 +8,8 @@ import 'package:avatar_glow/avatar_glow.dart';
 import 'package:orthophoniste/beg_pack/custom_dialog.dart';
 import 'package:orthophoniste/beg_pack/level2.dart';
 
+import 'Beg.dart';
+
 class Level1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -40,6 +42,13 @@ class __Page1State extends State<_Page1> {
   String _textSpeech = 'hit record to start the game';
   String _correct = 'hit record to start the game';
   //must got glad that grandad had flat hat
+
+  void backNew() {
+    Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (BuildContext context) {
+      return Beg();
+    }));
+  }
 
   void onListen() async {
     if (!_isListening) {
@@ -103,6 +112,44 @@ class __Page1State extends State<_Page1> {
     );
   }
 
+  Widget _buildTopBar(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
+          Align(
+            alignment: Alignment.centerLeft,
+            child: NeumorphicButton(
+              onPressed: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (BuildContext context) {
+                  return Beg();
+                }));
+              },
+              style: NeumorphicStyle(
+                shape: NeumorphicShape.flat,
+                boxShape: NeumorphicBoxShape.circle(),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Icon(Icons.navigate_before),
+              ),
+            ),
+          ),
+          Align(
+              alignment: Alignment.center,
+              child: Text(
+                "First Level",
+                style: TextStyle(
+                  fontSize: 20,
+                ),
+              )),
+        ],
+      ),
+    );
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blue,
@@ -112,18 +159,10 @@ class __Page1State extends State<_Page1> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Neumorphic(
-                child: AppBar(
-                  iconTheme: IconThemeData.fallback(),
-                  backgroundColor: Colors.blue[300],
-                  elevation: 0,
-                  title: Text(
-                    "First Level",
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
+                child: _buildTopBar(context),
                 style: NeumorphicStyle(
+                  color: Colors.blue[300],
                   depth: -8,
                 ),
               ),
