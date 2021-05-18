@@ -12,6 +12,7 @@ class Chart extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(8, 400, 8, 30),
           child: PageView(
             children: [
+
               LineChartPage(),
             ],
           ),
