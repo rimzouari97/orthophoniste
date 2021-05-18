@@ -61,6 +61,40 @@ class _MyDoneListState extends State<MyDoneList> {
           return Scaffold(
             appBar: AppBar(
               title: Text("Patient List "),
+              actions: <Widget>[
+                Padding(
+                    padding: EdgeInsets.only(right: 20.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Row(
+                                  children:[
+                                    Icon(Icons.info,color: Colors.blueAccent),
+                                    Text('  Info . ')
+                                  ]
+                              ),
+                              content: Text("Exercice "+  " affecter a " ),
+                              actions: [
+                                MaterialButton(
+                                  onPressed: (){
+                                    Navigator.pop(context);
+                                  }, child: Text('ok'),
+                                  color: Colors.deepPurple,
+                                )
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      child: Icon(
+                          Icons.info_outline
+                      ),
+                    )
+                ),
+              ],
             ),
             body:Container(child: Center(child: Text(" No Patient   "),)),
           );
@@ -68,7 +102,49 @@ class _MyDoneListState extends State<MyDoneList> {
         return Scaffold(
           appBar: AppBar(
             title: Text("Patient List "),
+            actions: <Widget>[
+              Tooltip(
+                message: "message",
+
+               child: Padding(
+                  padding: EdgeInsets.only(right: 20.0),
+                  child: GestureDetector(
+                    onTap: () {
+                                showDialog(
+                        context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Row(
+                                  children: [
+                                    Icon(Icons.info, color: Colors.blueAccent),
+                                    Text('  Info . ')
+                                  ]
+                              ),
+                              content: Text("Exercice " + " affecter a "),
+                              actions: [
+                                MaterialButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  }, child: Text('ok'),
+                                  color: Colors.deepPurple,
+                                )
+                              ],
+                            );
+                          }
+                     );
+                    },
+                    child: Icon(
+                        Icons.info_outline
+
+                    ),
+                  )
+              ),
+               ),
+
+
+            ],
           ),
+
           body: ListWidget(),
         );
       }else {

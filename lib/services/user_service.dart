@@ -584,7 +584,36 @@ class UserService {
 
 
 
+  Future<APIResponse<User>> UpdateHasOrho(OrthoParam item){
+    print(json.encode(item.toJson()));
+    return http.post(BASE_URL+"hasOrth/updateName" ,headers: headers,body: json.encode(item.toJson()))
+        .then((data) {
+      print(data.statusCode.toString() );
+      if(data.statusCode == 200){
 
+        final Map<String, dynamic> jsonData = json.decode(data.body);
+
+        if(jsonData["message"] != null){
+          print(jsonData["message"]);
+          return APIResponse<User>(errer: true,errorMessage: jsonData["message"]);
+        }else {
+          var item = jsonData["user"];
+          final user = User(
+              item['id'],
+              item['name'],
+              item['email'],
+              item['type'],
+              item['password'],
+              code: item['code'],
+              phone: item['phone'],
+              score: item['score']
+          );
+          return APIResponse<User>(data: user);
+        }
+      }
+      return APIResponse<User>(errer: true,errorMessage: " An errer 1");
+    }).catchError((_) =>  APIResponse<User>(errer: true,errorMessage: " Opps server Errer"));
+  }
 
 
 

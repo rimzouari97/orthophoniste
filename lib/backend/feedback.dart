@@ -121,7 +121,41 @@ class _FeedbackState extends State<Feedback> {
 
           return Scaffold(
             appBar: AppBar(
-              title: Text("Affectation des Exercice"),
+              title: Text("Show chart"),
+                actions: <Widget>[
+                  Padding(
+                      padding: EdgeInsets.only(right: 20.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Row(
+                                    children:[
+                                      Icon(Icons.info,color: Colors.blueAccent),
+                                      Text('  Info . ')
+                                    ]
+                                ),
+                                content: Text("Exercice "+  " affecter a " ),
+                                actions: [
+                                  MaterialButton(
+                                    onPressed: (){
+                                      Navigator.pop(context);
+                                    }, child: Text('ok'),
+                                    color: Colors.deepPurple,
+                                  )
+                                ],
+                              );
+                            },
+                          );
+                        },
+                        child: Icon(
+                            Icons.info_outline
+                        ),
+                      )
+                  ),
+                ]
             ),
             body: Container(
                 padding: EdgeInsets.all(20.0),
