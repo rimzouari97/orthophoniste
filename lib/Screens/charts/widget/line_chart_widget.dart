@@ -19,7 +19,15 @@ class LineChartWidget extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(title: Text("State of user"),),
-      body: Center(child:  MyLineChart(_toDoParam),),
+      body: Center(child: Column(
+        children: [
+         Card(
+           child: Text("oussama"),
+         ),
+          MyLineChart(_toDoParam)
+        ],
+      )
+      ),
     );
   }
 }
