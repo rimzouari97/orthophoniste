@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:orthophoniste/Screens/ProfileOrtho/profile_screen.dart';
+import 'package:orthophoniste/models/ortho_parm.dart';
 import 'package:orthophoniste/models/user_info.dart';
 import 'package:orthophoniste/models/user_parm.dart';
 import 'package:orthophoniste/services/user_service.dart';
@@ -333,12 +334,17 @@ class MapScreenState extends State<ProfilePage>
 
                   
                   service.Update(UserParam(id: _idUser,name: name1,email: _email,phone: phone)).then((result) {
+
+                    service.UpdateHasOrho(OrthoParam(nameP: name1,idP: _idUser)).then((value)  {
+
                     SharedPref pref = SharedPref();
-                    pref.addUserName(result.data.name);
+                        pref.addUserName(result.data.name);
                     pref.addUserPhone(result.data.phone);
                     print(result.data.name);
 
                     setState(() {});
+                    });
+
 
                   });
                   setState(() {

@@ -66,7 +66,28 @@ class _MyDoneListState extends State<MyDoneList> {
                     padding: EdgeInsets.only(right: 20.0),
                     child: GestureDetector(
                       onTap: () {
-                        print("test pppppppppppp");
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Row(
+                                  children:[
+                                    Icon(Icons.info,color: Colors.blueAccent),
+                                    Text('  Info . ')
+                                  ]
+                              ),
+                              content: Text("Exercice "+  " affecter a " ),
+                              actions: [
+                                MaterialButton(
+                                  onPressed: (){
+                                    Navigator.pop(context);
+                                  }, child: Text('ok'),
+                                  color: Colors.deepPurple,
+                                )
+                              ],
+                            );
+                          },
+                        );
                       },
                       child: Icon(
                           Icons.info_outline
@@ -89,7 +110,28 @@ class _MyDoneListState extends State<MyDoneList> {
                   padding: EdgeInsets.only(right: 20.0),
                   child: GestureDetector(
                     onTap: () {
-                      print("rrrrrrrrrrrrrrrrrrr");
+                                showDialog(
+                        context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Row(
+                                  children: [
+                                    Icon(Icons.info, color: Colors.blueAccent),
+                                    Text('  Info . ')
+                                  ]
+                              ),
+                              content: Text("Exercice " + " affecter a "),
+                              actions: [
+                                MaterialButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  }, child: Text('ok'),
+                                  color: Colors.deepPurple,
+                                )
+                              ],
+                            );
+                          }
+                     );
                     },
                     child: Icon(
                         Icons.info_outline
@@ -102,11 +144,8 @@ class _MyDoneListState extends State<MyDoneList> {
 
             ],
           ),
-         body:   Tooltip(
-           message: 'I am a Tooltip',
-           child: Text('Hover over the text to show a tooltip.'),
-         ),
-         // body: ListWidget(),
+
+          body: ListWidget(),
         );
       }else {
         debugPrint('Step 3, build loading widget');
