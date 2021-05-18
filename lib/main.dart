@@ -85,6 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
         SharedPreferences _prefs = await SharedPreferences.getInstance();
         SharedPref pref = SharedPref();
         currentUserId = _prefs.getString("UserId");
+        stutterservice.getStutterProgress(currentUserId);
         hasOr = _prefs.getString('HasOrtho');
         print('hasOr');
         print(hasOr);
@@ -99,8 +100,6 @@ class _MyHomePageState extends State<MyHomePage> {
           print("test 500");
           print(snapshot.hasData);
           if (snapshot.hasData) {
-            String userId = currentUserId;
-            stutterservice.getStutterProgress(userId);
             if (snapshot.data == "patient") {
               if (hasOr == "false") {
                 return HasOrth();

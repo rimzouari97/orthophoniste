@@ -108,6 +108,17 @@ class _MyToDoListState extends State<MyToDoList> {
           return Scaffold(
             appBar: AppBar(
               title: Text("List To Do patient"),
+              actions: <Widget>[
+                Padding(
+                    padding: EdgeInsets.only(right: 20.0),
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: Icon(
+                          Icons.info_outline
+                      ),
+                    )
+                ),
+              ],
             ),
             body:Container(child: Center(child: Text(" pas de patient"),)),
           );
@@ -116,6 +127,17 @@ class _MyToDoListState extends State<MyToDoList> {
         return Scaffold(
           appBar: AppBar(
             title: Text("List To Do patient"),
+            actions: <Widget>[
+              Padding(
+                  padding: EdgeInsets.only(right: 20.0),
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Icon(
+                        Icons.info_outline
+                    ),
+                  )
+              ),
+            ],
           ),
          body: ListWidget(),
         );
