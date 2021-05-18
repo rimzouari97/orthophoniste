@@ -1,17 +1,22 @@
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:orthophoniste/constants.dart';
 import 'package:orthophoniste/models/API_response.dart';
+import 'package:orthophoniste/models/exercice.dart';
 import 'package:orthophoniste/models/ortho_parm.dart';
 import 'package:orthophoniste/models/todo_param.dart';
+import 'package:orthophoniste/models/user_info.dart';
 import 'package:orthophoniste/models/user_parm.dart';
 import 'package:orthophoniste/services/user_service.dart';
 import 'package:orthophoniste/shared_preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:http/http.dart'as http;
 import 'griddashboard.dart';
 
 
@@ -36,9 +41,13 @@ class MyToDoList extends StatefulWidget {
 class _MyToDoListState extends State<MyToDoList> {
   UserService get service => GetIt.I<UserService>();
   APIResponse rep;
+  List<OrthoParam> listUser =[];
+  List<Exercice> listExe =[];
 
   void initState() {
     super.initState();
+
+ //   background: Container(color: Colors.red);
 
   }
 
@@ -47,10 +56,43 @@ class _MyToDoListState extends State<MyToDoList> {
       Future.delayed(Duration(microseconds: 3000), () async {
         SharedPreferences preferences = await SharedPreferences.getInstance();
         widget._id = await preferences.getString('UserId');
-        print(widget._id);
+        listUser = await service.gatAllByIdOrtho(UserParam(id: widget._id));
+        await http.get(BASE_URL+"exercices/list",headers: headers)
+            .then((data) {
+          //   print(data.statusCode.toString() );
+          if(data.statusCode == 200){
+            Map<String, dynamic> jsonData = json.decode(data.body);
+            //  print(jsonData);
+            // List<Exercice>  list = <Exercice>[];
+            listExe.clear();
 
-        var res =  await service.getToDoByIdUser(ToDoParam(idUser:"60726eb547828200150a7571"));
-        print(res.length);
+            for(var item in jsonData.values.last ){
+              //  print("item");
+              Exercice exercice = Exercice(
+                  category: item["category"],
+                  id: item["_id"],
+                  type: item['type'],
+                  score: item["score"],
+                  name: item["name"],
+                  niveau :item["niveau"]
+              );
+              // print(exercice.id);
+              //print(exercice.name);
+
+
+              // list.add(exercice);
+              listExe.add(exercice);
+            }
+            //  print(list.length);
+
+          }
+
+        });
+
+      //  print(widget._id);
+
+        var res =  await service.getToDoByIdOrtho(ToDoParam(idOrtho:widget._id));
+      //  print(res.length);
          return res;
 
       });
@@ -60,12 +102,12 @@ class _MyToDoListState extends State<MyToDoList> {
     future: fetchData(), //fetchData(),
     builder: (context, snapshot) {
       if(snapshot.hasData) {
-        print('eeeeeeeeeeee');
+     //   print('eeeeeeeeeeee');
         // print(snapshot.data.length );
         if(snapshot.data.length == 0){
           return Scaffold(
             appBar: AppBar(
-              title: Text("List Patient"),
+              title: Text("List To Do patient"),
             ),
             body:Container(child: Center(child: Text(" pas de patient"),)),
           );
@@ -73,7 +115,7 @@ class _MyToDoListState extends State<MyToDoList> {
 
         return Scaffold(
           appBar: AppBar(
-            title: Text("List Patient"),
+            title: Text("List To Do patient"),
           ),
          body: ListWidget(),
         );
@@ -95,53 +137,131 @@ class _MyToDoListState extends State<MyToDoList> {
 
   Widget ListWidget() {
     return FutureBuilder(
-      builder: (context, Snap) {
-        if (Snap.connectionState == ConnectionState.none &&
-            Snap.hasData == null) {
-          //print('project snapshot data is: ${projectSnap.data}');
-          return Container();
-        }
-        int len = 0;
-        try {
-          len = Snap.data.length;
-        }catch(e){
-          print(e.toString());
-        }
-        return ListView.builder(
-          itemCount: len,
-          itemBuilder: (context, index) {
+        future: fetchData(),
+        builder: (context, Snap) {
+          if (Snap.connectionState == ConnectionState.none &&
+              Snap.hasData == null) {
+            //print('project snapshot data is: ${projectSnap.data}');
+            return Container();
+          }
+          int len = 0;
+          try {
+            len = Snap.data.length;
+          } catch (e) {
+            print(e.toString());
+          }
+          return ListView.builder(
+            itemCount: len,
+            itemBuilder: (context, index) {
+              ToDoParam item = Snap.data[index];
 
-            return Column(
-              children: <Widget>[
-                Card(
-                  child: Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Row(children: [
-                      Image.network("https://scontent.ftun12-1.fna.fbcdn.net/v/t1.6435-9/48405342_1823459577765035_1096277873884397568_n.jpg?_nc_cat=111&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=24WMN-QgMioAX-NzwGI&_nc_ht=scontent.ftun12-1.fna&oh=10f7bf58608579869ca8b83704157ea3&oe=609BD258",
-                        height: 60,
-                        width: 60,),
-                      Text(" "),
-                      Text(Snap.data[index].id),
-                      Text(" "),
-                      Text(" "),
-                      // Text("Approuve",style: TextStyle(color: Colors.green),),
-                      Text(" "),Text(" "),Text(" "),
+              return Dismissible(
+                // Each Dismissible must contain a Key. Keys allow Flutter to
+                // uniquely identify widgets.
+                key: Key(item.idUser),
+                child: Column(
+                  children: <Widget>[
+                    Card(
+                      child: Padding(
+                        padding: EdgeInsets.all(16.0),
+                        child: Row(children: [
+                          Image.network(
+                            "https://raw.githubusercontent.com/oussamaMaaroufi/orthoBack/master/166395810_233537285126986_5719499729791420255_o.jpg",
+                            height: 60,
+                            width: 60,),
+                          Text(" "),
+                        //  Text(Snap.data[index].id),
+                          NameUser(item.idUser),
+                          Text(" "),
+                          NameEx(item.idExercice),
+                          Text(" "),
+                          Text(" "),
+                          // Text("Approuve",style: TextStyle(color: Colors.green),),
+                          Text(" "),
+                          Text(" "),
+                          Text(" "),
 
 
-                    ],
+                        ],
 
+                        ),
+                      ),
                     ),
-                  ),
-                ),
 
-                // Widget to display the list of project
-              ],
-            );
-          },
-        );
-      },
-      future: fetchData(),
+                    // Widget to display the list of project
+                  ],
+                ),
+                  background: Container(color: Colors.green,
+                                        child: Icon(Icons.check),
+                  ),
+
+                secondaryBackground: Container(color: Colors.red,
+                                     child: Icon(Icons.cancel),
+                ),
+                direction: DismissDirection.endToStart,
+
+                onDismissed: (direction) async {
+
+                    Snap.data.remove(index);
+                     service.deleteToDo(ToDoParam(id: item.id)).then((value) {
+                       if(value == true){
+                         ScaffoldMessenger.of(context)
+                             .showSnackBar(SnackBar(content: Row(
+                           children: [
+                             //      NameUser(item.idUser),
+                             //     Text(" "),
+                             //     NameEx(item.idExercice),
+                             Text(" Delete")
+                           ],
+                         )
+                         ));
+                       }else{
+                         ScaffoldMessenger.of(context)
+                             .showSnackBar(SnackBar(content: Row(
+                           children: [
+                             //      NameUser(item.idUser),
+                             //     Text(" "),
+                             //     NameEx(item.idExercice),
+                             Text(" Ops")
+                           ],
+                         )
+                         ));
+                       }
+
+                     });
+
+
+
+
+                },
+
+
+              );
+            },
+          );
+        }
     );
+  }
+
+  Widget NameUser(String idUser ){
+    for(OrthoParam user in listUser){
+      print(idUser);
+      if(user.idP == idUser){
+        return  Text(user.nameP);
+      }
+    }
+
+  }
+
+  Widget NameEx (String idEx ){
+    for(Exercice ex in listExe){
+    //  print(ex.name);
+      if(ex.id == idEx){
+        return  Text(ex.name);
+      }
+    }
+    return  Text("");
+
   }
 
 

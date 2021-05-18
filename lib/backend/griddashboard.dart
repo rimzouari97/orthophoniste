@@ -1,11 +1,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'package:orthophoniste/Screens/ProfileOrtho/profile_screen.dart';
-import 'package:orthophoniste/Screens/charts/pie_chart.dart';
+import 'package:orthophoniste/Screens/charts/page/home_page.dart';
 import 'package:orthophoniste/backend/affect_exerecice.dart';
 import 'package:orthophoniste/backend/done_list.dart';
+import 'package:orthophoniste/backend/feedback.dart';
 import 'package:orthophoniste/backend/patient_list.dart';
 import 'package:orthophoniste/backend/to_do_list.dart';
 
@@ -18,7 +18,7 @@ class GridDashboard extends StatelessWidget {
       img: "assets/images/calendar.png",);
 
   Items item2 = new Items(
-    title: "Patients",
+    title: "Approuve List",
     subtitle: "FROM 1 TO 10",
     event: "",
     img: "assets/images/score1.png",
@@ -29,10 +29,10 @@ class GridDashboard extends StatelessWidget {
     subtitle: "Lucy Mao going to Office",
     event: "",
     img: "assets/images/chart.png",
-    Navigator: PieChart()
+    Navigator: FeedbackWidget()
   );
   Items item4 = new Items(
-    title: "Activities",
+    title: "List Pateent",
     subtitle: "Rose favirited your Post",
     event: "",
     img: "assets/images/festival.png",

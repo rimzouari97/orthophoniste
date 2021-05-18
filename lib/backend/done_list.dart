@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:orthophoniste/data/draggable_animal.dart';
 import 'package:orthophoniste/models/API_response.dart';
 import 'package:orthophoniste/models/done.dart';
 import 'package:orthophoniste/models/ortho_parm.dart';
@@ -37,15 +38,15 @@ class MyDoneList extends StatefulWidget {
 
 class _MyDoneListState extends State<MyDoneList> {
 
-  DoneService get service => GetIt.I<DoneService> ();
+  UserService get service => GetIt.I<UserService> ();
   APIResponse rep;
-  Future<List<Done>> fetchData() =>
+  Future<List<OrthoParam>> fetchData() =>
       Future.delayed(Duration(microseconds: 3000), () async {
         SharedPreferences preferences = await SharedPreferences.getInstance();
-        widget._id = await preferences.getString('idUser');
-        return  await service.getAllByIdDone(Done(id: widget._id));
+        widget._name = await preferences.getString('UserName');
+        widget._id = await preferences.getString('UserId');
 
-        // return list;
+        return  await service.gatAllByIdOrtho(UserParam(id: widget._id));
 
       });
 
@@ -59,14 +60,14 @@ class _MyDoneListState extends State<MyDoneList> {
         if(snapshot.data.length == 0){
           return Scaffold(
             appBar: AppBar(
-              title: Text("Done lessons"),
+              title: Text("Patient List "),
             ),
-            body:Container(child: Center(child: Text(" No lessons "),)),
+            body:Container(child: Center(child: Text(" No Patient   "),)),
           );
         }
         return Scaffold(
           appBar: AppBar(
-            title: Text("Done lessons"),
+            title: Text("Patient List "),
           ),
           body: ListWidget(),
         );
@@ -103,31 +104,78 @@ class _MyDoneListState extends State<MyDoneList> {
         return ListView.builder(
           itemCount: len,
           itemBuilder: (context, index) {
+           OrthoParam  item = Snap.data[index];
 
-            return Column(
-              children: <Widget>[
-                Card(
-                  child: Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: Column(children: [
-                      Text(" "),
-                      Text(Snap.data[index].exerciceName),
-                      Text(Snap.data[index].score),
+            if(item.valid == "true"){
+              return Dismissible(
+                  key: Key(Snap.data[index].id),
+                  child: Column(
+                    children: <Widget>[
+                      Card(
+                        child: Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: Row(children: [
+                            Image.network(
+                              "https://raw.githubusercontent.com/oussamaMaaroufi/orthoBack/master/166395810_233537285126986_5719499729791420255_o.jpg",
+                              height: 60,
+                              width: 60,),
+                            Text(" "),
+                            Text(Snap.data[index].nameP),
+                            Text(" "),
+                            Text(" "),
+                            // Text("Approuve",style: TextStyle(color: Colors.green),),
+                            Text(" "),Text(" "),Text(" "),
 
+
+
+                          ],
+
+                          ),
+                        ),
+                      ),
+
+                      // Widget to display the list of project
                     ],
-
-                    ),
                   ),
+                direction: DismissDirection.endToStart,
+                background: Container(color: Colors.green,
+                  child: Icon(Icons.check),
                 ),
 
-                // Widget to display the list of project
-              ],
-            );
-          },
-        );
+                secondaryBackground: Container(color: Colors.red,
+                  child: Icon(Icons.cancel),
+                ),
+                onDismissed: (direction){
+                    Delete(item);
+
+                },
+              );
+            }else {
+              return Container();
+            }
+
+          }
+          );
+
       },
       future: fetchData(),
     );
+  }
+
+  dynamic Delete(OrthoParam item) async {
+    await service.deleteHasOrth(OrthoParam(id:item.id ,idP: item.idP)).then((res) => {
+      if(!res.errer){
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (BuildContext context) => super.widget))
+
+      }else{
+
+
+      }
+    });
+
   }
 
 

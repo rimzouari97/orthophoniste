@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:orthophoniste/Screens/Profile/components/update_pwd.dart';
 import 'package:orthophoniste/backend/dropdowe_mune_exercice.dart';
 import 'package:orthophoniste/constants.dart';
 import 'package:orthophoniste/models/API_response.dart';
@@ -202,20 +203,16 @@ class UserService {
       if(data.statusCode == 200){
 
         final Map<String, dynamic> jsonData = json.decode(data.body);
-        print('jsonData["success"]');
-        print(jsonData["success"]);
+
         if(jsonData["success"] != null){
-          print('jsonData["success"]1');
-          print(jsonData["success"]);
+
 
            if(jsonData["success"].toString() == "true"){
-             print('jsonData["success"]2');
-             print(jsonData["success"]);
+
              return true;
 
            }else{
-             print('jsonData["success"]3');
-             print(jsonData["success"]);
+
              return false;
            }
 
@@ -352,7 +349,7 @@ class UserService {
     }).catchError((_) =>  APIResponse<OrthoParam>(errer: true,errorMessage: " Opps server Errer"));
   }
 
-  Future<bool> getAllExercice(){
+  Future<List<Exercice>> getAllExercice(){
     return  http.get(BASE_URL+"exercices/list",headers: headers)
         .then((data) {
       print(data.statusCode.toString() );
@@ -404,17 +401,23 @@ class UserService {
       print(data.body);
       if(data.statusCode == 200){
 
-        final Map<String, dynamic> jsonData = json.decode(data.body);
 
+        final Map<String, dynamic> jsonData = json.decode(data.body);
+        print(jsonData["success"]);
+        if(jsonData["success"] == false){
+          print(jsonData["success"]);
+          return APIResponse<ToDoParam>(errorMessage : jsonData["message"], errer: true);
+        }else {
           var item = jsonData["todo"];
           print(item);
           final todo = ToDoParam(
-              id : item['_id'],
-              AvgScore:  item['AvgScore'],
+              id: item['_id'],
+              AvgScore: item['AvgScore'],
               idExercice: item['idExercice'],
               idUser: item['idUser']
           );
-          return APIResponse<ToDoParam>(data: todo,errer: false);
+          return APIResponse<ToDoParam>(data: todo, errer: false);
+        }
       }
       return APIResponse<ToDoParam>(errer: true,errorMessage: " An errer 1");
     }).catchError((_) =>  APIResponse<ToDoParam>(errer: true,errorMessage: " Opps server Errer"));
@@ -424,7 +427,7 @@ class UserService {
 
     //  print(json.encode(item.toJson()));
     var parm ={"idUser" :user.idUser};
-    print(json.encode(parm));
+  //  print(json.encode(parm));
     return http.post(BASE_URL+"todo/getByIdUser" ,headers: headers,body: json.encode(user.toJson()))
         .then((data) {
       print(data.statusCode.toString() );
@@ -434,7 +437,7 @@ class UserService {
 
         Map<String, dynamic> jsonData = json.decode(data.body);
 
-        print(jsonData);
+       // print(jsonData);
 
         for(var item in jsonData.values.last ){
 
@@ -457,6 +460,129 @@ class UserService {
     });
 
   }
+
+
+
+  Future<bool> deleteToDo(ToDoParam item){
+    print(json.encode(item.toJson()));
+    return http.post(BASE_URL+"todo/"+"delete" ,headers: headers,body: json.encode(item.toJson()))
+        .then((data) {
+      print(data.statusCode.toString() );
+      if(data.statusCode == 200){
+
+        final Map<String, dynamic> jsonData = json.decode(data.body);
+
+        if(jsonData["success"] != null){
+          print(jsonData["message"]);
+          return true;
+        }else {
+
+          return  false;
+        }
+      }
+      return false;
+    });
+  }
+
+  Future<List<ToDoParam>> getAllToDo(){
+
+    return http.get(BASE_URL+"todo/list" ,headers: headers)
+        .then((data) {
+      print(data.statusCode.toString() );
+      // print(data.body);
+      List<ToDoParam>  list = <ToDoParam>[];
+      if(data.statusCode == 200){
+
+        Map<String, dynamic> jsonData = json.decode(data.body);
+
+        // print(jsonData);
+
+        for(var item in jsonData.values.last ){
+
+          //  print("item");
+          //  print(item);
+
+          ToDoParam done = ToDoParam(
+              id: item["_id"],
+              idUser: item["idUser"],
+              idExercice: item["idExercice"],
+              AvgScore: item["AvgScore"]
+          );
+
+          list.add(done);
+        }
+
+
+      }
+      return list;
+    });
+
+  }
+
+
+
+
+  Future<List<ToDoParam>> getToDoByIdOrtho(ToDoParam user){
+
+    //  print(json.encode(item.toJson()));
+    var parm ={"idOrtho" :user.idOrtho};
+    //  print(json.encode(parm));
+    return http.post(BASE_URL+"todo/getByIdOrtho" ,headers: headers,body: json.encode(user.toJson()))
+        .then((data) {
+      print(data.statusCode.toString() );
+      // print(data.body);
+      List<ToDoParam>  list = <ToDoParam>[];
+      if(data.statusCode == 200){
+
+        Map<String, dynamic> jsonData = json.decode(data.body);
+
+        // print(jsonData);
+
+        for(var item in jsonData.values.last ){
+
+          print("item");
+          print(item);
+
+          ToDoParam todoP = ToDoParam(
+              id: item["_id"],
+              idUser: item["idUser"],
+              idExercice: item["idExercice"],
+              AvgScore: item["AvgScore"],
+            idOrtho:item["idOrtho"],
+          );
+
+          list.add(todoP);
+        }
+
+
+      }
+      return list;
+    });
+
+  }
+
+  Future<APIResponse<User>> UpdatePasssword(UserParam item){
+    print(json.encode(item.toJson()));
+    return http.post(API+"updatePwd" ,headers: headers,body: json.encode(item.toJson()))
+        .then((data) {
+      print(data.statusCode.toString() );
+      if(data.statusCode == 200){
+
+        final Map<String, dynamic> jsonData = json.decode(data.body);
+
+        if(jsonData["success"] == false){
+          print(jsonData["message"]);
+          return APIResponse<User>(errer: true,errorMessage: jsonData["message"]);
+        }else {
+
+          return APIResponse<User>(errer: false);
+        }
+      }
+      return APIResponse<User>(errer: true,errorMessage: " An errer 1");
+    }).catchError((_) =>  APIResponse<User>(errer: true,errorMessage: " Opps server Errer"));
+  }
+
+
 
 
 

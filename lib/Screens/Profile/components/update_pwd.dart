@@ -25,6 +25,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class UpdatePwd extends StatefulWidget {
 
   String _id,_name;
+  String _email;
   String _oldPwd,_newPwd1,_newPwd2;
   GlobalKey<FormState> _keyForm = new GlobalKey<FormState>();
 
@@ -51,6 +52,9 @@ class _UpdatePwdState extends State<UpdatePwd> {
         SharedPreferences preferences = await SharedPreferences.getInstance();
         widget._name = await preferences.getString('UserName');
         widget._id = await preferences.getString('UserId');
+        widget._email = await preferences.getString("UserEmail");
+        print("widget._email");
+        print(widget._email);
         print(widget._id);
 
         return true;
@@ -80,7 +84,8 @@ class _UpdatePwdState extends State<UpdatePwd> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
 
-                            Text(widget._name + " Change your pls " ),
+                          //  Text(widget._name + " Change your password " ),
+                            Text(" "),
 
                             TextFormField(
                               keyboardType: TextInputType.emailAddress,
@@ -106,6 +111,8 @@ class _UpdatePwdState extends State<UpdatePwd> {
                                 widget._oldPwd = value;
                               },
                             ),
+                            Text(" "),
+                            Text(" "),
                             TextFormField(
                               keyboardType: TextInputType.emailAddress,
                               decoration: InputDecoration(
@@ -129,13 +136,17 @@ class _UpdatePwdState extends State<UpdatePwd> {
                               onSaved: (String value) {
                                 widget._newPwd1 = value;
                               },
-                            ),TextFormField(
+
+                            ),
+                            Text(" "),
+                            Text(" "),
+                            TextFormField(
                               keyboardType: TextInputType.emailAddress,
                               decoration: InputDecoration(
                                 icon: IconButton(
                                   icon: Icon(Icons.vpn_key_rounded),
                                 ),
-                                labelText: 'new  password',
+                                labelText: 'Confirm  password',
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(50),
                                   borderSide: BorderSide(
@@ -143,10 +154,11 @@ class _UpdatePwdState extends State<UpdatePwd> {
                                   ),),
                               ),
                               validator: (String value) {
+                                print(value);
+
                                 if (value.isEmpty) {
                                   return "must not be empty";
-                                }else if(widget._newPwd1 == value) {
-                                  return "password not eqauls";
+
                                 }else {
                                   return null;
                                 }
@@ -154,79 +166,117 @@ class _UpdatePwdState extends State<UpdatePwd> {
                               onSaved: (String value) {
                                 widget._newPwd2 = value;
                               },
+
+
                             ),
 
                             SizedBox(child: Text(""), height: 25,),
                             RoundedButton(
                                 text: "change",
                                 press: () async {
-                                  if (!_keyForm.currentState.validate())
+                                  if (!_keyForm.currentState.validate()) {
                                     return;
+                                  }
                                   _keyForm.currentState.save();
-                                  UserParam userP = UserParam(id: widget._id,name: widget._name);
-                                  //   userP.code = userP.hashCode;
-                                  print("userP.id");
-                                  print(userP.id);
-                                  final result = await service.hasOrtho(userP);
-
-                                  if (!result.errer) {
-                                    setState(() {
-                                    });
-                                    showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-
-                                          return AlertDialog(
-                                            title: Row(
-                                                children: [
-                                                  Icon(Icons.info,
-                                                      color: Colors.blueAccent),
-                                                  Text('  Info. '),
-
-                                                ]
-                                            ),
-                                            actions: [
-                                              FlatButton(
-                                                  child: Text('Yes'),
-                                                  onPressed: () {
-                                                    setState(() {
-                                                    });
-                                                    Navigator.of(context).pop();
-                                                  }),
-                                            ],
-
-                                            content: Text(
-                                                "Wiating ortho for approve"),
-
-
-
-
-                                          );
-                                        }
-                                    );
-                                  } else if (result.errer) {
-
-                                    final text = result.errorMessage;
-
-
+                                  if(widget._newPwd2 != widget._newPwd1){
                                     showDialog(
                                       context: context,
-                                      builder: (BuildContext context) {
+                                      builder: (BuildContext
+                                      context) {
                                         return AlertDialog(
-                                          title: Text("Info"),
-                                          content: Text(text),
+                                          title: Row(
+                                              children: [
+                                                Icon(Icons.error,
+                                                    color: Colors
+                                                        .blueAccent),
+                                                Text('  error . ')
+                                              ]
+                                          ),
+                                          content: Text(
+                                              "new Password and Confirm  password NOT equals"),
                                           actions: [
-                                            FlatButton(
-                                                child: Text('Yes'),
-                                                onPressed: () {
-                                                  setState(() {
-                                                  });
-                                                  Navigator.of(context).pop();
-                                                }),
+                                            MaterialButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              }, child: Text('ok'),
+                                              color: Colors.deepPurple,
+                                            )
                                           ],
                                         );
                                       },
                                     );
+
+                                  } else {
+                                    UserParam userP = UserParam(id: widget._id,
+                                        name: widget._newPwd1,
+                                        password: widget._oldPwd,
+                                        email: widget._email);
+                                    //   userP.code = userP.hashCode;
+                                    print("userP.id");
+                                    print(userP.id);
+                                    service.UpdatePasssword(userP).then((
+                                        value) =>
+                                    {
+                                      if(value.errer == false){
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext
+                                          context) {
+                                            return AlertDialog(
+                                              title: Row(
+                                                  children: [
+                                                    Icon(Icons.info,
+                                                        color: Colors
+                                                            .blueAccent),
+                                                    Text('  Info . ')
+                                                  ]
+                                              ),
+                                              content: Text(
+                                                  "Password changed successfully"),
+                                              actions: [
+                                                MaterialButton(
+                                                  onPressed: () {
+                                                    _keyForm.currentState.reset();
+                                                    Navigator.pop(context);
+                                                  }, child: Text('ok'),
+                                                  color: Colors.deepPurple,
+                                                )
+                                              ],
+                                            );
+                                          },
+                                        )
+                                      } else
+                                        {
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext
+                                            context) {
+                                              return AlertDialog(
+                                                title: Row(
+                                                    children: [
+                                                      Icon(Icons.info,
+                                                          color: Colors
+                                                              .blueAccent),
+                                                      Text('  Info . ')
+                                                    ]
+                                                ),
+                                                content: Text(
+                                                    value.errorMessage),
+                                                actions: [
+                                                  MaterialButton(
+                                                    onPressed: () {
+
+                                                      Navigator.pop(context);
+                                                    }, child: Text('ok'),
+
+                                                    color: Colors.deepPurple,
+                                                  )
+                                                ],
+                                              );
+                                            },
+                                          )
+                                        }
+                                    });
                                   }
                                 }
                             ),

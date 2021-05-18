@@ -29,7 +29,7 @@ class _MyquizzState extends State<Myquizz> {
         _idUser = preferences.getString('UserId');
 
         Done done = await service.getLastScore(
-            Done(idUser: _idUser, idExercice: "6074abf282c71b0015918da3"));
+            Done(idUser: _idUser, idExercice: "6074b1a582c71b0015918da5"));
 
         if (!done.score.isEmpty) {
           lastscore = done.score;
@@ -136,11 +136,14 @@ class _MyquizzState extends State<Myquizz> {
                   ),
                 ),
                 description: Text(
-                  ' votre  score est ${_totalScore}',
+                  ' votre derniere est  ${lastscore} , votre score actuel est ${_totalScore}',
                   textAlign: TextAlign.center,
                 ),
                 entryAnimation: EntryAnimation.RIGHT,
-                onOkButtonPressed: () {},
+                onOkButtonPressed: () {
+                  Navigator.of(context).pop();
+                },
+                onlyOkButton: true,
               ));
 
       Done done = Done(

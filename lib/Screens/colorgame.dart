@@ -17,6 +17,7 @@ class ColorGameState extends State<ColorGame> {
   int endgame = 0;
   int scoore = 0;
   String _idUser;
+  String lastscore = "0";
 
   DoneService get service => GetIt.I<DoneService>();
 
@@ -25,6 +26,12 @@ class ColorGameState extends State<ColorGame> {
         debugPrint('Step 2, fetch data');
         SharedPreferences preferences = await SharedPreferences.getInstance();
         _idUser = preferences.getString('UserId');
+        Done done = await service.getLastScore(
+            Done(idUser: _idUser, idExercice: "6074abf282c71b0015918da3"));
+
+        if (!done.score.isEmpty) {
+          lastscore = done.score;
+        }
 
         return true;
       });
@@ -110,7 +117,7 @@ class ColorGameState extends State<ColorGame> {
             //child: Text('Correct!'),
             alignment: Alignment.center,
             height: 80,
-            width: 180,
+            width: 200,
             decoration: BoxDecoration(
               border: Border.all(
                 color: Colors.blueAccent,
@@ -120,7 +127,18 @@ class ColorGameState extends State<ColorGame> {
             ),
           );
         } else {
-          return Container(color: choices[emoji], height: 80, width: 200);
+          //return Container(color: choices[emoji], height: 80, width: 200);
+          return Container(
+            height: 80,
+            width: 200,
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.blueAccent,
+                width: 3,
+              ),
+              color: choices[emoji],
+            ),
+          );
         }
       },
       onWillAccept: (data) => data == emoji,
@@ -158,12 +176,15 @@ class ColorGameState extends State<ColorGame> {
                         ),
                       ),
                       description: Text(
-                        'Bravo votre score est ${scoore}',
+                        'votre derniere est  ${lastscore} , votre score actuel est ${scoore}',
                         textAlign: TextAlign.center,
                       ),
                       buttonOkText: Text("ok"),
                       entryAnimation: EntryAnimation.RIGHT,
-                      onOkButtonPressed: () {},
+                      onlyOkButton: true,
+                      onOkButtonPressed: () {
+                        Navigator.of(context).pop();
+                      },
                     ));
 
             print('end of the game');

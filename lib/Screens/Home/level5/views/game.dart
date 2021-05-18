@@ -21,10 +21,23 @@ class Game extends StatefulWidget {
   _GameState createState() => _GameState();
 }
 
+
 class _GameState extends State<Game> {
   List<String> letters;
   List<String> addedLetters;
+  int scoore = 0;
+  String _idUser;
 
+  DoneService get service => GetIt.I<DoneService>();
+
+  Future<bool> fetchData() =>
+      Future.delayed(Duration(microseconds: 3000), () async {
+        debugPrint('Step 2, fetch data');
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        _idUser = preferences.getString('UserId');
+
+        return true;
+      });
   @override
   void initState() {
     super.initState();
@@ -50,12 +63,12 @@ class _GameState extends State<Game> {
                       onPressed: () {
                         Navigator.of(context).push(
                             MaterialPageRoute(builder: (context) => Levels()));
-                        scoore += 100;
+                        //scoore += 10;
                         print('end of the game');
-                        print(String.fromCharCode(scoore));
                         print(_idUser);
                         Done done = Done(
-                            exerciceName: "Dysorthographie "+ nextLevel.id.toString()+" :"+scoore.toString(),
+                            idExercice: "6088d462079cb400154a37e1",
+                            exerciceName: "Dysorthographie ",
                             idToDo: "mm",
                             score: scoore.toString(),
                             idUser: _idUser);
@@ -72,19 +85,6 @@ class _GameState extends State<Game> {
 
     }
   }
-  int scoore = 0;
-  String _idUser;
-
-  DoneService get service => GetIt.I<DoneService>();
-
-  Future<bool> fetchData() =>
-      Future.delayed(Duration(microseconds: 3000), () async {
-        debugPrint('Step 2, fetch data');
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        _idUser = preferences.getString('UserId');
-
-        return true;
-      });
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +119,7 @@ class _GameState extends State<Game> {
                               setState(() {
                                 addedLetters[index] = data;
                                 compareWord();
-
+                                scoore +=10;
                               });
                             }, builder: (context, _, __) {
                               return GestureDetector(
