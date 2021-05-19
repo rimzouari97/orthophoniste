@@ -134,10 +134,10 @@ class _FeedbackState extends State<Feedback> {
                                 title: Row(
                                     children:[
                                       Icon(Icons.info,color: Colors.blueAccent),
-                                      Text('  Info . ')
+                                      Text(' Show statics ')
                                     ]
                                 ),
-                                content: Text("Exercice "+  " affecter a " ),
+                                content: Text("You can select your patient and the assigned lesson before hitting the show button" ),
                                 actions: [
                                   MaterialButton(
                                     onPressed: (){
@@ -195,7 +195,7 @@ class _FeedbackState extends State<Feedback> {
 
                     MaterialButton(
                         color: Colors.deepPurple,
-                        child: Text("Save"),
+                        child: Text("Show"),
                         shape:RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(18.0),
                             side: BorderSide(color: Colors.deepPurple)

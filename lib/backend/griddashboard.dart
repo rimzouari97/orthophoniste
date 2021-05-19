@@ -11,14 +11,14 @@ import 'package:orthophoniste/backend/to_do_list.dart';
 
 class GridDashboard extends StatelessWidget {
   Items item1 = new Items(
-      title: "Affect Exercices",
+      title: "Assign lessons",
       subtitle: "March, Wednesday",
       event: "",
       Navigator: AffectExercice(),
       img: "assets/images/calendar.png",);
 
   Items item2 = new Items(
-    title: "Approuve List",
+    title: "Approval List",
     subtitle: "FROM 1 TO 10",
     event: "",
     img: "assets/images/score1.png",
@@ -32,14 +32,14 @@ class GridDashboard extends StatelessWidget {
     Navigator: FeedbackWidget()
   );
   Items item4 = new Items(
-    title: "List Pateent",
+    title: "Patients list",
     subtitle: "Rose favirited your Post",
     event: "",
     img: "assets/images/festival.png",
     Navigator: DoneList()
   );
   Items item5 = new Items(
-    title: "To do",
+    title: "To do list",
     subtitle: "Homework, Design",
     event: "",
     img: "assets/images/todo.png",

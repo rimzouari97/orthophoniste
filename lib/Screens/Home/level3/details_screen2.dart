@@ -121,7 +121,7 @@ class _Apprend extends State<DetailsScreen2> {
                       children: <Widget>[
                         SeassionCard(
                           seassionNum: 1,
-                          sessionName: "Dyslexie L",
+                          sessionName: "L.Dyslexia",
                           press: () {
                             var idDyslexieL = "6088d433079cb400154a37df";
                             var i = 1;
@@ -150,7 +150,7 @@ class _Apprend extends State<DetailsScreen2> {
                         ),
                         SeassionCard(
                           seassionNum: 2,
-                          sessionName: "Dyslexie O",
+                          sessionName: "O.Dyslexia",
                           press: () {
                             var idDyslexieO ="6088d443079cb400154a37e0";
                             var i =1;
