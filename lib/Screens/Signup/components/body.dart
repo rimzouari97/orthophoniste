@@ -333,7 +333,7 @@ class _BodyState extends State<Body> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        " je suis un orthophoniste",
+                        " I am a pathologist",
                         style: TextStyle(color: kPrimaryColor),
                       ),
                       GestureDetector(
@@ -348,7 +348,7 @@ class _BodyState extends State<Body> {
                           );
                         },
                         child: Text(
-                          "  OUI",
+                          "  YES ",
                           style: TextStyle(
                             color: kPrimaryColor,
                             fontWeight: FontWeight.bold,
