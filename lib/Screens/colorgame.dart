@@ -58,7 +58,38 @@ class ColorGameState extends State<ColorGame> {
       builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
         return Scaffold(
           appBar: AppBar(
-              title: Text('les couleurs    Score ${scoore} '),
+              title: Text('Colors  Score ${scoore} '),
+              actions: <Widget>[
+                Padding(
+                    padding: EdgeInsets.only(right: 20.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Row(children: [
+                                Icon(Icons.info, color: Colors.blueAccent),
+                                Text(' How to play ? ')
+                              ]),
+                              content: Text(
+                                  "try to match the fruit color with right square color  "),
+                              actions: [
+                                MaterialButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text('ok'),
+                                  color: Colors.deepPurple,
+                                )
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      child: Icon(Icons.info_outline),
+                    )),
+              ],
               //Text('les couleurs    Score ${score.length} /6'),
               backgroundColor: Colors.deepPurpleAccent.shade100),
           floatingActionButton: FloatingActionButton(

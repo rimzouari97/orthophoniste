@@ -49,6 +49,38 @@ class _DragPictureState extends State<DragPicture> {
         return Scaffold(
           appBar: AppBar(
             title: Text('jeux des formes '),
+
+            actions: <Widget>[
+              Padding(
+                  padding: EdgeInsets.only(right: 20.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Row(children: [
+                              Icon(Icons.info, color: Colors.blueAccent),
+                              Text('How to play ?')
+                            ]),
+                            content: Text(
+                                "try to drag the shape and put it on the right shadow"),
+                            actions: [
+                              MaterialButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text('ok'),
+                                color: Colors.deepPurple,
+                              )
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    child: Icon(Icons.info_outline),
+                  )),
+            ],
             backgroundColor: Colors.deepPurpleAccent.shade100,
             //backgroundColor: Colors.orangeAccent.shade100,
           ),
