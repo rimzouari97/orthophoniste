@@ -28,9 +28,9 @@ class LineChartWidget extends StatelessWidget {
 
            child: Column(
              children: [
-               Text("Name patient  :"+_toDoParam.id,style: TextStyle(color: Colors.blueAccent,  ),),
+               Text("Name Exercice  :"+_toDoParam.id,style: TextStyle(color: Colors.blueAccent,  ),),
                Text(""),
-               Text("Name Exercice :"+_toDoParam.idOrtho,style: TextStyle(color: Colors.blueAccent,  ),)
+               Text("Name patient :"+_toDoParam.idOrtho,style: TextStyle(color: Colors.blueAccent,  ),)
              ],
            ),
 
