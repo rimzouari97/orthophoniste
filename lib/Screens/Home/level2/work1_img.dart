@@ -79,6 +79,50 @@ class _HomeState extends State<Home2> {
   future: fetchData(),
   builder: (BuildContext context, AsyncSnapshot<bool> snapshot){
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.teal,
+        title: Text("Memory game"),
+        actions: <Widget>[
+          Tooltip(
+            message: "message",
+            child: Padding(
+                padding: EdgeInsets.only(right: 20.0),
+                child: GestureDetector(
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Row(
+                                children: [
+                                  Icon(Icons.info, color: Colors.amber),
+                                  Text(' How to play ? ')
+                                ]
+                            ),
+                            content: Text("This is a matching game, try to find all the identical pairs by selecting two sounds for each try"),
+                            actions: [
+                              MaterialButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                }, child: Text('ok'),
+                                color: Colors.amber,
+                              )
+                            ],
+                          );
+                        }
+                    );
+                  },
+                  child: Icon(
+                      Icons.info_outline
+
+                  ),
+                )
+            ),
+          ),
+
+
+        ],
+      ),
       backgroundColor: Colors.teal,
       body: SingleChildScrollView(
           child: Container(
@@ -90,7 +134,7 @@ class _HomeState extends State<Home2> {
                     iconTheme: IconThemeData.fallback(),
                     backgroundColor: Colors.grey[300],
                     title: Text(
-                      "  Mémoire auditive",
+                      "  Hearing memory",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.black,

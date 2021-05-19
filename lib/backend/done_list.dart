@@ -117,10 +117,10 @@ class _MyDoneListState extends State<MyDoneList> {
                               title: Row(
                                   children: [
                                     Icon(Icons.info, color: Colors.blueAccent),
-                                    Text('  Info . ')
+                                    Text(' Patients list ')
                                   ]
                               ),
-                              content: Text("Exercice " + " affecter a "),
+                              content: Text("Here's the list of all the patients who were approved by their pathologists. If you want to delete a patient, you can swipe right."),
                               actions: [
                                 MaterialButton(
                                   onPressed: () {

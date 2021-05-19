@@ -110,6 +110,50 @@ class _HomeState extends State<HomeSpell> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.teal,
+          title: Text("Dyslexia"),
+          actions: <Widget>[
+            Tooltip(
+              message: "message",
+              child: Padding(
+                  padding: EdgeInsets.only(right: 20.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Row(
+                                  children: [
+                                    Icon(Icons.info, color: Colors.greenAccent),
+                                    Text(' How to play ? ')
+                                  ]
+                              ),
+                              content: Text("You have to click on the speaker button to hear the sound of the word before typing it to finish the word correctly"),
+                              actions: [
+                                MaterialButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  }, child: Text('ok'),
+                                  color: Colors.greenAccent,
+                                )
+                              ],
+                            );
+                          }
+                      );
+                    },
+                    child: Icon(
+                        Icons.info_outline
+
+                    ),
+                  )
+              ),
+            ),
+
+
+          ],
+        ),
         backgroundColor: Colors.teal,
       body: Padding(
         padding: EdgeInsets.fromLTRB(8.0, 80.0, 8.0, 0.0),
@@ -121,7 +165,7 @@ class _HomeState extends State<HomeSpell> {
                 backgroundColor: Colors.grey[300],
 
                 title: Text(
-                  "      Dyslexie lexicale",
+                  "      lexical Dyslexia",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.black,

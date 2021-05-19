@@ -14,6 +14,50 @@ class Levels extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.teal,
+        title: Text(" Dysorthographia​"),
+        actions: <Widget>[
+          Tooltip(
+            message: "message",
+            child: Padding(
+                padding: EdgeInsets.only(right: 20.0),
+                child: GestureDetector(
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Row(
+                                children: [
+                                  Icon(Icons.info, color: Colors.amber),
+                                  Text(' How to play ? ')
+                                ]
+                            ),
+                            content: Text("Try to guess the word from the given pictures by dragging the alphabets one by one until you form the right answer"),
+                            actions: [
+                              MaterialButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                }, child: Text('Got it!'),
+                                color: Colors.amber,
+                              )
+                            ],
+                          );
+                        }
+                    );
+                  },
+                  child: Icon(
+                      Icons.info_outline
+
+                  ),
+                )
+            ),
+          ),
+
+
+        ],
+      ),
       backgroundColor: Colors.teal,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 50),
