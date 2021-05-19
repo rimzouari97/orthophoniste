@@ -98,8 +98,8 @@ class _MyHomePageState extends State<MyHomePage> {
                               mainAxisSpacing: 20,
                               children: <Widget>[
                                 CategoryCard(
-                                  title: "Exercices de mémoire",
-                                  svgSrc: "assets/icons/Hamburger.svg",
+                                  title: "Memory lessons",
+                                  svgSrc: "assets/icons/brain.svg",
                                   press: () {
                                     Navigator.push(
                                       context,
@@ -110,7 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   },
                                 ),
                                 CategoryCard(
-                                  title: "Exercices de begaiement",
+                                  title: "Stuttering lessons",
                                   svgSrc: "assets/icons/Excrecises.svg",
                                   press: () {
                                     Navigator.push(
@@ -122,7 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   },
                                 ),
                                 CategoryCard(
-                                  title: "Exercices de concentration",
+                                  title: "Concentration lessons",
                                   svgSrc: "assets/icons/Meditation.svg",
                                   press: () {
                                     Navigator.push(
@@ -134,7 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   },
                                 ),
                                 CategoryCard(
-                                  title: "Exercices d'apprentissage",
+                                  title: "Learning lessons",
                                   svgSrc: "assets/icons/yoga.svg",
                                   press: () {
                                     Navigator.push(

@@ -91,7 +91,7 @@ class _BottomNavBarState extends State<MyBottomNavBar> {
             },
           ),
           BottomNavItem(
-            title: "Acceuil",
+            title: "Home",
             svgScr: "assets/icons/gym.svg",
             isActive: _Active1,
             press: (){

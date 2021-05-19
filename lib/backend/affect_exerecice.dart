@@ -116,10 +116,10 @@ class _HomeState extends State<AffectExercice> {
                             title: Row(
                                 children:[
                                   Icon(Icons.info,color: Colors.blueAccent),
-                                  Text('  Info . ')
+                                  Text('  Assign a lesson ')
                                 ]
                             ),
-                            content: Text("Exercice "+  " affecter a " ),
+                            content: Text("You can select your patient and the assigned lesson before hitting the save button " ),
                             actions: [
                               MaterialButton(
                                 onPressed: (){

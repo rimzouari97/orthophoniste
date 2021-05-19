@@ -87,7 +87,7 @@ class _MyPatientListState extends State<MyPatientList> {
 
         return Scaffold(
           appBar: AppBar(
-            title: Text(" Approuve List "),
+            title: Text(" Approval List "),
             actions: <Widget>[
               Padding(
                   padding: EdgeInsets.only(right: 20.0),
@@ -100,10 +100,10 @@ class _MyPatientListState extends State<MyPatientList> {
                             title: Row(
                                 children:[
                                   Icon(Icons.info,color: Colors.blueAccent),
-                                  Text('  Info . ')
+                                  Text(' Approving patients ')
                                 ]
                             ),
-                            content: Text("Exercice "+  " affecter a " ),
+                            content: Text("Here you can approve a patient's demand by swiping left or disapprove it by swiping right" ),
                             actions: [
                               MaterialButton(
                                 onPressed: (){

@@ -150,11 +150,14 @@ class _Quiz extends State<ExerciceConcentration> {
                         ),*/
                             SeassionCard(
                               seassionNum: 3,
-                              seassionName: "Couleurs",
+                              seassionName: "Colors",
                               press: () {
                                 var idcolor = "6074ab5b82c71b0015918da2";
                                 var i = 1;
                                 bool b = false;
+                                if (snapshot.data.isEmpty) {
+                                  _showMyDialog();
+                                }
                                 for (var item in snapshot.data) {
                                   if (item.idExercice == idcolor) {
                                     b = true;
@@ -178,12 +181,15 @@ class _Quiz extends State<ExerciceConcentration> {
                             ),
                             SeassionCard(
                               seassionNum: 4,
-                              seassionName: "Forme",
+                              seassionName: "Forms",
                               press: () {
                                 var idcolor = "6074abf282c71b0015918da3";
                                 var i = 1;
                                 print(snapshot.data.length);
                                 bool b = false;
+                                if (snapshot.data.isEmpty) {
+                                  _showMyDialog();
+                                }
                                 for (var item in snapshot.data) {
                                   if (item.idExercice == idcolor) {
                                     b = true;
@@ -215,6 +221,9 @@ class _Quiz extends State<ExerciceConcentration> {
                                 var idcolor = "6074b1a582c71b0015918da5";
                                 var i = 1;
                                 bool b = false;
+                                if (snapshot.data.isEmpty) {
+                                  _showMyDialog();
+                                }
                                 for (var item in snapshot.data) {
                                   if (item.idExercice == idcolor) {
                                     b = true;

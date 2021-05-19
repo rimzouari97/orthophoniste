@@ -75,6 +75,50 @@ class _HomeState extends State<Home> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.teal,
+          title: Text("Memory game"),
+          actions: <Widget>[
+            Tooltip(
+              message: "message",
+              child: Padding(
+                  padding: EdgeInsets.only(right: 20.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Row(
+                                  children: [
+                                    Icon(Icons.info, color: Colors.amber),
+                                    Text(' How to play ? ')
+                                  ]
+                              ),
+                              content: Text("This is a matching game, try to find all the identical pairs by selecting two pictures for each try"),
+                              actions: [
+                                MaterialButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  }, child: Text('ok'),
+                                  color: Colors.amber,
+                                )
+                              ],
+                            );
+                          }
+                      );
+                    },
+                    child: Icon(
+                        Icons.info_outline
+
+                    ),
+                  )
+              ),
+            ),
+
+
+          ],
+        ),
         backgroundColor: Colors.teal,
         body: SingleChildScrollView(
           child: Container(
@@ -86,9 +130,9 @@ class _HomeState extends State<Home> {
                   child: AppBar(
                     iconTheme: IconThemeData.fallback(),
                     backgroundColor: Colors.grey[300],
-
+                    centerTitle: true,
                     title: Text(
-                      "      Mémoire visuelle",
+                      "Visual memory",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.black,
