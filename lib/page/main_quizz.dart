@@ -168,7 +168,37 @@ class _MyquizzState extends State<Myquizz> {
         return MaterialApp(
           home: Scaffold(
             appBar: AppBar(
-              title: Text('Quizz                     ${_questionIndex + 1}/5'),
+              title: Text('Quizz                   ${_questionIndex + 1}/5'),
+              actions: <Widget>[
+                Padding(
+                    padding: EdgeInsets.only(right: 20.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Row(children: [
+                                Icon(Icons.info, color: Colors.blueAccent),
+                                Text('  Haw to play . ')
+                              ]),
+                              content: Text("Exercice " + " affecter a "),
+                              actions: [
+                                MaterialButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text('ok'),
+                                  color: Colors.deepPurple,
+                                )
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      child: Icon(Icons.info_outline),
+                    )),
+              ],
               backgroundColor: Colors.deepPurpleAccent.shade100,
             ),
             body: Container(
