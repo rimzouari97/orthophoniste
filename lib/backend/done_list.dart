@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orthophoniste/data/draggable_animal.dart';
@@ -103,10 +104,7 @@ class _MyDoneListState extends State<MyDoneList> {
           appBar: AppBar(
             title: Text("Patient List "),
             actions: <Widget>[
-              Tooltip(
-                message: "message",
-
-               child: Padding(
+               Padding(
                   padding: EdgeInsets.only(right: 20.0),
                   child: GestureDetector(
                     onTap: () {
@@ -139,7 +137,7 @@ class _MyDoneListState extends State<MyDoneList> {
                     ),
                   )
               ),
-               ),
+
 
 
             ],
@@ -191,11 +189,10 @@ class _MyDoneListState extends State<MyDoneList> {
                         child: Padding(
                           padding: EdgeInsets.all(16.0),
                           child: Row(children: [
-                            Image.network(
-                              "https://raw.githubusercontent.com/oussamaMaaroufi/orthoBack/master/166395810_233537285126986_5719499729791420255_o.jpg",
-                              height: 60,
-                              width: 60,),
-                            Text(" "),
+                          //  Image.network("https://raw.githubusercontent.com/oussamaMaaroufi/orthoBack/master/166395810_233537285126986_5719499729791420255_o.jpg", height: 60, width: 60,),
+                            SvgPicture.asset("assets/icons/User Icon.svg",height: 60,width: 60,),
+
+                            Text("   "),
                             Text(Snap.data[index].nameP),
                             Text(" "),
                             Text(" "),

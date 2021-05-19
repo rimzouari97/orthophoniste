@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orthophoniste/models/API_response.dart';
@@ -174,10 +175,10 @@ class _MyPatientListState extends State<MyPatientList> {
                         child: Padding(
                           padding: EdgeInsets.all(16.0),
                           child: Row(children: [
-                            Image.network(
-                              "https://raw.githubusercontent.com/oussamaMaaroufi/orthoBack/master/166395810_233537285126986_5719499729791420255_o.jpg",
-                              height: 60,
-                              width: 60,),
+                           // Image.network("https://raw.githubusercontent.com/oussamaMaaroufi/orthoBack/master/166395810_233537285126986_5719499729791420255_o.jpg", height: 60, width: 60,),
+                            SvgPicture.asset("assets/icons/User Icon.svg",height: 60,width: 60,),
+                            Text(" "),
+                            Text(" "),
                             Text(" "),
                             Text(Snap.data[index].nameP),
                             Text(" "),
