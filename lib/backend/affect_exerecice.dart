@@ -16,25 +16,19 @@ import 'dart:convert';
 class AffectExercice extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
+
 }
 
 class _HomeState extends State<AffectExercice> {
 
 
 
-  List<OrthoParam> _dropdownItems = [
-    OrthoParam(id: "1", nameP: "First Value"),
-    OrthoParam(id :"2", nameP: "Second Item")
-  ];
+  List<OrthoParam> _dropdownItems = [];
+  List<Exercice> dropdownItems1 = [];
+
 
   List<DropdownMenuItem<OrthoParam>> _dropdownMenuItems;
   OrthoParam _selectedItem ;
-  List<Exercice> dropdownItems1 = [
- //   Exercice(id: "2",name: "Exercice 1"),
- //   Exercice(id: "2",name: "Exercice 2"),
- //   Exercice(id: "3",name: "Exercice 3"),
-  //  Exercice(id: "4",name: "Exercice 4"),
-  ];
 
   List<DropdownMenuItem<Exercice>> _dropdownMenuItems1;
   Exercice _selectedItem1 ;
@@ -84,24 +78,7 @@ class _HomeState extends State<AffectExercice> {
     return res.data1;
     //return false;
   });
-/*
-@override
-  void initState()  {
-    // TODO: implement initState
-    super.initState();
-    /*  fetchData().then((value) {
-        _selectedItem = _dropdownMenuItems.first.value;
-        _selectedItem1 = _dropdownMenuItems1.first.value;
 
-      });
-
-     */
-
-  //  _selectedItem1 =Exercice(name: "select item")  ;
-  }
-*
-
- */
 
 
   @override
@@ -126,7 +103,41 @@ class _HomeState extends State<AffectExercice> {
 
       return Scaffold(
         appBar: AppBar(
-          title: Text("Affectation des Exercice"),
+          title: Text("Assign Exercice"),
+            actions: <Widget>[
+              Padding(
+                  padding: EdgeInsets.only(right: 20.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Row(
+                                children:[
+                                  Icon(Icons.info,color: Colors.blueAccent),
+                                  Text('  Info . ')
+                                ]
+                            ),
+                            content: Text("Exercice "+  " affecter a " ),
+                            actions: [
+                              MaterialButton(
+                                onPressed: (){
+                                  Navigator.pop(context);
+                                }, child: Text('ok'),
+                                color: Colors.deepPurple,
+                              )
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    child: Icon(
+                        Icons.info_outline
+                    ),
+                  )
+              ),
+            ]
         ),
         body: Container(
             padding: EdgeInsets.all(20.0),

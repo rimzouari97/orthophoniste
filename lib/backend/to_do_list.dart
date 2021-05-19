@@ -21,8 +21,6 @@ import 'griddashboard.dart';
 
 
 class ToDoList extends StatelessWidget{
-
-
   @override
   Widget build(BuildContext context) {
 
@@ -35,7 +33,6 @@ class MyToDoList extends StatefulWidget {
   _MyToDoListState createState() => _MyToDoListState();
   String _id;
 
-
 }
 
 class _MyToDoListState extends State<MyToDoList> {
@@ -43,6 +40,7 @@ class _MyToDoListState extends State<MyToDoList> {
   APIResponse rep;
   List<OrthoParam> listUser =[];
   List<Exercice> listExe =[];
+
 
   void initState() {
     super.initState();
@@ -112,7 +110,31 @@ class _MyToDoListState extends State<MyToDoList> {
                 Padding(
                     padding: EdgeInsets.only(right: 20.0),
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Row(
+                                  children:[
+                                    Icon(Icons.info,color: Colors.blueAccent),
+                                    Text('  Info . ')
+                                  ]
+                              ),
+                              content: Text("Exercice "+  " affecter a " ),
+                              actions: [
+                                MaterialButton(
+                                  onPressed: (){
+                                    Navigator.pop(context);
+                                  }, child: Text('ok'),
+                                  color: Colors.deepPurple,
+                                )
+                              ],
+                            );
+                          },
+                        );
+                      },
                       child: Icon(
                           Icons.info_outline
                       ),

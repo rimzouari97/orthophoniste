@@ -16,7 +16,7 @@ class OrthoParam{
   Map<String, dynamic> toJson() {
     return {
       "_id":id,
-      "namep": nameP,
+      "nameP": nameP,
       "idP": idP,
       "idOrtho": idOrtho,
       "valid": valid,

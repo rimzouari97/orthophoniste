@@ -92,7 +92,28 @@ class _MyPatientListState extends State<MyPatientList> {
                   padding: EdgeInsets.only(right: 20.0),
                   child: GestureDetector(
                     onTap: () {
-                      print("test pppppppppppp");
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Row(
+                                children:[
+                                  Icon(Icons.info,color: Colors.blueAccent),
+                                  Text('  Info . ')
+                                ]
+                            ),
+                            content: Text("Exercice "+  " affecter a " ),
+                            actions: [
+                              MaterialButton(
+                                onPressed: (){
+                                  Navigator.pop(context);
+                                }, child: Text('ok'),
+                                color: Colors.deepPurple,
+                              )
+                            ],
+                          );
+                        },
+                      );
                     },
                     child: Icon(
                         Icons.info_outline
