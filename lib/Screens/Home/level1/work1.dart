@@ -130,9 +130,9 @@ class _HomeState extends State<Home> {
                   child: AppBar(
                     iconTheme: IconThemeData.fallback(),
                     backgroundColor: Colors.grey[300],
-
+                    centerTitle: true,
                     title: Text(
-                      "      Visual memory",
+                      "Visual memory",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.black,

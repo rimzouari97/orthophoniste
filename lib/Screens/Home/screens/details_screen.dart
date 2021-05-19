@@ -41,7 +41,7 @@ class _Memoire extends State<DetailsScreen> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text("No access ! please wait for your ortho!"),
+                Text("No access ! please wait for your pathologist!"),
                 //Text('Would you like to approve of this message?'),
               ],
             ),
@@ -104,7 +104,7 @@ class _Memoire extends State<DetailsScreen> {
                     ),
                     SizedBox(height: 10),
                     Text(
-                      "3-10 MIN Course",
+                      "",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 10),
@@ -124,7 +124,7 @@ class _Memoire extends State<DetailsScreen> {
                       children: <Widget>[
                         SeassionCard(
                           seassionNum: 1,
-                          sessionName: "visuelle",
+                          sessionName: "Visual",
                           press: () {
                             var idvisuelle = "6088d3d7079cb400154a37dd";
                             var i=1;
@@ -153,7 +153,7 @@ class _Memoire extends State<DetailsScreen> {
                         ),
                         SeassionCard(
                           seassionNum: 2,
-                          sessionName: "auditive",
+                          sessionName: "Hearing",
                           press: () {
                             var idauditive = "6088d3e2079cb400154a37de";
                             var i=1;

@@ -133,8 +133,9 @@ class _HomeState extends State<Home2> {
                   child: AppBar(
                     iconTheme: IconThemeData.fallback(),
                     backgroundColor: Colors.grey[300],
+                    centerTitle: true,
                     title: Text(
-                      "  Hearing memory",
+                      "Hearing memory",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.black,

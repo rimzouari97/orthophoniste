@@ -16,6 +16,7 @@ class Levels extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.teal,
+        centerTitle: true,
         title: Text(" Dysorthographia​"),
         actions: <Widget>[
           Tooltip(
@@ -68,9 +69,9 @@ class Levels extends StatelessWidget {
               child: AppBar(
                 iconTheme: IconThemeData.fallback(),
                 backgroundColor: Colors.grey[300],
-
+                centerTitle: true,
                 title: Text(
-                  "   Dysorthographie",
+                  "Dysorthographia​",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.black,
