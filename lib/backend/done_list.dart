@@ -104,10 +104,7 @@ class _MyDoneListState extends State<MyDoneList> {
           appBar: AppBar(
             title: Text("Patient List "),
             actions: <Widget>[
-              Tooltip(
-                message: "message",
-
-               child: Padding(
+               Padding(
                   padding: EdgeInsets.only(right: 20.0),
                   child: GestureDetector(
                     onTap: () {
@@ -140,7 +137,7 @@ class _MyDoneListState extends State<MyDoneList> {
                     ),
                   )
               ),
-               ),
+
 
 
             ],

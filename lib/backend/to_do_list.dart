@@ -112,35 +112,39 @@ class _MyToDoListState extends State<MyToDoList> {
                     padding: EdgeInsets.only(right: 20.0),
                     child: GestureDetector(
                       onTap: () {
-
+                        print("ff");
                         showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: Row(
-                                  children:[
-                                    Icon(Icons.info,color: Colors.blueAccent),
-                                    Text('  Info . ')
-                                  ]
-                              ),
-                              content: Text("Exercice "+  " affecter a " ),
-                              actions: [
-                                MaterialButton(
-                                  onPressed: (){
-                                    Navigator.pop(context);
-                                  }, child: Text('ok'),
-                                  color: Colors.deepPurple,
-                                )
-                              ],
-                            );
-                          },
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Row(
+                                    children: [
+                                      Icon(Icons.info, color: Colors.blueAccent),
+                                      Text(' Patients list ')
+                                    ]
+                                ),
+                                content: Text("Here's the list of all the patients who were approved by their pathologists. If you want to delete a patient, you can swipe right."),
+                                actions: [
+                                  MaterialButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    }, child: Text('ok'),
+                                    color: Colors.deepPurple,
+                                  )
+                                ],
+                              );
+                            }
                         );
                       },
                       child: Icon(
                           Icons.info_outline
+
                       ),
                     )
                 ),
+
+
+
               ],
             ),
             body:Container(child: Center(child: Text(" pas de patient"),)),
@@ -154,12 +158,40 @@ class _MyToDoListState extends State<MyToDoList> {
               Padding(
                   padding: EdgeInsets.only(right: 20.0),
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      print("ff");
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Row(
+                                  children: [
+                                    Icon(Icons.info, color: Colors.blueAccent),
+                                    Text(' Patients list ')
+                                  ]
+                              ),
+                              content: Text("Here's the list of all the to do patients who were assign by their pathologists. If you want to delete a to do patient, you can swipe right."),
+                              actions: [
+                                MaterialButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  }, child: Text('ok'),
+                                  color: Colors.deepPurple,
+                                )
+                              ],
+                            );
+                          }
+                      );
+                    },
                     child: Icon(
                         Icons.info_outline
+
                     ),
                   )
               ),
+
+
+
             ],
           ),
          body: ListWidget(),
