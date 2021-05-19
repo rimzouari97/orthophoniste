@@ -150,7 +150,7 @@ class FullSampleHomePage extends StatelessWidget {
                   _buildButton(
                       text: getLevelName('6'),
                       onClick: () {
-                        if (levelLocked(3)) return;
+                        if (levelLocked(6)) return;
                         Navigator.of(context)
                             .push(MaterialPageRoute(builder: (context) {
                           return FinalLevel();
