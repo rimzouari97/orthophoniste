@@ -27,6 +27,7 @@ dependencies:
   flutter_tts:
 
 
+
   get_it: ^3.0.3
   http: ^0.12.2
   audioplayers: ^0.17.4
@@ -55,6 +56,7 @@ dependencies:
 
   flutter_neumorphic: ^3.0.3
   lottie: ^0.7.0+1
+  image_picker: 0.6.7+22
 
 
 

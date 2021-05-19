@@ -16,7 +16,8 @@ class ProfilePic extends StatelessWidget {
         overflow: Overflow.visible,
         children: [
           CircleAvatar(
-            child: Image.network("https://raw.githubusercontent.com/oussamaMaaroufi/orthoBack/master/166395810_233537285126986_5719499729791420255_o.jpg"),
+            child: SvgPicture.asset("assets/icons/User Icon.svg",height: 60,width: 60,),
+           // child: Image.network("https://raw.githubusercontent.com/oussamaMaaroufi/orthoBack/master/166395810_233537285126986_5719499729791420255_o.jpg"),
           ),
           Positioned(
             right: -16,

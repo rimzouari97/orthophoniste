@@ -87,6 +87,7 @@ class MapScreenState extends State<ProfilePage>
                                                   image: new ExactAssetImage(
                                                       'assets/fox.png'),
                                                   fit: BoxFit.cover,
+                                                 // colorFilter: ColorFilter.mode(Colors.blueAccent, BlendMode.clear)
                                                 ),
                                               )),
                                         ],
