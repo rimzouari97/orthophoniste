@@ -99,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               children: <Widget>[
                                 CategoryCard(
                                   title: "Memory lessons",
-                                  svgSrc: "assets/icons/concentration.svg",
+                                  svgSrc: "assets/icons/brain.svg",
                                   press: () {
                                     Navigator.push(
                                       context,
@@ -111,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ),
                                 CategoryCard(
                                   title: "Stuttering lessons",
-                                  svgSrc: "assets/icons/stutte.svg",
+                                  svgSrc: "assets/icons/Excrecises.svg",
                                   press: () {
                                     Navigator.push(
                                       context,

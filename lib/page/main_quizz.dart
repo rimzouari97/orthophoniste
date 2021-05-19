@@ -180,9 +180,10 @@ class _MyquizzState extends State<Myquizz> {
                             return AlertDialog(
                               title: Row(children: [
                                 Icon(Icons.info, color: Colors.blueAccent),
-                                Text('  Haw to play . ')
+                                Text(' How to play ? ')
                               ]),
-                              content: Text("Exercice " + " affecter a "),
+                              content: Text(
+                                  "this is a quiz game, try to match the sound of each animal with the right picture"),
                               actions: [
                                 MaterialButton(
                                   onPressed: () {

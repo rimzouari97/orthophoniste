@@ -58,7 +58,7 @@ class ColorGameState extends State<ColorGame> {
       builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
         return Scaffold(
           appBar: AppBar(
-              title: Text('les couleurs    Score ${scoore} '),
+              title: Text('Colors  Score ${scoore} '),
               actions: <Widget>[
                 Padding(
                     padding: EdgeInsets.only(right: 20.0),
@@ -70,9 +70,10 @@ class ColorGameState extends State<ColorGame> {
                             return AlertDialog(
                               title: Row(children: [
                                 Icon(Icons.info, color: Colors.blueAccent),
-                                Text('  Info . ')
+                                Text(' How to play ? ')
                               ]),
-                              content: Text("Exercice " + " affecter a "),
+                              content: Text(
+                                  "try to match the fruit color with right square color  "),
                               actions: [
                                 MaterialButton(
                                   onPressed: () {
