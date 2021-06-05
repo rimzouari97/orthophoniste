@@ -11,9 +11,11 @@ import 'package:orthophoniste/Screens/Welcome/welcome_screen.dart';
 import 'package:orthophoniste/beg_pack/Beg.dart';
 import 'package:orthophoniste/constants.dart';
 import 'package:orthophoniste/main.dart';
+import 'package:orthophoniste/models/done.dart';
+import 'package:orthophoniste/models/ortho_parm.dart';
 import 'package:orthophoniste/models/todo_param.dart';
 import 'package:orthophoniste/page/exercice_memoire.dart';
-import 'package:orthophoniste/services/user_service.dart';
+import 'package:orthophoniste/services/done_service.dart';
 import 'package:orthophoniste/shared_preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -27,24 +29,28 @@ class HomeScreen extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
+  String _name;
+  String _id;
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  UserService get service => GetIt.I<UserService>();
-  List<ToDoParam> ToDoList = [];
+  DoneService get service => GetIt.I<DoneService> ();
 
-  final Future<String> _name =
-      Future<String>.delayed(const Duration(microseconds: 100), () {
+  Future<List<ToDoParam>> fetchData() =>
+      Future.delayed(Duration(microseconds: 3000), () async {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        widget._name = await preferences.getString('UserName');
+        widget._id = await preferences.getString('UserId');
 
-    SharedPref pref = SharedPref();
-    return pref.getUserName();
-  });
+        return  await service.getToDoListByIdP(Done(idUser: widget._id));
+
+      });
 
   @override
   Widget build(BuildContext context) => FutureBuilder(
-        future: _name, //fetchData(),
+        future: fetchData(), //fetchData(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return Scaffold(
@@ -90,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                           ),
                           Text(
-                            "Good Morning \n" + snapshot.data.toString(),
+                            "Good Morning \n" + widget._name,
                             style: Theme.of(context)
                                 .textTheme
                                 .display1
@@ -120,12 +126,27 @@ class _MyHomePageState extends State<MyHomePage> {
                                   title: "Stuttering lessons",
                                   svgSrc: "assets/icons/Excrecises.svg",
                                   press: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(builder: (context) {
-                                        return Beg();
-                                      }),
-                                    );
+                                    bool b = false;
+                                    for(ToDoParam todo in snapshot.data){
+                                      if(todo.idExercice == "60bbc61c8104a60015f958ec"){
+                                        b = true;
+                                      }
+                                    }
+
+                                    if(b){
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) {
+                                          return Beg();
+                                        }),
+                                      );
+                                    }else{
+                                      print("test 2002");
+
+                                    }
+
+
+
                                   },
                                 ),
                                 CategoryCard(
@@ -179,9 +200,5 @@ class _MyHomePageState extends State<MyHomePage> {
         },
       );
 
-  Future<String> fetchData() => Future.delayed(Duration(seconds: 1), () {
-        debugPrint('Step 4, fetch data');
-        SharedPref pref = SharedPref();
-        return pref.getUserName();
-      });
+
 }
