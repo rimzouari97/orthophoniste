@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get_it/get_it.dart';
 import 'package:orthophoniste/Screens/Home/level3/details_screen2.dart';
 import 'package:orthophoniste/Screens/Home/level3/pages/home.dart';
 import 'package:orthophoniste/Screens/Home/screens/details_screen.dart';
@@ -10,7 +11,9 @@ import 'package:orthophoniste/Screens/Welcome/welcome_screen.dart';
 import 'package:orthophoniste/beg_pack/Beg.dart';
 import 'package:orthophoniste/constants.dart';
 import 'package:orthophoniste/main.dart';
+import 'package:orthophoniste/models/todo_param.dart';
 import 'package:orthophoniste/page/exercice_memoire.dart';
+import 'package:orthophoniste/services/user_service.dart';
 import 'package:orthophoniste/shared_preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -29,8 +32,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  UserService get service => GetIt.I<UserService>();
+  List<ToDoParam> ToDoList = [];
+
   final Future<String> _name =
       Future<String>.delayed(const Duration(microseconds: 100), () {
+
     SharedPref pref = SharedPref();
     return pref.getUserName();
   });
