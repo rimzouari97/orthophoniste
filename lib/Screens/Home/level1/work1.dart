@@ -36,10 +36,13 @@ class _HomeState extends State<Home> {
     myPairs = getPairs();
     myPairs.shuffle();
     gridViewTiles = myPairs;
+
     Future.delayed(const Duration(seconds: 5), () {
 // Here you can write your code
+    int i =0;
+
      setState(() {
-        print("2 seconds done");
+        print("5 seconds done");
         // Here you can write your code for open new view
         questionPairs = getQuestionPairs();
         gridViewTiles = questionPairs;
@@ -195,7 +198,7 @@ class _HomeState extends State<Home> {
                         children: <Widget>[
                           GestureDetector(
                             onTap: (){
-                              if (mounted) setState(() {
+                             setState(() {
                                 i=0;
                                 points = 0;
                                 reStart();
@@ -312,7 +315,7 @@ class _TileState extends State<Tile> {
     return GestureDetector(
       onTap: () {
         if (!selected) {
-          if (mounted) setState(() {
+           setState(() {
             myPairs[widget.tileIndex].setIsSelected(true);
           });
           if (selectedTile != "") {
@@ -320,7 +323,7 @@ class _TileState extends State<Tile> {
             if (selectedTile == myPairs[widget.tileIndex].getImageAssetPath()) {
               points = points + 10;
               i++;
-              print(points);
+              print(i);
               //print(selectedTile + " this " + widget.imagePathUrl);
               TileModel tileModel = new TileModel();
               //print(widget.tileIndex);
@@ -331,10 +334,10 @@ class _TileState extends State<Tile> {
                 myPairs[widget.tileIndex] = tileModel;
                 print(selectedIndex);
                 myPairs[selectedIndex] = tileModel;
-                if (mounted) this.widget.parent.setState(() {
+                this.widget.parent.setState(() {
                 });
 
-                if (mounted) setState(() {
+                setState(() {
                   selected = false;
 
                 });
@@ -348,17 +351,14 @@ class _TileState extends State<Tile> {
                   myPairs[widget.tileIndex].getImageAssetPath());
               print("wrong choice");
               points = points - 5;
-              //print(points);
-              //print(widget.tileIndex);
-              //print(selectedIndex);
               selected = true;
               Future.delayed(const Duration(seconds: 2), () {
-                if (mounted) this.widget.parent.setState(() {
+             this.widget.parent.setState(() {
                   myPairs[widget.tileIndex].setIsSelected(false);
                   myPairs[selectedIndex].setIsSelected(false);
                 });
 
-                if (mounted) setState(() {
+                setState(() {
                   selected = false;
                 });
               });
@@ -367,7 +367,7 @@ class _TileState extends State<Tile> {
             }
 
           } else {
-            if (mounted) setState(() {
+            setState(() {
               selectedTile = myPairs[widget.tileIndex].getImageAssetPath();
               selectedIndex = widget.tileIndex;
 

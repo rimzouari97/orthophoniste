@@ -27,7 +27,7 @@ import 'Screens/Home/level1/work1.dart';
 void setupLocator() {
   GetIt.I.registerLazySingleton(() => UserService());
   GetIt.I.registerLazySingleton(() => StutterService());
-  GetIt.I.registerLazySingleton(() => DoneService());
+    GetIt.I.registerLazySingleton(() => DoneService());
 }
 
 //void main() {
