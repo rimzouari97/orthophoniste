@@ -98,7 +98,8 @@ class _GameState extends State<Game> {
               decoration: BoxDecoration(
                   image: DecorationImage(
                       fit: BoxFit.cover,
-                      image: NetworkImage(widget.question.imageUrl))),
+                      image: NetworkImage(widget.question.imageUrl)
+                  )),
             ),
           ),
 

@@ -150,8 +150,8 @@ class _HomeState extends State<Home> {
                 points !=80 ? Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    Text("last score here  " + lastscore),
-                    Text(
+                    Text("Your previous score is   " + lastscore),
+                    /*Text(
                       "$points/80",
                       style: TextStyle(
                           fontSize: 20, fontWeight: FontWeight.w500),
@@ -162,7 +162,7 @@ class _HomeState extends State<Home> {
                       textAlign: TextAlign.start,
                       style: TextStyle(
                           fontSize: 14, fontWeight: FontWeight.w300),
-                    ),
+                    ),*/
 
                   ],
                 ) : Container(),
@@ -179,7 +179,7 @@ class _HomeState extends State<Home> {
                   child:
                   i != 8 ? GridView(
                     shrinkWrap: true,
-                    //physics: ClampingScrollPhysics(),
+                    physics: ClampingScrollPhysics(),
                     scrollDirection: Axis.vertical,
                     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                         mainAxisSpacing: 0.0, maxCrossAxisExtent: 100.0),
