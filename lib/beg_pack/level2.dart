@@ -5,8 +5,6 @@ import 'package:lottie/lottie.dart';
 import 'package:orthophoniste/services/stutter_service.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:avatar_glow/avatar_glow.dart';
-import 'package:audioplayers/audio_cache.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:orthophoniste/beg_pack/custom_dialog.dart';
 import 'package:orthophoniste/beg_pack/level3.dart';
 
@@ -42,7 +40,7 @@ class __Page2State extends State<_Page2> {
   stt.SpeechToText _speech;
   bool _isListening = false;
   String _textSpeech = 'press the button to start speaking';
-  String _correct = 'press the button to start speaking';
+  String _correct = 'limit civic clinic spirit mimic skillet wicked vivid';
 //limit civic clinic spirit mimic skillet wicked vivid
   void onListen() async {
     if (!_isListening) {

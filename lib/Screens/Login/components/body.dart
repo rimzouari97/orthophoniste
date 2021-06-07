@@ -185,7 +185,7 @@ class _BodyState extends State<Body> {
                       text = "Address or password incorrect";
                     } else {
                       print("hi getting stutter progress");
-                      await stutterservice.getStutterProgress(result.data.id);
+                   //   await stutterservice.getStutterProgress(result.data.id);
                       text = 'you are connected';
                     }
 

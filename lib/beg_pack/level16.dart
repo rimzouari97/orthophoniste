@@ -5,11 +5,12 @@ import 'package:lottie/lottie.dart';
 import 'package:orthophoniste/services/stutter_service.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:avatar_glow/avatar_glow.dart';
+import 'package:orthophoniste/beg_pack/level17.dart';
 
 import 'Beg.dart';
 import 'custom_dialog.dart';
 
-class FinalLevel extends StatelessWidget {
+class Level16 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NeumorphicTheme(
@@ -23,19 +24,19 @@ class FinalLevel extends StatelessWidget {
       themeMode: ThemeMode.light,
       child: Material(
         child: NeumorphicBackground(
-          child: _Pagef(),
+          child: _Page16(),
         ),
       ),
     );
   }
 }
 
-class _Pagef extends StatefulWidget {
+class _Page16 extends StatefulWidget {
   @override
-  __PagefState createState() => __PagefState();
+  __Page16State createState() => __Page16State();
 }
 
-class __PagefState extends State<_Pagef> {
+class __Page16State extends State<_Page16> {
   stt.SpeechToText _speech;
   bool _isListening = false;
   String _textSpeech = 'press the button to start speaking';
@@ -97,7 +98,7 @@ class __PagefState extends State<_Pagef> {
         horizontal: 24,
       ),
       style: NeumorphicStyle(
-        color: Colors.blue[300],
+        color: Colors.green[300],
         boxShape: NeumorphicBoxShape.roundRect(
           BorderRadius.circular(12),
         ),
@@ -136,7 +137,7 @@ class __PagefState extends State<_Pagef> {
           Align(
               alignment: Alignment.center,
               child: Text(
-                "Final Level",
+                "5th Level",
                 style: TextStyle(
                   fontSize: 20,
                 ),
@@ -149,7 +150,7 @@ class __PagefState extends State<_Pagef> {
   Widget build(BuildContext context) {
     var item = '';
     return Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: Colors.green,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -168,9 +169,9 @@ class __PagefState extends State<_Pagef> {
               ),
               Container(
                 child: Lottie.network(
-                    'https://assets10.lottiefiles.com/packages/lf20_ofa3xwo7.json'),
+                    'https://assets5.lottiefiles.com/packages/lf20_AHptq1.json'),
                 alignment: Alignment.center,
-                constraints: BoxConstraints.tightForFinite(width: 250),
+                constraints: BoxConstraints.tightForFinite(width: 300),
               ),
               Neumorphic(
                 margin: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -298,7 +299,7 @@ class __PagefState extends State<_Pagef> {
               ),
               AvatarGlow(
                 animate: _isListening,
-                glowColor: Theme.of(context).accentColor,
+                glowColor: Theme.of(context).primaryColor,
                 endRadius: 40,
                 duration: Duration(milliseconds: 2000),
                 repeatPauseDuration: Duration(milliseconds: 100),
@@ -307,7 +308,7 @@ class __PagefState extends State<_Pagef> {
                   onPressed: () async {
                     await onListen();
                     if (_correct.compareTo(_textSpeech.toLowerCase()) == 0) {
-                      await StutterService.saveStutterProgress(6);
+                      await StutterService.saveStutterProgress(17);
                       await showDialog(
                         context: context,
                         builder: (BuildContext context) => CustomDialog(
@@ -320,7 +321,7 @@ class __PagefState extends State<_Pagef> {
                       await Navigator.of(context)
                           .push(MaterialPageRoute(builder: (context) {
                         print('hurray');
-                        return FinalLevel();
+                        return Level17();
                       }));
                     } else {
                       await print('fail');

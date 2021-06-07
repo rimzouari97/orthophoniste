@@ -5,8 +5,6 @@ import 'package:lottie/lottie.dart';
 import 'package:orthophoniste/services/stutter_service.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:avatar_glow/avatar_glow.dart';
-import 'package:audioplayers/audio_cache.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:orthophoniste/beg_pack/level5.dart';
 
 import 'Beg.dart';
@@ -42,7 +40,7 @@ class __Page4State extends State<_Page4> {
   stt.SpeechToText _speech;
   bool _isListening = false;
   String _textSpeech = 'press the button to start speaking';
-  String _correct = 'must got glad that grandad had flat hat';
+  String _correct = 'paint power pardon pass pearl penny pie play';
 
   void onListen() async {
     if (!_isListening) {
@@ -81,14 +79,14 @@ class __Page4State extends State<_Page4> {
   StutterService get stutterservice => GetIt.I<StutterService>();
 
   List<String> words = [
-    'Bad',
-    'Glad',
-    'Comerade',
-    'Grandad',
-    'Nomad',
-    'Cat',
-    'Splat',
-    'hat'
+    'Paint',
+    'Power',
+    'Pardon',
+    'Pass',
+    'Pearl',
+    'Penny',
+    'Pie',
+    'Play'
   ];
 
   @override
