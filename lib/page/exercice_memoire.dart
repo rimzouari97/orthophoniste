@@ -41,11 +41,11 @@ class _Quiz extends State<ExerciceConcentration> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Alert d acces'),
+          title: Text('Access Alert'),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text("vous n'avez pas acces"),
+                Text("No access ! please wait for your pathologist!"),
                 //Text('Would you like to approve of this message?'),
               ],
             ),

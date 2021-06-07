@@ -7,6 +7,6 @@ String ANIMATED_SPLASH = '/SplashScreen',
     PROFILE = '/ProfilePage',
     LOGIN_SCREEN = '/LoginScreen';
 enum VirusStatus { none, visible, whacked }
-//const BASE_URL = "https://backorth.herokuapp.com/";
-const BASE_URL = "http://192.168.1.10:3000/";
+const BASE_URL = "https://backorth.herokuapp.com/";
+//const BASE_URL = "http://192.168.1.10:3000/";
 const headers = {"Content-Type": "application/json"};
