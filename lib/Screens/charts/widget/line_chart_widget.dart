@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get_it/get_it.dart';
 import 'package:orthophoniste/Screens/charts/widget/line_titles.dart';
 import 'package:orthophoniste/models/done.dart';
@@ -18,7 +19,7 @@ class LineChartWidget extends StatelessWidget {
   Widget showdet (String name ){
 
       if(name == "stutterless"){
-        return  Text("def textttttttttt",style: TextStyle(color: Colors.blueAccent,));
+        return  Text("For each level, 5 points will be added to the score",style: TextStyle(color: Colors.black,),textAlign: TextAlign.center,);
       }
 
     return  Text("");
@@ -29,20 +30,26 @@ class LineChartWidget extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: AppBar(title: Text("State of user"),),
+      appBar: AppBar(title: Text("State of user"),
+        backgroundColor: Colors.teal,),
       body: Center(child: Column(
         children: [
-         Card(
-            margin: EdgeInsets.all(20),
-           borderOnForeground: true,
+      Neumorphic(
+      margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+          style: NeumorphicStyle(
+              color: Colors.grey[200],
+              boxShape:
+              NeumorphicBoxShape.roundRect(BorderRadius.circular(12))),
+
 
            child: Column(
              children: [
-               Text("Name Exercice  :"+_toDoParam.id,style: TextStyle(color: Colors.blueAccent,  ),),
+               Text("Name Exercice  : "+_toDoParam.id,style: TextStyle(color: Colors.black,  ),),
                Text(""),
-               Text("Name patient :"+_toDoParam.idOrtho,style: TextStyle(color: Colors.blueAccent,  ),),
+               Text("Name patient : "+_toDoParam.idOrtho,style: TextStyle(color: Colors.black,  ),),
                Text(""),
-               showdet(_toDoParam.id)
+
 
              ],
            ),
@@ -55,7 +62,9 @@ class LineChartWidget extends StatelessWidget {
           Text(""),
           Text(""),
           Text(""),
-          MyLineChart(_toDoParam)
+          MyLineChart(_toDoParam),
+          SizedBox(height: 20,),
+          showdet(_toDoParam.id)
         ],
       )
       ),
