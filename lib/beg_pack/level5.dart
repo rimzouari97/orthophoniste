@@ -40,7 +40,7 @@ class __Page5State extends State<_Page5> {
   stt.SpeechToText _speech;
   bool _isListening = false;
   String _textSpeech = 'press the button to start speaking';
-  String _correct = 'must got glad that grandad had flat hat';
+  String _correct = 'paper popular upper pipe happy flippy puppy apple';
 
   void onListen() async {
     if (!_isListening) {
@@ -79,14 +79,14 @@ class __Page5State extends State<_Page5> {
   StutterService get stutterservice => GetIt.I<StutterService>();
 
   List<String> words = [
-    'Bad',
-    'Glad',
-    'Comerade',
-    'Grandad',
-    'Nomad',
-    'Cat',
-    'Splat',
-    'hat'
+    'Paper',
+    'Popular',
+    'upper',
+    'pipe',
+    'happy',
+    'flippy',
+    'puppy',
+    'apple'
   ];
 
   @override

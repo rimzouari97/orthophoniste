@@ -5,12 +5,12 @@ import 'package:lottie/lottie.dart';
 import 'package:orthophoniste/services/stutter_service.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:avatar_glow/avatar_glow.dart';
-import 'package:orthophoniste/beg_pack/level4.dart';
+import 'package:orthophoniste/beg_pack/level16.dart';
 
 import 'Beg.dart';
 import 'custom_dialog.dart';
 
-class Level3 extends StatelessWidget {
+class Level15 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NeumorphicTheme(
@@ -24,24 +24,24 @@ class Level3 extends StatelessWidget {
       themeMode: ThemeMode.light,
       child: Material(
         child: NeumorphicBackground(
-          child: _Page3(),
+          child: _Page15(),
         ),
       ),
     );
   }
 }
 
-class _Page3 extends StatefulWidget {
+class _Page15 extends StatefulWidget {
   @override
-  __Page3State createState() => __Page3State();
+  __Page15State createState() => __Page15State();
 }
 
-class __Page3State extends State<_Page3> {
+class __Page15State extends State<_Page15> {
   stt.SpeechToText _speech;
   bool _isListening = false;
   String _textSpeech = 'press the button to start speaking';
-  String _correct = 'pause close draw flow grow cause show applause';
-//'pause clause draw flaw claw paw cause applause'
+  String _correct = 'must got glad that grandad had flat hat';
+
   void onListen() async {
     if (!_isListening) {
       bool available = await _speech.initialize(
@@ -79,14 +79,14 @@ class __Page3State extends State<_Page3> {
   StutterService get stutterservice => GetIt.I<StutterService>();
 
   List<String> words = [
-    'Pause',
-    'Close',
-    'Draw',
-    'Flow',
-    'Grow',
-    'Cause',
-    'Show',
-    'Applause'
+    'Bad',
+    'Glad',
+    'Comerade',
+    'Grandad',
+    'Nomad',
+    'Cat',
+    'Splat',
+    'hat'
   ];
 
   @override
@@ -98,7 +98,7 @@ class __Page3State extends State<_Page3> {
         horizontal: 24,
       ),
       style: NeumorphicStyle(
-        color: Colors.blue[300],
+        color: Colors.green[300],
         boxShape: NeumorphicBoxShape.roundRect(
           BorderRadius.circular(12),
         ),
@@ -137,7 +137,7 @@ class __Page3State extends State<_Page3> {
           Align(
               alignment: Alignment.center,
               child: Text(
-                "Third Level",
+                "5th Level",
                 style: TextStyle(
                   fontSize: 20,
                 ),
@@ -150,7 +150,7 @@ class __Page3State extends State<_Page3> {
   Widget build(BuildContext context) {
     var item = '';
     return Scaffold(
-      backgroundColor: Colors.blue[800],
+      backgroundColor: Colors.green,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -160,7 +160,7 @@ class __Page3State extends State<_Page3> {
                 padding: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
                 child: _buildTopBar(context),
                 style: NeumorphicStyle(
-                  color: Colors.blue[400],
+                  color: Colors.blue[300],
                   depth: -8,
                 ),
               ),
@@ -169,9 +169,9 @@ class __Page3State extends State<_Page3> {
               ),
               Container(
                 child: Lottie.network(
-                    'https://assets1.lottiefiles.com/packages/lf20_SI8fvW.json'),
+                    'https://assets5.lottiefiles.com/packages/lf20_AHptq1.json'),
                 alignment: Alignment.center,
-                constraints: BoxConstraints.tightForFinite(width: 200),
+                constraints: BoxConstraints.tightForFinite(width: 300),
               ),
               Neumorphic(
                 margin: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -193,9 +193,6 @@ class __Page3State extends State<_Page3> {
                   ),
                   alignment: Alignment.center,
                 ),
-              ),
-              SizedBox(
-                height: 20,
               ),
               Neumorphic(
                 margin: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -311,7 +308,7 @@ class __Page3State extends State<_Page3> {
                   onPressed: () async {
                     await onListen();
                     if (_correct.compareTo(_textSpeech.toLowerCase()) == 0) {
-                      await StutterService.saveStutterProgress(4);
+                      await StutterService.saveStutterProgress(16);
                       await showDialog(
                         context: context,
                         builder: (BuildContext context) => CustomDialog(
@@ -324,7 +321,7 @@ class __Page3State extends State<_Page3> {
                       await Navigator.of(context)
                           .push(MaterialPageRoute(builder: (context) {
                         print('hurray');
-                        return Level4();
+                        return Level16();
                       }));
                     } else {
                       await print('fail');
