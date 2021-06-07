@@ -89,6 +89,7 @@ class _TextToSpeechState extends State<Exercice> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.teal,
         title: Center(
             child:
             Text('Confidence: ${(_confidence * 100.0).toStringAsFixed(1)}%',
@@ -96,7 +97,48 @@ class _TextToSpeechState extends State<Exercice> {
                   fontFamily: 'Stolzl',
                 )
             )
-        ),),
+        ),
+        actions: <Widget>[
+          Tooltip(
+            message: "message",
+            child: Padding(
+                padding: EdgeInsets.only(right: 20.0),
+                child: GestureDetector(
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Row(
+                                children: [
+                                  Icon(Icons.info, color: Colors.blueAccent),
+                                  Text(' How to play ? ')
+                                ]
+                            ),
+                            content: Text("Press on the speaker button to hear the word then press on the mic button to speak"),
+                            actions: [
+                              MaterialButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                }, child: Text('Got it!'),
+                                color: Colors.blueAccent,
+                              )
+                            ],
+                          );
+                        }
+                    );
+                  },
+                  child: Icon(
+                      Icons.info_outline
+
+                  ),
+                )
+            ),
+          ),
+
+
+        ],
+      ),
 
 
       body: Column (
@@ -107,7 +149,7 @@ class _TextToSpeechState extends State<Exercice> {
                   text: _text,
                   words: _highlights,
                   textStyle: const TextStyle(
-                      fontSize: 32.0,
+                      fontSize: 25.0,
                       color: Colors.black,
                       fontWeight: FontWeight.w100,
                       fontFamily: 'Stolzl'

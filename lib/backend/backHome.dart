@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orthophoniste/shared_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'griddashboard.dart';
 
 
 class backHome extends StatelessWidget{
+
   @override
   Widget build(BuildContext context) {
 
@@ -14,21 +16,35 @@ class backHome extends StatelessWidget{
 }
 
 class MyHomeBack extends StatefulWidget {
+
   @override
   _MyHomeBackState createState() => _MyHomeBackState();
+
+
 }
 
 class _MyHomeBackState extends State<MyHomeBack> {
-  final Future<String> _name = Future<String>.delayed(
-      const Duration(microseconds: 100),() {
-    SharedPref pref = SharedPref();
-    return  pref.getUserName();
+  String _codeUser,_name = "";
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
   }
-  );
+
+  Future<bool> fetchData() => Future.delayed(Duration(microseconds: 3000), () async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    _name = preferences.getString('UserName');
+    _codeUser = preferences.getString('UserCode');
+
+    return true;
+  });
+
 
   @override
   Widget build(BuildContext context) => FutureBuilder(
-  future: _name, //fetchData(),
+  future: fetchData(), //fetchData(),
   builder: (context, snapshot) {
   if(snapshot.hasData) {
     return Scaffold(
@@ -47,7 +63,7 @@ class _MyHomeBackState extends State<MyHomeBack> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      snapshot.data.toString(),
+                      _name,
                       style: GoogleFonts.openSans(
                           textStyle: TextStyle(
                               color: Colors.white,
@@ -69,11 +85,35 @@ class _MyHomeBackState extends State<MyHomeBack> {
                 ),
                 IconButton(
                   alignment: Alignment.topCenter,
-                  icon: Image.asset(
-                    "assets/images/notification.png",
-                    width: 24,
-                  ),
-                  onPressed: () {},
+                  icon: Icon(Icons.vpn_key_rounded,color: Colors.white,),
+                  onPressed: () {
+                    print(_codeUser);
+                    showDialog(
+                    context: context,
+                    builder: (BuildContext context)
+                    {
+                      return AlertDialog(
+                        title: Row(
+                            children: [
+                              Icon(Icons.info, color: Colors.blueAccent),
+                              Text(' Verification number  . ')
+                            ]
+                        ),
+                        content: Text("Your code is :  " + _codeUser),
+                        actions: [
+                          MaterialButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            }, child: Text('ok'),
+                            color: Colors.deepPurple,
+                          )
+                        ],
+                      );
+                    },
+                    );
+
+
+                  },
                 )
               ],
             ),

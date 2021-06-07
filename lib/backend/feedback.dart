@@ -208,6 +208,8 @@ class _FeedbackState extends State<Feedback> {
                             print("_selectedItem.nameP");
                             print(_selectedItem.nameP);
                         ToDoParam   toDoParam = ToDoParam(idExercice: _selectedItem1.id,idUser: _selectedItem.idP);
+                        toDoParam.idOrtho = _selectedItem.nameP;
+                        toDoParam.id = _selectedItem1.name;
                             print(toDoParam.idUser);
 
                             showDialog(

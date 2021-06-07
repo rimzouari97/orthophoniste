@@ -114,7 +114,7 @@ class _GameScreenState extends State<GameScreen> {
         children: <Widget>[
           CircleAvatar(
             backgroundImage: AssetImage('assets/images/$imageUrl'),
-            radius: 50,
+            radius: 30,
           ),
           SizedBox(height: 10.0),
           Text(
@@ -157,7 +157,7 @@ class _GameScreenState extends State<GameScreen> {
                 onPressed: () {
                   _speak("${widget.question}");
                 },
-                backgroundColor: Theme.of(context).primaryColor,
+                backgroundColor: Colors.teal,
                 child: Icon(
                   Icons.speaker_phone,
                   size: 35.0,

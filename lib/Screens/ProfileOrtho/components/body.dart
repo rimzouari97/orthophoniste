@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:orthophoniste/Screens/Profile/ProfilePage.dart';
 import 'package:orthophoniste/Screens/Profile/components/update_pwd.dart';
+import 'package:orthophoniste/Screens/ProfileOrtho/ProfilePage.dart';
 import 'package:orthophoniste/main.dart';
 import 'package:orthophoniste/shared_preferences.dart';
 import 'profile_menu.dart';
@@ -24,7 +24,7 @@ class BodyOrtho extends StatelessWidget {
             context,
             MaterialPageRoute(
             builder: (context) {
-            return ProfilePage();
+            return ProfilePageOrtho();
             },
             ),
             ),

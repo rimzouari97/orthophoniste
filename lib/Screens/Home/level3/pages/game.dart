@@ -25,8 +25,49 @@ class _GameState extends State<Game> {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.teal,
         title: Text('${level.name} Level'),
         centerTitle: true,
+        actions: <Widget>[
+          Tooltip(
+            message: "message",
+            child: Padding(
+                padding: EdgeInsets.only(right: 20.0),
+                child: GestureDetector(
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Row(
+                                children: [
+                                  Icon(Icons.info, color: Colors.teal),
+                                  Text(' How to play ? ')
+                                ]
+                            ),
+                            content: Text("Press on the speaker to listen "),
+                            actions: [
+                              MaterialButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                }, child: Text('ok'),
+                                color: Colors.teal,
+                              )
+                            ],
+                          );
+                        }
+                    );
+                  },
+                  child: Icon(
+                      Icons.info_outline
+
+                  ),
+                )
+            ),
+          ),
+
+
+        ],
       ),
       body: PageView.builder(
         itemCount: questions.length,

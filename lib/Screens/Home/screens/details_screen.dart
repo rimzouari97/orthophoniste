@@ -14,10 +14,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class DetailsScreen extends StatefulWidget {
   @override
-  _Memoire createState() => new _Memoire();
+  _Memoire createState() => new  _Memoire();
 }
 
 class _Memoire extends State<DetailsScreen> {
+
   DoneService get service => GetIt.I<DoneService>();
   String _idUser;
   List<ToDoParam> listtodo;
@@ -60,187 +61,187 @@ class _Memoire extends State<DetailsScreen> {
 
   @override
   Widget build(BuildContext context) => FutureBuilder(
-      future: fetchData(),
-      builder: (BuildContext context, AsyncSnapshot<List<ToDoParam>> snapshot) {
-        var size = MediaQuery.of(context).size;
-        return Scaffold(
-          bottomNavigationBar: BottomNavBar(),
-          body: Stack(
-            children: <Widget>[
-              Container(
-                height: size.height * .45,
-                decoration: BoxDecoration(
-                  color: kBlueLightColor,
-                  image: DecorationImage(
-                    image: AssetImage("assets/images/meditation_bg.png"),
-                    fit: BoxFit.fitWidth,
-                  ),
-                ),
+      future: fetchData(), builder: (BuildContext context, AsyncSnapshot<List<ToDoParam>> snapshot) {
+    var size = MediaQuery.of(context).size;
+    return Scaffold(
+      bottomNavigationBar: BottomNavBar(),
+      body: Stack(
+        children: <Widget>[
+          Container(
+            height: size.height * .45,
+            decoration: BoxDecoration(
+              color: kBlueLightColor,
+              image: DecorationImage(
+                image: AssetImage("assets/images/meditation_bg.png"),
+                fit: BoxFit.fitWidth,
               ),
-              SafeArea(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+            ),
+          ),
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    SizedBox(
+                      height: size.height * 0.05,
+                    ),
+                    Text(
+                      "Memory Games",
+                      style: Theme.of(context)
+                          .textTheme
+                          .display1
+                          .copyWith(fontWeight: FontWeight.w900),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      "Let's remember!",
+                      style: Theme.of(context)
+                          .textTheme
+                          .display1
+                          .copyWith(fontWeight: FontWeight.w900),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      "",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 10),
+                    SizedBox(
+                      width: size.width * .6, // it just take 60% of total width
+                      child: Text(
+                        "Live happier and healthier by learning the fundamentals of these game",
+                      ),
+                    ),
+                    SizedBox(
+                      width: size.width * .5, // it just take the 50% width
+                      child: SearchBar(),
+                    ),
+                    Wrap(
+                      spacing: 20,
+                      runSpacing: 20,
                       children: <Widget>[
-                        SizedBox(
-                          height: size.height * 0.05,
+                        SeassionCard(
+                          seassionNum: 1,
+                          sessionName: "Visual",
+                          press: () {
+                            var idvisuelle = "6088d3d7079cb400154a37dd";
+                            var i=1;
+                            bool b = false;
+                            for (var item in snapshot.data){
+                              if (item.idExercice == idvisuelle){
+                                b=true;
+                                setState(() {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) {
+                                      return Home();
+                                    }),
+                                  );
+                                });
+
+                              } else if (snapshot.data.length == i && !b){
+                                print('no access');
+                                _showMyDialog();
+                              }
+                              print(i);
+                              i++;
+                            }
+
+                           },
                         ),
-                        Text(
-                          "Memory Games",
-                          style: Theme.of(context)
-                              .textTheme
-                              .display1
-                              .copyWith(fontWeight: FontWeight.w900),
+                        SeassionCard(
+                          seassionNum: 2,
+                          sessionName: "Hearing",
+                          press: () {
+                            var idauditive = "6088d3e2079cb400154a37de";
+                            var i=1;
+                            bool b = false;
+                            for (var item in snapshot.data){
+                              if (item.idExercice == idauditive) {
+                                setState(() {
+                                  b=true;
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) {
+                                      return Home2();
+                                    }),
+                                  );
+                                });
+
+                              } else if (snapshot.data.length == i && !b){
+                                print('no access');
+                                _showMyDialog();
+                              }
+                              print(i);
+                              i++;
+                            }
+
+                           },
                         ),
-                        SizedBox(height: 10),
-                        Text(
-                          "Let's remember!",
-                          style: Theme.of(context)
-                              .textTheme
-                              .display1
-                              .copyWith(fontWeight: FontWeight.w900),
-                        ),
-                        SizedBox(height: 10),
-                        Text(
-                          "3-10 MIN Course",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(height: 10),
-                        SizedBox(
-                          width: size.width *
-                              .6, // it just take 60% of total width
-                          child: Text(
-                            "Live happier and healthier by learning the fundamentals of these game",
-                          ),
-                        ),
-                        SizedBox(
-                          width: size.width * .5, // it just take the 50% width
-                          child: SearchBar(),
-                        ),
-                        Wrap(
-                          spacing: 20,
-                          runSpacing: 20,
-                          children: <Widget>[
-                            SeassionCard(
-                              seassionNum: 1,
-                              sessionName: "visuelle",
-                              press: () {
-                                var idvisuelle = "6088d3d7079cb400154a37dd";
-                                var i = 1;
-                                bool b = false;
-                                for (var item in snapshot.data) {
-                                  if (item.idExercice == idvisuelle) {
-                                    b = true;
-                                    setState(() {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(builder: (context) {
-                                          return Home();
-                                        }),
-                                      );
-                                    });
-                                  } else if (snapshot.data.length == i && !b) {
-                                    print('no access');
-                                    _showMyDialog();
-                                  }
-                                  print(i);
-                                  i++;
-                                }
-                              },
-                            ),
-                            SeassionCard(
-                              seassionNum: 2,
-                              sessionName: "auditive",
-                              press: () {
-                                var idauditive = "6088d3e2079cb400154a37de";
-                                var i = 1;
-                                bool b = false;
-                                for (var item in snapshot.data) {
-                                  if (item.idExercice == idauditive) {
-                                    setState(() {
-                                      b = true;
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(builder: (context) {
-                                          return Home2();
-                                        }),
-                                      );
-                                    });
-                                  } else if (snapshot.data.length == i && !b) {
-                                    print('no access');
-                                    _showMyDialog();
-                                  }
-                                  print(i);
-                                  i++;
-                                }
-                              },
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 20),
-                        Text(
-                          "Memory",
-                          style: Theme.of(context)
-                              .textTheme
-                              .title
-                              .copyWith(fontWeight: FontWeight.bold),
-                        ),
-                        Container(
-                          margin: EdgeInsets.symmetric(vertical: 20),
-                          padding: EdgeInsets.all(10),
-                          height: 90,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(13),
-                            boxShadow: [
-                              BoxShadow(
-                                offset: Offset(0, 17),
-                                blurRadius: 23,
-                                spreadRadius: -13,
-                                color: kShadowColor,
-                              ),
-                            ],
-                          ),
-                          child: Row(
-                            children: <Widget>[
-                              SvgPicture.asset(
-                                "assets/icons/Meditation_women_small.svg",
-                              ),
-                              SizedBox(width: 20),
-                              Expanded(
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      "Basic 2",
-                                      style:
-                                          Theme.of(context).textTheme.subtitle,
-                                    ),
-                                    Text("Start your deepen you practice")
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(10),
-                                child:
-                                    SvgPicture.asset("assets/icons/Lock.svg"),
-                              ),
-                            ],
-                          ),
-                        )
+
                       ],
                     ),
-                  ),
+                    SizedBox(height: 20),
+                    Text(
+                      "Memory",
+                      style: Theme.of(context)
+                          .textTheme
+                          .title
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 20),
+                      padding: EdgeInsets.all(10),
+                      height: 90,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(13),
+                        boxShadow: [
+                          BoxShadow(
+                            offset: Offset(0, 17),
+                            blurRadius: 23,
+                            spreadRadius: -13,
+                            color: kShadowColor,
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        children: <Widget>[
+                          SvgPicture.asset(
+                            "assets/icons/Meditation_women_small.svg",
+                          ),
+                          SizedBox(width: 20),
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  "Basic 2",
+                                  style: Theme.of(context).textTheme.subtitle,
+                                ),
+                                Text("Start your deepen you practice")
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(10),
+                            child: SvgPicture.asset("assets/icons/Lock.svg"),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
                 ),
               ),
-            ],
+            ),
           ),
-        );
-      });
+        ],
+      ),
+    );
+  });
 }
 
 class SeassionCard extends StatelessWidget {
@@ -280,7 +281,7 @@ class SeassionCard extends StatelessWidget {
           child: Material(
             color: Colors.transparent,
             child: InkWell(
-              onTap: press,
+              onTap: press ,
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Row(
@@ -298,6 +299,7 @@ class SeassionCard extends StatelessWidget {
                         color: isDone ? Colors.white : kBlueColor,
                       ),
                     ),
+
                     SizedBox(width: 10),
                     Text(
                       " $sessionName",

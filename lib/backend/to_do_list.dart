@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orthophoniste/constants.dart';
@@ -111,35 +112,39 @@ class _MyToDoListState extends State<MyToDoList> {
                     padding: EdgeInsets.only(right: 20.0),
                     child: GestureDetector(
                       onTap: () {
-
+                        print("ff");
                         showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: Row(
-                                  children:[
-                                    Icon(Icons.info,color: Colors.blueAccent),
-                                    Text('  Info . ')
-                                  ]
-                              ),
-                              content: Text("Exercice "+  " affecter a " ),
-                              actions: [
-                                MaterialButton(
-                                  onPressed: (){
-                                    Navigator.pop(context);
-                                  }, child: Text('ok'),
-                                  color: Colors.deepPurple,
-                                )
-                              ],
-                            );
-                          },
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Row(
+                                    children: [
+                                      Icon(Icons.info, color: Colors.blueAccent),
+                                      Text(' Patients list ')
+                                    ]
+                                ),
+                                content: Text("Here's the list of all the patients who were approved by their pathologists. If you want to delete a patient, you can swipe right."),
+                                actions: [
+                                  MaterialButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    }, child: Text('ok'),
+                                    color: Colors.deepPurple,
+                                  )
+                                ],
+                              );
+                            }
                         );
                       },
                       child: Icon(
                           Icons.info_outline
+
                       ),
                     )
                 ),
+
+
+
               ],
             ),
             body:Container(child: Center(child: Text(" pas de patient"),)),
@@ -153,12 +158,40 @@ class _MyToDoListState extends State<MyToDoList> {
               Padding(
                   padding: EdgeInsets.only(right: 20.0),
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      print("ff");
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Row(
+                                  children: [
+                                    Icon(Icons.info, color: Colors.blueAccent),
+                                    Text(' Patients list ')
+                                  ]
+                              ),
+                              content: Text("Here's the list of all the to do patients who were assign by their pathologists. If you want to delete a to do patient, you can swipe right."),
+                              actions: [
+                                MaterialButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  }, child: Text('ok'),
+                                  color: Colors.deepPurple,
+                                )
+                              ],
+                            );
+                          }
+                      );
+                    },
                     child: Icon(
                         Icons.info_outline
+
                     ),
                   )
               ),
+
+
+
             ],
           ),
          body: ListWidget(),
@@ -209,11 +242,9 @@ class _MyToDoListState extends State<MyToDoList> {
                       child: Padding(
                         padding: EdgeInsets.all(16.0),
                         child: Row(children: [
-                          Image.network(
-                            "https://raw.githubusercontent.com/oussamaMaaroufi/orthoBack/master/166395810_233537285126986_5719499729791420255_o.jpg",
-                            height: 60,
-                            width: 60,),
-                          Text(" "),
+                         // Image.network("https://raw.githubusercontent.com/oussamaMaaroufi/orthoBack/master/166395810_233537285126986_5719499729791420255_o.jpg", height: 60, width: 60,),
+                          SvgPicture.asset("assets/icons/User Icon.svg",height: 60,width: 60,),
+                         Text("     "),
                         //  Text(Snap.data[index].id),
                           NameUser(item.idUser),
                           Text(" "),

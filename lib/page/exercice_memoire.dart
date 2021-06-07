@@ -150,7 +150,7 @@ class _Quiz extends State<ExerciceConcentration> {
                         ),*/
                             SeassionCard(
                               seassionNum: 3,
-                              seassionName: "Couleurs",
+                              seassionName: "Colors",
                               press: () {
                                 var idcolor = "6074ab5b82c71b0015918da2";
                                 var i = 1;
@@ -181,7 +181,7 @@ class _Quiz extends State<ExerciceConcentration> {
                             ),
                             SeassionCard(
                               seassionNum: 4,
-                              seassionName: "Forme",
+                              seassionName: "Forms",
                               press: () {
                                 var idcolor = "6074abf282c71b0015918da3";
                                 var i = 1;

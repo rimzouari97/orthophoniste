@@ -140,18 +140,18 @@ class DoneService {
     return http
         .post(BASE_URL + "done/" + "getscore",
             headers: headers, body: json.encode(item.toJson()))
-        .then((data) {
-      print(data.statusCode.toString());
+        .then(( data) {
+    //  print(data.statusCode.toString());
       // print(data.body);
       List<Done> list = <Done>[];
       if (data.statusCode == 200) {
         Map<String, dynamic> jsonData = json.decode(data.body);
 
-        print(jsonData);
+     //   print(jsonData);
 
         for (var item in jsonData.values.last) {
-          print("item");
-          print(item);
+        //  print("item");
+        //  print(item);
 
           Done done = Done(
               id: item["_id"],

@@ -101,7 +101,7 @@ class _Apprend extends State<DetailsScreen2> {
                     ),
                     SizedBox(height: 10),
                     Text(
-                      "3-10 MIN Course",
+                      "",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 10),

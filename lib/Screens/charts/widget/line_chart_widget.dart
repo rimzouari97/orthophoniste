@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:get_it/get_it.dart';
@@ -22,8 +23,25 @@ class LineChartWidget extends StatelessWidget {
       body: Center(child: Column(
         children: [
          Card(
-           child: Text("oussama"),
+            margin: EdgeInsets.all(20),
+           borderOnForeground: true,
+
+           child: Column(
+             children: [
+               Text("Name Exercice  :"+_toDoParam.id,style: TextStyle(color: Colors.blueAccent,  ),),
+               Text(""),
+               Text("Name patient :"+_toDoParam.idOrtho,style: TextStyle(color: Colors.blueAccent,  ),)
+             ],
+           ),
+
          ),
+          Text(""),
+          Text(""),
+          Text(""),
+          Text(""),
+          Text(""),
+          Text(""),
+          Text(""),
           MyLineChart(_toDoParam)
         ],
       )

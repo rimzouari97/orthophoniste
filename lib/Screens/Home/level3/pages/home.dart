@@ -112,6 +112,7 @@ class _HomeState extends State<HomeSpell> {
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.teal,
+          centerTitle: true,
           title: Text("Dyslexia"),
           actions: <Widget>[
             Tooltip(
@@ -163,9 +164,9 @@ class _HomeState extends State<HomeSpell> {
               child: AppBar(
                 iconTheme: IconThemeData.fallback(),
                 backgroundColor: Colors.grey[300],
-
+                centerTitle: true,
                 title: Text(
-                  "      lexical Dyslexia",
+                  "lexical Dyslexia",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.black,
