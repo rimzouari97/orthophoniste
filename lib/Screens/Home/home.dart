@@ -16,6 +16,7 @@ import 'package:orthophoniste/models/ortho_parm.dart';
 import 'package:orthophoniste/models/todo_param.dart';
 import 'package:orthophoniste/page/exercice_memoire.dart';
 import 'package:orthophoniste/services/done_service.dart';
+import 'package:orthophoniste/services/stutter_service.dart';
 import 'package:orthophoniste/shared_preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -37,6 +38,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   DoneService get service => GetIt.I<DoneService>();
+  StutterService get stutterservice => GetIt.I<StutterService>();
 
   Future<void> _showMyDialog() async {
     return showDialog<void>(
@@ -69,9 +71,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<List<ToDoParam>> fetchData() =>
       Future.delayed(Duration(microseconds: 3000), () async {
         SharedPreferences preferences = await SharedPreferences.getInstance();
+
         widget._name = await preferences.getString('UserName');
         widget._id = await preferences.getString('UserId');
-
+        stutterservice.getStutterProgress(widget._id);
         return await service.getToDoListByIdP(Done(idUser: widget._id));
       });
 

@@ -75,7 +75,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   String hasOr;
 
-  StutterService get stutterservice => GetIt.I<StutterService>();
+
 
   String currentUserId = "";
 
@@ -85,7 +85,6 @@ class _MyHomePageState extends State<MyHomePage> {
         SharedPreferences _prefs = await SharedPreferences.getInstance();
         SharedPref pref = SharedPref();
         currentUserId = _prefs.getString("UserId");
-       // stutterservice.getStutterProgress(currentUserId);
         hasOr = _prefs.getString('HasOrtho');
         print('hasOr');
         print(hasOr);

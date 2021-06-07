@@ -15,6 +15,16 @@ class LineChartWidget extends StatelessWidget {
 
   LineChartWidget(this._toDoParam);
 
+  Widget showdet (String name ){
+
+      if(name == "stutterless"){
+        return  Text("def textttttttttt",style: TextStyle(color: Colors.blueAccent,));
+      }
+
+    return  Text("");
+
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -30,7 +40,10 @@ class LineChartWidget extends StatelessWidget {
              children: [
                Text("Name Exercice  :"+_toDoParam.id,style: TextStyle(color: Colors.blueAccent,  ),),
                Text(""),
-               Text("Name patient :"+_toDoParam.idOrtho,style: TextStyle(color: Colors.blueAccent,  ),)
+               Text("Name patient :"+_toDoParam.idOrtho,style: TextStyle(color: Colors.blueAccent,  ),),
+               Text(""),
+               showdet(_toDoParam.id)
+
              ],
            ),
 
