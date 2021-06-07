@@ -36,7 +36,35 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  DoneService get service => GetIt.I<DoneService> ();
+  DoneService get service => GetIt.I<DoneService>();
+
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Access Alert'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text("No access ! please wait for your ortho!"),
+                //Text('Would you like to approve of this message?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Ok'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   Future<List<ToDoParam>> fetchData() =>
       Future.delayed(Duration(microseconds: 3000), () async {
@@ -44,8 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
         widget._name = await preferences.getString('UserName');
         widget._id = await preferences.getString('UserId');
 
-        return  await service.getToDoListByIdP(Done(idUser: widget._id));
-
+        return await service.getToDoListByIdP(Done(idUser: widget._id));
       });
 
   @override
@@ -127,26 +154,23 @@ class _MyHomePageState extends State<MyHomePage> {
                                   svgSrc: "assets/icons/Excrecises.svg",
                                   press: () {
                                     bool b = false;
-                                    for(ToDoParam todo in snapshot.data){
-                                      if(todo.idExercice == "60bbc61c8104a60015f958ec"){
+                                    for (ToDoParam todo in snapshot.data) {
+                                      if (todo.idExercice ==
+                                          "60bbc61c8104a60015f958ec") {
                                         b = true;
                                       }
                                     }
 
-                                    if(b){
+                                    if (b) {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(builder: (context) {
                                           return Beg();
                                         }),
                                       );
-                                    }else{
-                                      print("test 2002");
-
+                                    } else {
+                                      _showMyDialog();
                                     }
-
-
-
                                   },
                                 ),
                                 CategoryCard(
@@ -199,6 +223,4 @@ class _MyHomePageState extends State<MyHomePage> {
           }
         },
       );
-
-
 }
