@@ -99,6 +99,7 @@ class _GameScreenState extends State<GameScreen> {
 
   @override
   void dispose() {
+
     super.dispose();
     flutterTts.stop();
   }
@@ -136,8 +137,6 @@ class _GameScreenState extends State<GameScreen> {
                     isSolved = true;
                   });
                   return Alert().showAlert(context, "Correct!", "You got it right!");
-
-
 
                 } else {
                   return Alert().showAlert(context, "Wrong!", "Try again!");

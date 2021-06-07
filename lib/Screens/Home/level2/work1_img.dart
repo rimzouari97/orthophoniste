@@ -35,8 +35,6 @@ class _HomeState extends State<Home2> {
 
   void reStart()  {
 
-
-
     myPairs = getPairs();
     myPairs.shuffle();
 
@@ -153,18 +151,8 @@ class _HomeState extends State<Home2> {
                 points != 80 ? Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    Text("last score here  " + lastscore),
-                    Text(
-                      "$points/80",
-                      style: TextStyle(
-                          fontSize: 20, fontWeight: FontWeight.w500),
-                    ),
-                    Text(
-                      "Points",
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                          fontSize: 14, fontWeight: FontWeight.w300),
-                    ),
+                    Text("Your previous score is  " + lastscore),
+
                   ],
                 ) : Container(),
                 SizedBox(

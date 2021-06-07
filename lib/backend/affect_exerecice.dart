@@ -228,7 +228,7 @@ class _HomeState extends State<AffectExercice> {
                                title: Row(
                                    children:[
                                      Icon(Icons.error,color: Colors.red),
-                                     Text('  error . ')
+                                     Text('  Already done ')
                                    ]
                                ),
                                content: Text(res.errorMessage),

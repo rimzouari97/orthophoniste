@@ -142,6 +142,7 @@ class DoneService {
             headers: headers, body: json.encode(item.toJson()))
         .then((data) {
       print(data.statusCode.toString());
+      //data response of server
       // print(data.body);
       List<Done> list = <Done>[];
       if (data.statusCode == 200) {
@@ -152,7 +153,7 @@ class DoneService {
         for (var item in jsonData.values.last) {
           print("item");
           print(item);
-
+          //serialisation
           Done done = Done(
               id: item["_id"],
               score: item['score'],

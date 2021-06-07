@@ -32,7 +32,6 @@ class _Apprend extends State<DetailsScreen2> {
         debugPrint('Step 2, fetch data');
         SharedPreferences preferences = await SharedPreferences.getInstance();
         _idUser = preferences.getString('UserId');
-
         return await service.getToDoListByIdP(Done(idUser: _idUser));
       });
 
@@ -46,7 +45,7 @@ class _Apprend extends State<DetailsScreen2> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text("No access ! please wait for your ortho!"),
+                Text("No access ! please wait for your pathologist!"),
                 //Text('Would you like to approve of this message?'),
               ],
             ),

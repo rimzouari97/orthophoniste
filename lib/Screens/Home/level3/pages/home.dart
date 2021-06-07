@@ -16,7 +16,7 @@ class HomeSpell extends StatefulWidget {
 
 class _HomeState extends State<HomeSpell> {
   final List <Level> levels = [
-    Level(name: "Easy", number: 1, color: Colors.greenAccent),
+    Level(name: "Easy", number: 1, color: Colors.grey),
     Level(name: "Medium", number: 2, color: Colors.grey),
     Level(name: "Hard", number: 3, color: Colors.grey),
     Level(name: "Extreme", number: 4, color: Colors.grey)
@@ -191,6 +191,7 @@ class _HomeState extends State<HomeSpell> {
                       color: levels[index].color,
                       child: ListTile(
                         onTap: () {
+
                           _goToGame(levels[index]);
                         },
                         title: Center(
