@@ -85,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
         SharedPreferences _prefs = await SharedPreferences.getInstance();
         SharedPref pref = SharedPref();
         currentUserId = _prefs.getString("UserId");
-        stutterservice.getStutterProgress(currentUserId);
+       // stutterservice.getStutterProgress(currentUserId);
         hasOr = _prefs.getString('HasOrtho');
         print('hasOr');
         print(hasOr);
