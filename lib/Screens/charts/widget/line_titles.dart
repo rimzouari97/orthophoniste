@@ -24,7 +24,7 @@ class LineTitles {
               case 15:
                 return '15 fois';
               case 20:
-              return '20 fois';
+                return '20 fois';
 
             }
             return '';
