@@ -15,6 +15,7 @@ class LineChartWidget extends StatelessWidget {
 
   LineChartWidget(this._toDoParam);
 
+
   @override
   Widget build(BuildContext context) {
 
@@ -30,7 +31,8 @@ class LineChartWidget extends StatelessWidget {
              children: [
                Text("Name Exercice  :"+_toDoParam.id,style: TextStyle(color: Colors.blueAccent,  ),),
                Text(""),
-               Text("Name patient :"+_toDoParam.idOrtho,style: TextStyle(color: Colors.blueAccent,  ),)
+               Text("Name patient :"+_toDoParam.idOrtho,style: TextStyle(color: Colors.blueAccent,  ),),
+
              ],
            ),
 
@@ -47,6 +49,7 @@ class LineChartWidget extends StatelessWidget {
       )
       ),
     );
+
   }
 }
 
@@ -168,4 +171,5 @@ class _MyLineChartState extends State<MyLineChart> {
         }
       }
   );
+
 }

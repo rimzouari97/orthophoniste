@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get_it/get_it.dart';
 import 'package:orthophoniste/backend/to_do_list.dart';
 import 'package:orthophoniste/constants.dart';
@@ -35,7 +36,7 @@ class _HomeState extends State<AffectExercice> {
   UserService get service => GetIt.I<UserService>();
   String id;
 
-  Future<List<OrthoParam>> fetchData() => Future.delayed(Duration(microseconds: 5000), () async{
+  Future<List<OrthoParam>> fetchData() => Future.delayed(Duration(microseconds: 6000), () async{
     debugPrint('Step 2, fetch data');
     SharedPreferences prefs = await SharedPreferences.getInstance();
      id = prefs.getString('UserId');
@@ -102,8 +103,10 @@ class _HomeState extends State<AffectExercice> {
       }
 
       return Scaffold(
+        backgroundColor: Colors.grey[300],
         appBar: AppBar(
           title: Text("Assign Exercice"),
+            backgroundColor: Colors.teal,
             actions: <Widget>[
               Padding(
                   padding: EdgeInsets.only(right: 20.0),
@@ -143,31 +146,32 @@ class _HomeState extends State<AffectExercice> {
             padding: EdgeInsets.all(20.0),
             child: Column(
               children: [
+                Image.asset("assets/images/score1.png",height: 100,width: 100),
+                SizedBox(height: 20,),
                 Row(
                   children: [
-                    Text("Patient  : "),
+                    Text("Patient       "),
                     DropdownButton(
                         value: _selectedItem  ,
-                        hint: Text("select Patient"),
+                        hint: Text("SELECT PATIENT"),
                         items: _dropdownMenuItems,
+                        dropdownColor: Colors.grey[300],
                         onChanged: ( value) {
                       //    print("_selectedItem");
                           print(value.nameP);
                           _selectedItem = value;
-
-
 
                         }),
                   ],
                 ),
                 Row(
                   children: [
-                    Text("Exercice : "),
+                    Text("Assignement   "),
                     DropdownButton<Exercice>(
                       //  value: _selectedItem1  ,
-                        hint: Text("select Exercice"),
+                        hint: Text("SELECT EXERCICE"),
                         items: _dropdownMenuItems1,
-
+                        dropdownColor: Colors.grey[300],
                         onChanged: (value) {
                          //   print("value.name");
                          //   print(value.name);
@@ -176,13 +180,13 @@ class _HomeState extends State<AffectExercice> {
                         }),
                   ],
                 ),
-
+                SizedBox(height: 20,),
                 MaterialButton(
-                  color: Colors.deepPurple,
+                  color: Colors.teal,
                     child: Text("Save"),
                     shape:RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(18.0),
-                        side: BorderSide(color: Colors.deepPurple)
+                        side: BorderSide(color: Colors.teal)
                     ),
 
                     onPressed:() async {

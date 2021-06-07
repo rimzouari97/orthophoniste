@@ -122,6 +122,7 @@ class _FeedbackState extends State<Feedback> {
           return Scaffold(
             appBar: AppBar(
               title: Text("Show chart"),
+                backgroundColor: Colors.teal,
                 actions: <Widget>[
                   Padding(
                       padding: EdgeInsets.only(right: 20.0),
@@ -133,7 +134,7 @@ class _FeedbackState extends State<Feedback> {
                               return AlertDialog(
                                 title: Row(
                                     children:[
-                                      Icon(Icons.info,color: Colors.blueAccent),
+                                      Icon(Icons.info,color: Colors.teal),
                                       Text(' Show statics ')
                                     ]
                                 ),
@@ -143,7 +144,7 @@ class _FeedbackState extends State<Feedback> {
                                     onPressed: (){
                                       Navigator.pop(context);
                                     }, child: Text('ok'),
-                                    color: Colors.deepPurple,
+                                    color: Colors.teal,
                                   )
                                 ],
                               );
@@ -161,12 +162,14 @@ class _FeedbackState extends State<Feedback> {
                 padding: EdgeInsets.all(20.0),
                 child: Column(
                   children: [
+                    Image.asset("assets/images/hh.png",height: 100,width: 100,),
+                    SizedBox(height: 20,),
                     Row(
                       children: [
-                        Text("Patient  : "),
+                        Text("Patient       "),
                         DropdownButton(
                           //    value: _selectedItem  ,
-                            hint: Text("select Patient"),
+                            hint: Text("SELECT PATIENT"),
                             items: _dropdownMenuItems,
                             onChanged: ( value) {
                               //    print("_selectedItem");
@@ -180,10 +183,10 @@ class _FeedbackState extends State<Feedback> {
                     ),
                     Row(
                       children: [
-                        Text("Exercice : "),
+                        Text("Assignement   "),
                         DropdownButton<Exercice>(
                           //  value: _selectedItem1  ,
-                            hint: Text("select Exercice"),
+                            hint: Text("SELECT EXERCICE"),
                             items: _dropdownMenuItems1,
 
                             onChanged: (value) {
@@ -192,13 +195,13 @@ class _FeedbackState extends State<Feedback> {
                             }),
                       ],
                     ),
-
+                    SizedBox(height: 20,),
                     MaterialButton(
-                        color: Colors.deepPurple,
+                        color: Colors.teal,
                         child: Text("Show"),
                         shape:RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(18.0),
-                            side: BorderSide(color: Colors.deepPurple)
+                            side: BorderSide(color: Colors.teal)
                         ),
                         onPressed:() async {
                           print("text");
@@ -219,12 +222,12 @@ class _FeedbackState extends State<Feedback> {
                                     title: Row(
                                         children:[
                                           Icon(Icons.info,color: Colors.blueAccent),
-                                          Text('  Info . '),
+                                          Text('  STATUS '),
 
                                         ]
 
                                     ),
-                                    content: Text(" statistique de l'exercice "+ _selectedItem1.name  +" affecter a "+_selectedItem.nameP ),
+                                    content: Text(" Statics of the "+ _selectedItem1.name  +" was affected to "+_selectedItem.nameP ),
                                   actions: [
                                     FlatButton(onPressed: (){
                                       Navigator.pushReplacement(

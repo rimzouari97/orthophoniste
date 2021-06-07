@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -154,6 +155,7 @@ class _MyToDoListState extends State<MyToDoList> {
         return Scaffold(
           appBar: AppBar(
             title: Text("List To Do patient"),
+            backgroundColor: Colors.teal,
             actions: <Widget>[
               Padding(
                   padding: EdgeInsets.only(right: 20.0),
@@ -166,7 +168,7 @@ class _MyToDoListState extends State<MyToDoList> {
                             return AlertDialog(
                               title: Row(
                                   children: [
-                                    Icon(Icons.info, color: Colors.blueAccent),
+                                    Icon(Icons.info, color: Colors.teal),
                                     Text(' Patients list ')
                                   ]
                               ),
@@ -176,7 +178,7 @@ class _MyToDoListState extends State<MyToDoList> {
                                   onPressed: () {
                                     Navigator.pop(context);
                                   }, child: Text('ok'),
-                                  color: Colors.deepPurple,
+                                  color: Colors.teal,
                                 )
                               ],
                             );
@@ -238,12 +240,18 @@ class _MyToDoListState extends State<MyToDoList> {
                 key: Key(item.idUser),
                 child: Column(
                   children: <Widget>[
-                    Card(
+                Neumorphic(
+                margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                  padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                  style: NeumorphicStyle(
+                      color: Colors.grey[300],
+                      boxShape:
+                      NeumorphicBoxShape.roundRect(BorderRadius.circular(12))),
                       child: Padding(
                         padding: EdgeInsets.all(16.0),
                         child: Row(children: [
                          // Image.network("https://raw.githubusercontent.com/oussamaMaaroufi/orthoBack/master/166395810_233537285126986_5719499729791420255_o.jpg", height: 60, width: 60,),
-                          SvgPicture.asset("assets/icons/User Icon.svg",height: 60,width: 60,),
+                          SvgPicture.asset("assets/icons/User Icon.svg",height: 50,width: 50,),
                          Text("     "),
                         //  Text(Snap.data[index].id),
                           NameUser(item.idUser),

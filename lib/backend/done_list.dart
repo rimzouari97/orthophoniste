@@ -103,6 +103,7 @@ class _MyDoneListState extends State<MyDoneList> {
         return Scaffold(
           appBar: AppBar(
             title: Text("Patient List "),
+            backgroundColor: Colors.teal,
             actions: <Widget>[
                Padding(
                   padding: EdgeInsets.only(right: 20.0),
@@ -114,7 +115,7 @@ class _MyDoneListState extends State<MyDoneList> {
                             return AlertDialog(
                               title: Row(
                                   children: [
-                                    Icon(Icons.info, color: Colors.blueAccent),
+                                    Icon(Icons.info, color: Colors.teal),
                                     Text(' Patients list ')
                                   ]
                               ),
@@ -124,7 +125,7 @@ class _MyDoneListState extends State<MyDoneList> {
                                   onPressed: () {
                                     Navigator.pop(context);
                                   }, child: Text('ok'),
-                                  color: Colors.deepPurple,
+                                  color: Colors.teal,
                                 )
                               ],
                             );
@@ -185,12 +186,18 @@ class _MyDoneListState extends State<MyDoneList> {
                   key: Key(Snap.data[index].id),
                   child: Column(
                     children: <Widget>[
-                      Card(
+                      Neumorphic(
+                        margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                        padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                        style: NeumorphicStyle(
+                            color: Colors.grey[300],
+                            boxShape:
+                            NeumorphicBoxShape.roundRect(BorderRadius.circular(12))),
                         child: Padding(
                           padding: EdgeInsets.all(16.0),
                           child: Row(children: [
                           //  Image.network("https://raw.githubusercontent.com/oussamaMaaroufi/orthoBack/master/166395810_233537285126986_5719499729791420255_o.jpg", height: 60, width: 60,),
-                            SvgPicture.asset("assets/icons/User Icon.svg",height: 60,width: 60,),
+                            SvgPicture.asset("assets/icons/User Icon.svg",height: 50,width: 50,),
 
                             Text("   "),
                             Text(Snap.data[index].nameP),

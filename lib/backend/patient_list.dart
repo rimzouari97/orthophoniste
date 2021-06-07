@@ -88,6 +88,7 @@ class _MyPatientListState extends State<MyPatientList> {
         return Scaffold(
           appBar: AppBar(
             title: Text(" Approval List "),
+            backgroundColor: Colors.teal,
             actions: <Widget>[
               Padding(
                   padding: EdgeInsets.only(right: 20.0),
@@ -99,7 +100,7 @@ class _MyPatientListState extends State<MyPatientList> {
                           return AlertDialog(
                             title: Row(
                                 children:[
-                                  Icon(Icons.info,color: Colors.blueAccent),
+                                  Icon(Icons.info,color: Colors.teal),
                                   Text(' Approving patients ')
                                 ]
                             ),
@@ -109,7 +110,7 @@ class _MyPatientListState extends State<MyPatientList> {
                                 onPressed: (){
                                   Navigator.pop(context);
                                 }, child: Text('ok'),
-                                color: Colors.deepPurple,
+                                color: Colors.teal,
                               )
                             ],
                           );
