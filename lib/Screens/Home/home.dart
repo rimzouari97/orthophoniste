@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get_it/get_it.dart';
 import 'package:orthophoniste/Screens/Home/level3/details_screen2.dart';
 import 'package:orthophoniste/Screens/Home/level3/pages/home.dart';
 import 'package:orthophoniste/Screens/Home/screens/details_screen.dart';
@@ -10,7 +11,11 @@ import 'package:orthophoniste/Screens/Welcome/welcome_screen.dart';
 import 'package:orthophoniste/beg_pack/Beg.dart';
 import 'package:orthophoniste/constants.dart';
 import 'package:orthophoniste/main.dart';
+import 'package:orthophoniste/models/done.dart';
+import 'package:orthophoniste/models/ortho_parm.dart';
+import 'package:orthophoniste/models/todo_param.dart';
 import 'package:orthophoniste/page/exercice_memoire.dart';
+import 'package:orthophoniste/services/done_service.dart';
 import 'package:orthophoniste/shared_preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -24,20 +29,55 @@ class HomeScreen extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
+  String _name;
+  String _id;
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final Future<String> _name =
-      Future<String>.delayed(const Duration(microseconds: 100), () {
-    SharedPref pref = SharedPref();
-    return pref.getUserName();
-  });
+  DoneService get service => GetIt.I<DoneService>();
+
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Access Alert'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text("No access ! please wait for your ortho!"),
+                //Text('Would you like to approve of this message?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Ok'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<List<ToDoParam>> fetchData() =>
+      Future.delayed(Duration(microseconds: 3000), () async {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        widget._name = await preferences.getString('UserName');
+        widget._id = await preferences.getString('UserId');
+
+        return await service.getToDoListByIdP(Done(idUser: widget._id));
+      });
 
   @override
   Widget build(BuildContext context) => FutureBuilder(
-        future: _name, //fetchData(),
+        future: fetchData(), //fetchData(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return Scaffold(
@@ -83,7 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                           ),
                           Text(
-                            "Good Morning \n" + snapshot.data.toString(),
+                            "Good Morning \n" + widget._name,
                             style: Theme.of(context)
                                 .textTheme
                                 .display1
@@ -113,12 +153,24 @@ class _MyHomePageState extends State<MyHomePage> {
                                   title: "Stuttering lessons",
                                   svgSrc: "assets/icons/Excrecises.svg",
                                   press: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(builder: (context) {
-                                        return Beg();
-                                      }),
-                                    );
+                                    bool b = false;
+                                    for (ToDoParam todo in snapshot.data) {
+                                      if (todo.idExercice ==
+                                          "60bbc61c8104a60015f958ec") {
+                                        b = true;
+                                      }
+                                    }
+
+                                    if (b) {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) {
+                                          return Beg();
+                                        }),
+                                      );
+                                    } else {
+                                      _showMyDialog();
+                                    }
                                   },
                                 ),
                                 CategoryCard(
@@ -171,10 +223,4 @@ class _MyHomePageState extends State<MyHomePage> {
           }
         },
       );
-
-  Future<String> fetchData() => Future.delayed(Duration(seconds: 1), () {
-        debugPrint('Step 4, fetch data');
-        SharedPref pref = SharedPref();
-        return pref.getUserName();
-      });
 }

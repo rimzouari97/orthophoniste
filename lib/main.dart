@@ -27,7 +27,7 @@ import 'Screens/Home/level1/work1.dart';
 void setupLocator() {
   GetIt.I.registerLazySingleton(() => UserService());
   GetIt.I.registerLazySingleton(() => StutterService());
-  GetIt.I.registerLazySingleton(() => DoneService());
+    GetIt.I.registerLazySingleton(() => DoneService());
 }
 
 //void main() {
@@ -85,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
         SharedPreferences _prefs = await SharedPreferences.getInstance();
         SharedPref pref = SharedPref();
         currentUserId = _prefs.getString("UserId");
-        //stutterservice.getStutterProgress(currentUserId);
+       // stutterservice.getStutterProgress(currentUserId);
         hasOr = _prefs.getString('HasOrtho');
         print('hasOr');
         print(hasOr);

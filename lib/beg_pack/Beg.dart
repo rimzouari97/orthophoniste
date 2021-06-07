@@ -1,11 +1,23 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
-import 'package:orthophoniste/beg_pack/final_level.dart';
+import 'package:orthophoniste/beg_pack/level6.dart';
 import 'package:orthophoniste/beg_pack/level2.dart';
 import 'package:orthophoniste/beg_pack/level1.dart';
 import 'package:orthophoniste/beg_pack/level3.dart';
 import 'package:orthophoniste/beg_pack/level4.dart';
 import 'package:orthophoniste/beg_pack/level5.dart';
+import 'package:orthophoniste/beg_pack/level7.dart';
+import 'package:orthophoniste/beg_pack/level8.dart';
+import 'package:orthophoniste/beg_pack/level9.dart';
+import 'package:orthophoniste/beg_pack/level10.dart';
+import 'package:orthophoniste/beg_pack/level11.dart';
+import 'package:orthophoniste/beg_pack/level12.dart';
+import 'package:orthophoniste/beg_pack/level13.dart';
+import 'package:orthophoniste/beg_pack/level14.dart';
+import 'package:orthophoniste/beg_pack/level15.dart';
+import 'package:orthophoniste/beg_pack/level16.dart';
+import 'package:orthophoniste/beg_pack/level17.dart';
+import 'package:orthophoniste/beg_pack/level18.dart';
 
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:lottie/lottie.dart';
@@ -154,6 +166,126 @@ class FullSampleHomePage extends StatelessWidget {
                         Navigator.of(context)
                             .push(MaterialPageRoute(builder: (context) {
                           return FinalLevel();
+                        }));
+                      }),
+                  SizedBox(height: 20),
+                  _buildButton(
+                      text: getLevelName('7'),
+                      onClick: () {
+                        if (levelLocked(7)) return;
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return Level7();
+                        }));
+                      }),
+                  SizedBox(height: 20),
+                  _buildButton(
+                      text: getLevelName('8'),
+                      onClick: () {
+                        if (levelLocked(8)) return;
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return Level8();
+                        }));
+                      }),
+                  SizedBox(height: 20),
+                  _buildButton(
+                      text: getLevelName('9'),
+                      onClick: () {
+                        if (levelLocked(9)) return;
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return Level9();
+                        }));
+                      }),
+                  SizedBox(height: 20),
+                  _buildButton(
+                      text: getLevelName('10'),
+                      onClick: () {
+                        if (levelLocked(10)) return;
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return Level10();
+                        }));
+                      }),
+                  SizedBox(height: 20),
+                  _buildButton(
+                      text: getLevelName('11'),
+                      onClick: () {
+                        if (levelLocked(11)) return;
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return Level11();
+                        }));
+                      }),
+                  SizedBox(height: 20),
+                  _buildButton(
+                      text: getLevelName('12'),
+                      onClick: () {
+                        if (levelLocked(12)) return;
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return Level12();
+                        }));
+                      }),
+                  SizedBox(height: 20),
+                  _buildButton(
+                      text: getLevelName('13'),
+                      onClick: () {
+                        if (levelLocked(13)) return;
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return Level13();
+                        }));
+                      }),
+                  SizedBox(height: 20),
+                  _buildButton(
+                      text: getLevelName('14'),
+                      onClick: () {
+                        if (levelLocked(14)) return;
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return Level14();
+                        }));
+                      }),
+                  SizedBox(height: 20),
+                  _buildButton(
+                      text: getLevelName('15'),
+                      onClick: () {
+                        if (levelLocked(15)) return;
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return Level15();
+                        }));
+                      }),
+                  SizedBox(height: 20),
+                  _buildButton(
+                      text: getLevelName('16'),
+                      onClick: () {
+                        if (levelLocked(16)) return;
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return Level16();
+                        }));
+                      }),
+                  SizedBox(height: 20),
+                  _buildButton(
+                      text: getLevelName('17'),
+                      onClick: () {
+                        if (levelLocked(17)) return;
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return Level17();
+                        }));
+                      }),
+                  SizedBox(height: 20),
+                  _buildButton(
+                      text: getLevelName('18'),
+                      onClick: () {
+                        if (levelLocked(18)) return;
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return Level18();
                         }));
                       }),
                   SizedBox(height: 10),
