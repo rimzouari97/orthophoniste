@@ -40,7 +40,7 @@ class __Page1State extends State<_Page1> {
   stt.SpeechToText _speech;
   bool _isListening = false;
   String _textSpeech = 'hit record to start the game';
-  String _correct = 'hit record to start the game';
+  String _correct = 'must got glad that granddad had flat hat';
   //must got glad that grandad had flat hat
 
   void backNew() {

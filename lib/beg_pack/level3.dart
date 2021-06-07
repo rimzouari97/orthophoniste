@@ -40,7 +40,7 @@ class __Page3State extends State<_Page3> {
   stt.SpeechToText _speech;
   bool _isListening = false;
   String _textSpeech = 'press the button to start speaking';
-  String _correct = 'press the button to start speaking';
+  String _correct = 'pause close draw flow grow cause show applause';
 //'pause clause draw flaw claw paw cause applause'
   void onListen() async {
     if (!_isListening) {
@@ -80,12 +80,12 @@ class __Page3State extends State<_Page3> {
 
   List<String> words = [
     'Pause',
-    'Clause',
+    'Close',
     'Draw',
-    'Flaw',
-    'Claw',
-    'Paws',
+    'Flow',
+    'Grow',
     'Cause',
+    'Show',
     'Applause'
   ];
 
