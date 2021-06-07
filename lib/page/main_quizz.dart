@@ -136,7 +136,7 @@ class _MyquizzState extends State<Myquizz> {
                   ),
                 ),
                 description: Text(
-                  ' votre derniere est  ${lastscore} , votre score actuel est ${_totalScore}',
+                  ' your last score  ${lastscore} , your  actuel score ${_totalScore}',
                   textAlign: TextAlign.center,
                 ),
                 entryAnimation: EntryAnimation.RIGHT,
